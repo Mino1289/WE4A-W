@@ -1,0 +1,78 @@
+header {
+    padding: .5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #333;
+}
+
+.menu-container {
+    display: inline-block;
+    cursor: pointer;
+    margin: .5em;
+    /* margin-left: .5em; */
+}
+
+.bar1,
+.bar2,
+.bar3 {
+    width: 39px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+    transform: translate(0, 11px) rotate(-45deg);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+    opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+    transform: translate(0, -11px) rotate(45deg);
+}
+
+.topnav {
+    position: absolute;
+    left: calc(50px + 1em);
+    top: .5em;
+    overflow: hidden;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+}
+
+.hide {
+    display: none;
+}
+
+.topnav a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+
+    transition: .5s;
+    text-decoration: none;
+    border: .1em solid transparent;
+}
+
+.topnav a:hover {
+    transition: .5s;
+    color: white;
+
+    border-bottom: .1em solid white;
+}
+
+#pdp {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    margin: 8px 8px 0px 0px;
+}
