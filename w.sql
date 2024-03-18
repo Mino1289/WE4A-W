@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 14 mars 2024 à 22:00
+-- Généré le : lun. 18 mars 2024 à 08:54
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -24,37 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `comment`
+-- Structure de la table `dislike`
 --
 
-CREATE TABLE `comment` (
-  `ID` int(11) NOT NULL,
-  `ID_post` int(11) NOT NULL,
-  `ID_user` int(11) NOT NULL,
-  `content` varchar(300) NOT NULL,
-  `date` date NOT NULL,
-  `isSensible` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `dislikecomment`
---
-
-CREATE TABLE `dislikecomment` (
-  `ID` int(11) NOT NULL,
-  `ID_user` int(11) NOT NULL,
-  `ID_comment` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `dislikepost`
---
-
-CREATE TABLE `dislikepost` (
+CREATE TABLE `dislike` (
   `ID` int(11) NOT NULL,
   `ID_user` int(11) NOT NULL,
   `ID_post` int(11) NOT NULL
@@ -75,22 +48,10 @@ CREATE TABLE `follow` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `likecomment`
+-- Structure de la table `like`
 --
 
-CREATE TABLE `likecomment` (
-  `ID` int(11) NOT NULL,
-  `ID_user` int(11) NOT NULL,
-  `ID_comment` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `likepost`
---
-
-CREATE TABLE `likepost` (
+CREATE TABLE `like` (
   `ID` int(11) NOT NULL,
   `ID_user` int(11) NOT NULL,
   `ID_post` int(11) NOT NULL
@@ -105,6 +66,7 @@ CREATE TABLE `likepost` (
 CREATE TABLE `post` (
   `ID` int(11) NOT NULL,
   `ID_user` int(11) NOT NULL,
+  `ID_post` int(11) DEFAULT NULL,
   `content` varchar(300) NOT NULL,
   `date` date NOT NULL,
   `isSensible` tinyint(1) NOT NULL
@@ -134,25 +96,9 @@ CREATE TABLE `user` (
 --
 
 --
--- Index pour la table `comment`
+-- Index pour la table `dislike`
 --
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `ID_post` (`ID_post`,`ID_user`),
-  ADD KEY `ID_user` (`ID_user`);
-
---
--- Index pour la table `dislikecomment`
---
-ALTER TABLE `dislikecomment`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `ID_user` (`ID_user`,`ID_comment`),
-  ADD KEY `ID_comment` (`ID_comment`);
-
---
--- Index pour la table `dislikepost`
---
-ALTER TABLE `dislikepost`
+ALTER TABLE `dislike`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ID_user` (`ID_user`,`ID_post`),
   ADD KEY `ID_post` (`ID_post`);
@@ -166,17 +112,9 @@ ALTER TABLE `follow`
   ADD KEY `ID_followed` (`ID_followed`);
 
 --
--- Index pour la table `likecomment`
+-- Index pour la table `like`
 --
-ALTER TABLE `likecomment`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `ID_user` (`ID_user`,`ID_comment`),
-  ADD KEY `ID_comment` (`ID_comment`);
-
---
--- Index pour la table `likepost`
---
-ALTER TABLE `likepost`
+ALTER TABLE `like`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ID_user` (`ID_user`,`ID_post`),
   ADD KEY `ID_post` (`ID_post`);
@@ -186,7 +124,8 @@ ALTER TABLE `likepost`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `ID_user` (`ID_user`);
+  ADD KEY `ID_user` (`ID_user`),
+  ADD KEY `ID_Post` (`ID_post`);
 
 --
 -- Index pour la table `user`
@@ -199,21 +138,9 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT pour la table `comment`
+-- AUTO_INCREMENT pour la table `dislike`
 --
-ALTER TABLE `comment`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `dislikecomment`
---
-ALTER TABLE `dislikecomment`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `dislikepost`
---
-ALTER TABLE `dislikepost`
+ALTER TABLE `dislike`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -223,15 +150,9 @@ ALTER TABLE `follow`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `likecomment`
+-- AUTO_INCREMENT pour la table `like`
 --
-ALTER TABLE `likecomment`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `likepost`
---
-ALTER TABLE `likepost`
+ALTER TABLE `like`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -245,25 +166,11 @@ ALTER TABLE `post`
 --
 
 --
--- Contraintes pour la table `comment`
+-- Contraintes pour la table `dislike`
 --
-ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `dislikecomment`
---
-ALTER TABLE `dislikecomment`
-  ADD CONSTRAINT `dislikecomment_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `dislikecomment_ibfk_2` FOREIGN KEY (`ID_comment`) REFERENCES `comment` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `dislikepost`
---
-ALTER TABLE `dislikepost`
-  ADD CONSTRAINT `dislikepost_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `dislikepost_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `dislike`
+  ADD CONSTRAINT `dislike_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `dislike_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `follow`
@@ -273,24 +180,18 @@ ALTER TABLE `follow`
   ADD CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`ID_followed`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `likecomment`
+-- Contraintes pour la table `like`
 --
-ALTER TABLE `likecomment`
-  ADD CONSTRAINT `likecomment_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `likecomment_ibfk_2` FOREIGN KEY (`ID_comment`) REFERENCES `comment` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `likepost`
---
-ALTER TABLE `likepost`
-  ADD CONSTRAINT `likepost_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `likepost_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `like`
+  ADD CONSTRAINT `like_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `like_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `post`
 --
 ALTER TABLE `post`
-  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `post_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
