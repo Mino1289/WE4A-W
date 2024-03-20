@@ -9,10 +9,8 @@
 <body>
 <?php
     include "header.php";
-?>
-<?php
-    if (isset($_COOKIE['ID_user'])) {
-        include "components/db.php";
+
+    if (isset($_SESSION['ID_user'])) {
         include "components/post.php";
 
         $sql = "SELECT * FROM post WHERE ID_post = NULL ORDER BY date DESC";

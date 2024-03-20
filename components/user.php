@@ -27,7 +27,7 @@
             global $db;
 
             echo "<title> W | ".$this->username ."</title>";
-            echo "<p id='username'>".$this->username."</p>";
+            echo "<h3 id='username'>".$this->username."</h3>";
             echo "<div id='information_user'>";
             echo "<p>Name : ".$this->username."</p>";
             echo "<p>Firstname : ".$this->first_name."</p>";
