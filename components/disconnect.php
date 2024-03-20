@@ -1,5 +1,8 @@
 <?php
     session_start();
     session_destroy();
-    header("Location: ../index.php");
+
+    // get the latest page
+    $page = $_SERVER['HTTP_REFERER'];
+    header("Location: $page");
 ?>

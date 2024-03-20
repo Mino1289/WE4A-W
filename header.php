@@ -49,7 +49,10 @@
                 // $validation = "<p id='welcome_back'>Welcome back $infos[0] </p><style>#welcome_back{color:green;}</style>";
                 $_SESSION['ID_user'] = $infos["ID"];
                 $_SESSION['profile_picture'] = __findPP($email,$password,$db);
-                header('Location: user.php?id='.$infos["ID"]);
+                // header('Refresh:0');
+                $page = $_SERVER['HTTP_REFERER'];
+                header("Location: $page");
+            
             }
         }
     } 
