@@ -17,6 +17,8 @@
             $this->date = $date;
             $this->isSensible = $isSensible;
             
+            global $db;
+
             $sql = "SELECT COUNT(*) FROM like WHERE ID = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID]);
@@ -68,5 +70,19 @@
             }
             echo "</div>";
         }
+    }
+
+    function postFromID($ID) {
+        global $db;
+
+        $sql = "SELECT * FROM post WHERE ID = ?";
+        $query = $db->prepare($sql);
+        $query->execute([$ID]);
+        $post = $query->fetch(PDO::FETCH_ASSOC);
+        if (!$post) {
+            return null;
+        }
+
+        return new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
     }
 ?>

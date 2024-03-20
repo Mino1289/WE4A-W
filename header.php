@@ -13,7 +13,7 @@
     $emailErr = $passwordErr=" ";
     $verifPassword=" ";
 
-    if($_SERVER["REQUEST_METHOD"]=="POST"){ // Variables are already define because we use required balise 
+    if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["login"])){ // Variables are already define because we use required balise 
         $password = test_input($_POST["password"]);
         $email = test_input($_POST["email"]);
     
@@ -81,7 +81,7 @@
     
     <?php echo $passwordErr;?>
 
-    <input name="submit" type="submit" value="Submit" id="submit"/>
+    <input name="login" type="submit" value="Submit" id="submit"/>
 
 
 </div>

@@ -11,8 +11,10 @@
     include "header.php";
 
     if (isset($_SESSION['ID_user'])) {
-        include "components/post.php";
-
+        // create a search bar
+        include "components/search.php";
+        // create a post form
+        
         $sql = "SELECT * FROM post WHERE ID_post = NULL ORDER BY date DESC";
         $query = $db->prepare($sql);
         $query->execute();
