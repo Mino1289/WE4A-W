@@ -101,6 +101,8 @@
                 echo '<a id="modalBtn" href="#">Login</a>';
                 echo '<a href="./register.php">Sign up</a>';
             } else {
+                // my page
+                echo '<a href="user.php?id='.$_SESSION['ID_user'].'">My page</a>';
                 echo '<a href="./components/disconnect.php">Disconnect</a>';
 
             }

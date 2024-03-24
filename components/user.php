@@ -33,28 +33,28 @@
             echo "<p>Firstname : ".$this->first_name."</p>";
             echo "<p>Mail : ".$this->email."</p>";
 
-            $sql = "SELECT COUNT(*) FROM follow WHERE ID_followed = ?";
+            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_followed = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
-            echo "<p>Followers : ". $followers['COUNT(*)'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
 
-            $sql = "SELECT COUNT(*) FROM follow WHERE ID_user = ?";
+            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $followings = $query->fetch(PDO::FETCH_ASSOC);
 
-            echo "<p>Followings : ". $followings['COUNT(*)'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
             //TODO: add a btn to follow/unfollow the user if you are not the user
             echo "</div>";
             echo "<div id='post_container'>";
             
-            $sql = "SELECT * FROM post WHERE ID_user = ? AND ID_post = NULL ORDER BY date DESC";
+            $sql = "SELECT * FROM post WHERE ID_user = ? AND ID_post IS NULL ORDER BY date ASC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $posts = $query->fetchAll(PDO::FETCH_ASSOC);
-
+            
             foreach ($posts as $post) {
                 $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
                 $post->display_post();

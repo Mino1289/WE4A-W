@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/post.css">
 </head>
 <body>
     <?php
     include 'header.php';
-
+    
     if(isset($_GET['id'])){
         include 'components/user.php';
-
+        
         $user = userFromID($_GET['id']);
         $user->display_page();
     } 
     ?>
     
+    <script src="scripts/post.js"></script>
 </body>
 </html>
