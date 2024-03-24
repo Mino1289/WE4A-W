@@ -1,21 +1,18 @@
 <?php
     include "post.php";
 
-echo '<div id="box_google_type">
+echo '<link rel="stylesheet" href="./css/search.css">
 
 <form method="POST" action="'.htmlspecialchars($_SERVER["PHP_SELF"]).'" class="spacing">
 
     <div id="search">
-        <div id=""><i class="fa fa-fw fa-search" id="logosearch"></i></div>
+        <div><i class="fa fa-fw fa-search" id="logosearch"></i></div>
         <input name="value" id="input" type="text" placeholder="Search on W" maxlength="32" autocomplete="off">
         
         <input type="submit" value="Research" id="submit" name="search">
     </div>
 
-    <div id="bordure_separation"></div>
-</form>
-</div>';
-
+</form>';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
