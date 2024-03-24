@@ -41,7 +41,13 @@
             $query->execute([$this->ID_user]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
             
-            echo "<div class='post";
+            echo "<div class='";
+            if ($this->ID_post != null) {
+                echo "comment";
+            }
+            else {
+                echo "post";
+            }
             if ($user['isWarn'] != 0) {
                 echo " warned";
             }
@@ -62,13 +68,16 @@
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
             echo "<p>W : ". $this->likes ."</p><button>W</button>"; 
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
-            echo "<p>L : ". $this->dislikes ."</p><button>L</button>"; 
+            echo "<p>L : ". $this->dislikes ."</p><button>L</button>";
+            echo "<a href='post.php?id=".$this->ID."'>Voir le post</a><br>";
+            // echo "<a href='newcomment.php?id=".$this->ID."'>Commenter</a>";
             echo "</div></div></div>";
-            // Add a form to comment the post/comment
         }
-
+        
         function display_page() {
+            // Add a form to comment the post/comment
             $this->display_post();
+
             global $db;
 
             $sql = "SELECT * FROM post WHERE ID_post = ? ORDER BY date ASC";
@@ -76,12 +85,12 @@
             $query->execute([$this->ID]);
             $comments = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "<div class='comment'>";
+            // echo "<div class='comment'>";
             foreach ($comments as $comment) {
-                $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_comment'], $comment['content'], $comment['date'], $comment['isSensible']);
+                $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['content'], $comment['date'], $comment['isSensible']);
                 $comment->display_post();
             }
-            echo "</div>";
+            // echo "</div>";
         }
     }
 

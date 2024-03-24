@@ -50,7 +50,7 @@
             echo "</div>";
             echo "<div id='post_container'>";
             
-            $sql = "SELECT * FROM post WHERE ID_user = ? AND ID_post IS NULL ORDER BY date ASC";
+            $sql = "SELECT * FROM post WHERE ID_user = ? AND ID_post IS NULL ORDER BY date DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $posts = $query->fetchAll(PDO::FETCH_ASSOC);

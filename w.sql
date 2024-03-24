@@ -68,7 +68,7 @@ CREATE TABLE `post` (
   `ID_user` int(11) NOT NULL,
   `ID_post` int(11) DEFAULT NULL,
   `content` varchar(300) NOT NULL,
-  `date` date NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
   `isSensible` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -41,3 +41,11 @@ div.warned:hover, div.sensible:hover {
     padding: 1em;
     vertical-align: 75%;
 }
+
+.comment {
+    margin: 4em;
+    padding: 2em;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
