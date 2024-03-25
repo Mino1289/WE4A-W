@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Website</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./css/register.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -47,57 +48,61 @@
                 $qry = $db->prepare($sql);
                 $qry->execute([file_get_contents($_FILES["photo_profil"]["tmp_name"]), $ID]); // ID de l'user
             }
-            
+
             if ($rs) {
                 echo "Contact Records Inserted";
             }
-
         }
-    }?>
-    
+    } ?>
+
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
 
-        <div class="formbutton">Register</div>
-        <div>
-            <i class="fa fa-fw fa-user"></i>
+        <div class="register_form">
+
+            <div class="formbutton">Register</div>
             <label for="username">Username :</label>
-            <input autofocus type="text" name="username" maxlength="20" placeholder="Username" autocomplete="off">
-        </div>
-        <div>
-            <i class="fa fa-fw fa-user"></i>
+            <div class="icon-input">
+                <input autofocus type="text" name="username" maxlength="20" placeholder="Username" autocomplete="off">
+                <i class="fa fa-fw fa-user"></i>
+            </div>
+
             <label for="firstName">First Name :</label>
-            <input type="text" name="firstName" maxlength="40" placeholder="First Name" autocomplete="off">
-        </div>
-        <div>
-            <i class="fa fa-fw fa-user"></i>
+            <div class="icon-input">
+                <input type="text" name="firstName" maxlength="40" placeholder="First Name" autocomplete="off">
+                <i class="fa fa-fw fa-user"></i>
+            </div>
             <label for="lastName">Last Name :</label>
-            <input type="text" name="lastName" maxlength="40" placeholder="Last Name" autocomplete="off">
-        </div>
-        <div>
-            <i class="fa fa-fw fa-envelope"></i>
+            <div class="icon-input">
+                <input type="text" name="lastName" maxlength="40" placeholder="Last Name" autocomplete="off">
+                <i class="fa fa-fw fa-user"></i>
+            </div>
             <label for="email">Email :</label>
-            <input type="text" name="email" maxlength="100" placeholder="Email" autocomplete="off">
-        </div>
-        <div>
-            <i class="fa fa-fw fa-calendar"></i>
+            <div class="icon-input">
+                <input type="text" name="email" maxlength="100" placeholder="Email" autocomplete="off">
+                <i class="fa fa-fw fa-envelope"></i>
+            </div>
             <label for="birthDate">Birthdate : </label>
-            <input type="date" name="birthDate" maxlength="100" autocomplete="off">
-        </div>
-        <div>
-            <i class="fa fa-fw fa-image"></i>
+            <div class="icon-input">
+                <input type="date" name="birthDate" maxlength="100" autocomplete="off">
+                <i class="fa fa-fw fa-calendar"></i>
+            </div>
             <label for="photo_profil">Profile Picture :</label>
-            <input type="file" name="photo_profil" accept="image/*">
-        </div>
-        <div>
-            <i class="fa fa-fw fa-lock"></i>
+            <div class="icon-input">
+                <input type="file" name="photo_profil" accept="image/*">
+                <i class="fa fa-fw fa-image"></i>
+            </div>
             <label for="password">Password :</label>
-            <input type="password" name="password" maxlength="20" placeholder="Password" autocomplete="off">
-        </div>
-        <div class="formbutton">
-            <button type="submit">Envoyer le formulaire</button>
-        </div>
+            <div class="icon-input">
+                <input type="password" name="password" maxlength="20" placeholder="Password" autocomplete="off">
+                <i class="fa fa-fw fa-lock"></i>
+            </div>
+            <div class="formbutton">
+                <button type="submit">Envoyer le formulaire</button>
+            </div>
     </form>
+    </div>
     <hr>
+
 
 </body>
 
