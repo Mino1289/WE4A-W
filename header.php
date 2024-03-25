@@ -63,7 +63,8 @@
 
 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
-<div id="member_login" class="modal-content">
+<div class="modal-content">
+    <div id="member_login">
     <span class="close">&times;</span>
 
 
@@ -84,7 +85,7 @@
     <input name="login" type="submit" value="Submit" id="submit"/>
 
 
-</div>
+</div></div>
 </form>
 </div>
 

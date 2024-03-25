@@ -14,7 +14,7 @@
         $id = isset($_GET['id']) ? $_GET['id'] : $_POST['id'];
         include 'components/post.php';
 
-        $post = postFromID($_GET['id']);
+        $post = postFromID($id);
         if ($post == NULL) {
             echo "<div id='acceuil'>";
             echo "<h1>Post not found</h1>";

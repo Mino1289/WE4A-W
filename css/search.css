@@ -37,3 +37,10 @@
     cursor: pointer;
     text-align: right;
 }
+
+#search_info {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    width: 90%;
+}

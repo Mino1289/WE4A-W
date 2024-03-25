@@ -124,3 +124,8 @@ header {
     text-decoration: none;
     cursor: pointer;
 }
+
+#member_login {
+    color: #ddd;    
+}
+

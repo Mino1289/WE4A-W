@@ -19,15 +19,18 @@
             
             global $db;
 
-            $sql = "SELECT COUNT(*) AS n FROM `like` WHERE `like`.ID = ?";
+            $sql = "SELECT COUNT(*) AS n FROM `like` WHERE `like`.ID_post = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID]);
             $this->likes = $query->fetch(PDO::FETCH_ASSOC);
             $this->likes = $this->likes['n'];
 
-            $sql = "SELECT COUNT(*) AS n FROM dislike WHERE `dislike`.ID = ?";
+            $sql = "SELECT COUNT(*) AS n FROM dislike WHERE `dislike`.ID_post = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID]);
+            // echo query with inserted values
+            
+            echo $query->queryString;
             $this->dislikes = $query->fetch(PDO::FETCH_ASSOC);
             $this->dislikes = $this->dislikes['n'];
             
@@ -66,12 +69,21 @@
             echo "<p>Date : ".$this->date."</p>";
             echo "<p>isSensible : ".$this->isSensible."</p>";
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
-            echo "<p>W : ". $this->likes ."</p><button>W</button>"; 
+            echo "<p>W : ". $this->likes ."</p>
+            <form action=".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$this->ID." method='POST'>
+            <button type='submit' name='like'>W</button>
+            </form>"; 
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
-            echo "<p>L : ". $this->dislikes ."</p><button>L</button>";
+            echo "<p>L : ". $this->dislikes ."</p>
+            <form action='processlike.php' method='POST'>
+            <button type='submit' name='dislike'>L</button>
+            </form>";
+
             echo "<a href='post.php?id=".$this->ID."'>Voir le post</a><br>";
             // echo "<a href='newcomment.php?id=".$this->ID."'>Commenter</a>";
             echo "</div></div></div>";
+
+            
         }
         
         function display_page() {
@@ -93,6 +105,7 @@
             // echo "</div>";
         }
     }
+
 
     function postFromID($ID) {
         global $db;
