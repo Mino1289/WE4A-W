@@ -16,17 +16,19 @@
         include "components/search.php";
         
         // create a post form
-        include "components/newpost.php";
+        
+        if (!isset($_POST["search"]) && !isset($_GET["q"])) {
+            include "components/newpost.php";
+            // display the posts
+            $sql = "SELECT * FROM post WHERE ID_post IS NULL ORDER BY date DESC";
+            $query = $db->prepare($sql);
+            $query->execute();
+            $posts = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        // display the posts
-        $sql = "SELECT * FROM post WHERE ID_post IS NULL ORDER BY date DESC";
-        $query = $db->prepare($sql);
-        $query->execute();
-        $posts = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($posts as $post) {
-            $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
-            $post->display_post();
+            foreach ($posts as $post) {
+                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
+                $post->display_post();
+            }
         }
     }
     else {

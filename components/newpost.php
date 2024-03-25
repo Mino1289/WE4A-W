@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["newPost"])) {
     $content = "";
     if (!empty($_POST["content"])) {
         $content = test_input($_POST["content"]);
+        $content = preg_replace("/#([0-9a-zA-Z]+)/", "<a class='hashtag' href='index.php?q=$1'>#$1</a>", $content);
     }
 }
 

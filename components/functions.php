@@ -35,7 +35,7 @@ function __isbeerhere($item,$nameOfField,$db){
 function test_input($data) {
     $data = trim($data); // Remove whitespace and other predifined caracter from both sides of a string
     $data = stripslashes($data);// Remove backslashes
-    $data = htmlspecialchars($data);// Convert predifined caracters
+    $data = htmlspecialchars($data); // Convert predifined caracters
     return $data;
 }
 
@@ -58,4 +58,10 @@ function __findPP($mail,$password,$db){
 
     return $profile_picture;
 
+}
+
+function __deletefromlikedislike($table, $ID_user, $ID_post, $db) {
+    $sql = "DELETE FROM `$table` WHERE ID_user = ? AND ID_post = ?";
+    $qry = $db->prepare($sql);
+    $qry->execute([$ID_user, $ID_post]);
 }
