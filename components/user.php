@@ -63,6 +63,14 @@
 
             echo "</div>";
         }
+
+        function isAdmin(): bool{
+            if($this -> isAdmin == 1){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     function userFromID($ID) : User {

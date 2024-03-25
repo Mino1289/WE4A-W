@@ -41,13 +41,14 @@
                 $passwordErr="<script>validate('password1');</script>
                 <p class='error_message'>Wrong password</p>";
             }else{
-                $sql="SELECT username, ID FROM user WHERE password=? AND email= ?";
+                $sql="SELECT username, ID, isAdmin FROM user WHERE password=? AND email= ?";
                 $qry = $db->prepare($sql);
                 $qry->execute([$password,$email]);
                 $infos = $qry->fetch();
 
                 // $validation = "<p id='welcome_back'>Welcome back $infos[0] </p><style>#welcome_back{color:green;}</style>";
                 $_SESSION['ID_user'] = $infos["ID"];
+                $_SESSION['isAdmin'] = $infos["isAdmin"];
                 $_SESSION['profile_picture'] = __findPP($email,$password,$db);
                 // header('Refresh:0');
                 $page = $_SERVER['HTTP_REFERER'];
@@ -104,6 +105,10 @@
                 // my page
                 echo '<a href="user.php?id='.$_SESSION['ID_user'].'">My page</a>';
                 echo '<a href="./components/disconnect.php">Disconnect</a>';
+
+                if($_SESSION['isAdmin']) {
+                    echo '<a href="./admin.php">Admin</a>';
+                }
 
             }
         ?>
