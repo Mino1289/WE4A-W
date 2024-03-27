@@ -8,7 +8,7 @@ if(isset($_GET["id"]) && !empty($_GET["id"])){
     header("Location: ../index.php");
 }
 
-$types = ["post", "user"];
+$types = ["post", "user", "delete"];
 if(isset($_GET["type"]) && !empty($_GET["type"]) && in_array($_GET['type'], $types)){
     $type = $_GET["type"];
 } else {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "UPDATE post SET isSensible=? WHERE ID=?";
         $qry = $db->prepare($sql);
         $qry->execute([($result['isSensible'] == '1') ? 0 : 1, $id]);
-        
+
     } elseif ($type == "user") {
         $sql = "SELECT isWarn FROM user WHERE ID=?";
         $qry = $db->prepare($sql);
@@ -35,6 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "UPDATE user SET isWarn=? WHERE ID=?";
         $qry = $db->prepare($sql);
         $qry->execute([($result['isWarn'] == '1') ? 0 : 1, $id]);
+    } elseif ($type == "delete"){
+        $sql = "DELETE FROM post WHERE ID=?";
+        $qry = $db->prepare($sql);
+        $qry->execute([$id]);
     }
 }
 header("Location: ../index.php");

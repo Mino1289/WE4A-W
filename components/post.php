@@ -71,6 +71,10 @@
                     echo "unwarn";
                 }
                 echo " user</button></form>";
+
+                echo"<form action='components/warn.php?id=".$this->ID."&type=delete' method='POST'>";
+                echo "<button type='submit' name='sensible'>";
+                echo " Delete post </button></form>";
                 
             }
             echo "</div>";

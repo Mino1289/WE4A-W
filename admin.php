@@ -9,10 +9,12 @@
 include "components/db.php";
 global $db;
 
-$sql= "UPDATE USER SET isWarn=1 WHERE id_user=?";
-$qry = $db->prepare($sql);
-$qry->execute([$id]);
-$verifPassword =$qry->fetch();
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $sql= "UPDATE USER SET isWarn=1 WHERE id_user=?";
+    $qry = $db->prepare($sql);
+    $qry->execute([$id]);
+    $verifPassword =$qry->fetch();
+}
 ?>
 
 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
