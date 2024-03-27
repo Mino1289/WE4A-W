@@ -61,12 +61,37 @@
             echo '<div class="post_user">';
             echo '<img class="post_user_pp" alt="pp" src="data:image/png;base64,'.$img.'">';
             echo "<a href='user.php?id=".$this->ID_user."' class='username'>".$user["username"]."</a>";
+            if ($_SESSION["isAdmin"]) {
+
+                echo"<form action='components/warn.php?id=".$this->ID_user."&type=user' method='POST'>";
+                echo "<button type='submit' name='sensible'>";
+                if($user['isWarn'] == 0){
+                    echo "warn";
+                } else {
+                    echo "unwarn";
+                }
+                echo " user</button></form>";
+                
+            }
             echo "</div>";
             echo "<div class='information_post'>";
             echo "<div>";
             echo "<p>Content : ".$this->content."</p>";
             echo "<p>Date : ".$this->date."</p>";
-            echo "<p>isSensible : ".$this->isSensible."</p>";
+            
+            if ($_SESSION["isAdmin"]) {
+
+                echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
+                echo "<button type='submit' name='sensible'>";
+                if($this->isSensible == 0){
+                    echo "M";
+                } else {
+                    echo "Unm";
+                }
+                echo "ark Sensible</button></form>";
+                
+            }
+
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
             echo "<p>W : ". $this->likes ."</p>
             <form action='components/processlike.php?id=".$this->ID."' method='POST'>
