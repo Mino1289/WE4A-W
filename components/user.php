@@ -39,6 +39,21 @@
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
             echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            if ($_SESSION['ID_user'] != $this->ID_user) {
+                $sql = "SELECT * FROM follow WHERE ID_user = ? AND ID_followed = ?";
+                $query = $db->prepare($sql);
+                $query->execute([$_SESSION['ID_user'], $this->ID_user]);
+                $follow = $query->fetch(PDO::FETCH_ASSOC);
+
+                echo "<form action='components/follow.php?id=".$this->ID_user."' method='POST'>
+                <input name='follow' type='submit' value='";
+                if ($follow) {
+                    echo "unfollow'>";
+                } else {
+                    echo "follow'>";
+                }
+                echo "</form>";
+            }
 
             $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
             $query = $db->prepare($sql);

@@ -12,7 +12,7 @@
 - [x] User can post
 - [x] User can comment
 - [x] User can have his own page
-- [ ] User can follow anoter one
+- [x] User can follow another one
 - [x] User can like/dislike a post
 - [x] User can see all posts
 - [x] User can see all posts of a user
@@ -36,9 +36,9 @@
 
 ### Admin
 
-- [ ] Admin can manage users (warn, ban)
-- [ ] Admin can manage posts (sensible, delete)
-- [ ] Admin can manage comments (delete)
+- [x] Admin can manage users (warn, ban)
+- [x] Admin can manage posts (sensible, delete)
+- [x] Admin can manage comments (sensible, delete)
 - [ ] Admin have a panel to manage all of this
 - [ ] 
 
