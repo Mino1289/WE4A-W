@@ -72,11 +72,10 @@
                 }
                 echo " user</button></form>";
 
-                echo"<form action='components/warn.php?id=".$this->ID."&type=delete' method='POST'>";
-                echo "<button type='submit' name='sensible'>";
-                echo " Delete post </button></form>";
-                
             }
+            echo"<form action='components/warn.php?id=".$this->ID."&type=delete' method='POST'>";
+            echo "<button type='submit' name='sensible'>";
+            echo " Delete post </button></form>";
             echo "</div>";
             echo "<div class='information_post'>";
             echo "<div>";
