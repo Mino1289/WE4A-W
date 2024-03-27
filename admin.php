@@ -6,6 +6,7 @@
 <body>
 
 <?php
+include "components/db.php";
 global $db;
 
 $sql= "UPDATE USER SET isWarn=1 WHERE id_user=?";
