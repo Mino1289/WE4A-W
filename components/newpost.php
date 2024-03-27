@@ -4,7 +4,7 @@
 <div>
     <i class="fa fa-fw fa-envelope"></i>
     <label for="content"></label>
-    <input type="text" name="content" maxlength="300" placeholder="De quoi voulez-vous parler ?" autocomplete="off">
+    <textarea type="text" name="content" maxlength="300" placeholder="De quoi voulez-vous parler ?" autocomplete="off"></textarea>
 </div>
 <div>
     <i class="fa fa-fw fa-image"></i>

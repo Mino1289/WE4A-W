@@ -89,9 +89,15 @@
             // Add a form to comment the post/comment
             $this->display_post();
 
+            echo "<form action='components/newcomment.php?id=".$this->ID."' method='POST'>";
+            echo "<input type='hidden' name='id' value='".$this->ID."'>";
+            echo "<textarea name='content' placeholder='Comment'></textarea>";
+            echo "<input name='newComment' type='submit' value='Comment'>";
+            echo "</form>";
+
             global $db;
 
-            $sql = "SELECT * FROM post WHERE ID_post = ? ORDER BY date ASC";
+            $sql = "SELECT * FROM post WHERE ID_post = ? ORDER BY `date` DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID]);
             $comments = $query->fetchAll(PDO::FETCH_ASSOC);
