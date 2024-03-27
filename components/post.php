@@ -38,7 +38,7 @@
         function display_post() {
             global $db;
 
-            $sql = "SELECT username, profile_picture, isWarn FROM user WHERE ID = ?";
+            $sql = "SELECT id, username, profile_picture, isWarn FROM user WHERE ID = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
@@ -73,9 +73,12 @@
                 echo " user</button></form>";
 
             }
-            echo"<form action='components/warn.php?id=".$this->ID."&type=delete' method='POST'>";
-            echo "<button type='submit' name='sensible'>";
-            echo " Delete post </button></form>";
+            if ($_SESSION["isAdmin"] || $this->ID_user == $_SESSION["ID_user"]){
+                echo"<form action='components/warn.php?id=".$this->ID."&type=delete' method='POST'>";
+                echo "<button type='submit' name='sensible'>";
+                echo " Delete post </button></form>";
+            }
+            
             echo "</div>";
             echo "<div class='information_post'>";
             echo "<div>";
