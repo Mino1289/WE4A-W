@@ -117,7 +117,7 @@
             echo "<form action='components/newcomment.php?id=".$this->ID."' method='POST'>";
             echo "<input type='hidden' name='id' value='".$this->ID."'>";
             echo "<textarea name='content' placeholder='Comment'></textarea>";
-            echo "<input name='newComment' type='submit' value='Comment'>";
+            echo "<input name='newComment' type='submit' value='comment'>";
             echo "</form>";
 
             global $db;
