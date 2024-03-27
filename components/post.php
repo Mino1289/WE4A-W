@@ -30,7 +30,6 @@
             $query->execute([$this->ID]);
             // echo query with inserted values
             
-            echo $query->queryString;
             $this->dislikes = $query->fetch(PDO::FETCH_ASSOC);
             $this->dislikes = $this->dislikes['n'];
             
@@ -70,12 +69,12 @@
             echo "<p>isSensible : ".$this->isSensible."</p>";
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
             echo "<p>W : ". $this->likes ."</p>
-            <form action=".htmlspecialchars($_SERVER['PHP_SELF'])."?id=".$this->ID." method='POST'>
+            <form action='components/processlike.php?id=".$this->ID."' method='POST'>
             <button type='submit' name='like'>W</button>
             </form>"; 
             //TODO: add a small form that likes/dislike the post/comment (get the unique id)
             echo "<p>L : ". $this->dislikes ."</p>
-            <form action='processlike.php' method='POST'>
+            <form action='components/processlike.php?id=".$this->ID."' method='POST'>
             <button type='submit' name='dislike'>L</button>
             </form>";
 
