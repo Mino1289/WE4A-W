@@ -31,8 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
 if (empty($value)) {
     return;
 } else {
-    $sql = "SELECT * FROM post INNER JOIN user ON post.ID_user = user.ID 
-            WHERE post.content LIKE ? AND post.ID_post IS NULL ORDER BY post.date DESC";
+    $sql = "SELECT * FROM post 
+            WHERE post.content LIKE ? AND post.ID_post IS NULL AND post.isDeleted = 0
+            ORDER BY post.date DESC";
 }
 
 $query = $db->prepare($sql);
@@ -42,7 +43,7 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
 $n = count($result);
 echo "<div id='search_info'><p> Found ".$n." results for '".$value."'</p></div>";
 foreach ($result as $post) {
-    $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
+    $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
     $post->display_post();
 }
 

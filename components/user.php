@@ -39,7 +39,7 @@
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
             echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
-            if ($_SESSION['ID_user'] != $this->ID_user) {
+            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] != $this->ID_user) {
                 $sql = "SELECT * FROM follow WHERE ID_user = ? AND ID_followed = ?";
                 $query = $db->prepare($sql);
                 $query->execute([$_SESSION['ID_user'], $this->ID_user]);
@@ -65,13 +65,15 @@
             echo "</div>";
             echo "<div id='post_container'>";
             
-            $sql = "SELECT * FROM post WHERE ID_user = ? AND ID_post IS NULL ORDER BY date DESC";
+            $sql = "SELECT * FROM post 
+                    WHERE ID_user = ? AND ID_post IS NULL AND isDeleted = 0
+                    ORDER BY date DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $posts = $query->fetchAll(PDO::FETCH_ASSOC);
             
             foreach ($posts as $post) {
-                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
+                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
                 $post->display_post();
             }
 

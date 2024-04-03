@@ -24,3 +24,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
 
     <input name="login" type="submit" value="Submit" id="submit"/>
+</form>

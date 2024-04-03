@@ -61,7 +61,7 @@
             echo '<div class="post_user">';
             echo '<img class="post_user_pp" alt="pp" src="data:image/png;base64,'.$img.'">';
             echo "<a href='user.php?id=".$this->ID_user."' class='username'>".$user["username"]."</a>";
-            if ($_SESSION["isAdmin"]) {
+            if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
 
                 echo"<form action='components/warn.php?id=".$this->ID_user."&type=user' method='POST'>";
                 echo "<button type='submit' name='sensible'>";
@@ -73,8 +73,8 @@
                 echo " user</button></form>";
 
             }
-            if ($_SESSION["isAdmin"] || $this->ID_user == $_SESSION["ID_user"]){
-                echo"<form action='components/warn.php?id=".$this->ID."&type=delete' method='POST'>";
+            if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
+                echo"<form action='components/delete.php?id=".$this->ID."&type=post' method='POST'>";
                 echo "<button type='submit' name='sensible'>";
                 echo " Delete post </button></form>";
             }
@@ -85,7 +85,7 @@
             echo "<p>Content : ".$this->content."</p>";
             echo "<p>Date : ".$this->date."</p>";
             
-            if ($_SESSION["isAdmin"]) {
+            if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
 
                 echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
                 echo "<button type='submit' name='sensible'>";

@@ -19,10 +19,10 @@
     <h1>W Social Network : for the winners</h1>
     <?php
     // database connection code
+    session_start();
     include 'components/db.php';
     global $db;
 
-    $loginAttempted = false;
 
     //Données reçues via formulaire?
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -34,7 +34,6 @@
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $birthDate = $_POST['birthDate'];
-            $loginAttempted = true;
 
             $sql = "INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `birth_date`) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -44,13 +43,17 @@
             $ID = $db->lastInsertId();
 
             if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['size'] != 0) {
+                $profile_picture = file_get_contents($_FILES["photo_profil"]["tmp_name"]);
                 $sql = "UPDATE user SET profile_picture = ? WHERE ID = ?";
                 $qry = $db->prepare($sql);
-                $qry->execute([file_get_contents($_FILES["photo_profil"]["tmp_name"]), $ID]); // ID de l'user
+                $qry->execute([$profile_picture, $ID]); // ID de l'user
             }
 
             if ($rs) {
-                echo "Contact Records Inserted";
+                $_SESSION["ID_user"] = $ID;
+                $_SESSION["profile_picture"] = $profile_picture;
+                $_SESSION['isAdmin'] = 0;
+                header("Location: user.php?id=" . $ID);    
             }
         }
     } ?>

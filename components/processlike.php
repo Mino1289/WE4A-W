@@ -5,12 +5,12 @@ include "db.php";
 global $db;
 
 if (!isset($_GET["id"])) {
-    header("Location: ../index.php");
+    header("Location: ". $_SERVER['HTTP_REFERER']);
 } else {
     $id_post = $_GET["id"];
 }
 if (!isset($_SESSION["ID_user"])) {
-    header("Location: ../index.php");
+    header("Location: ". $_SERVER['HTTP_REFERER']);
 } else {
     $id_user = $_SESSION["ID_user"];
 }
@@ -52,5 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-header("Location: ../post.php?id=$id_post")
+// header("Location: ../post.php?id=$id_post")
+header("Location: ". $_SERVER['HTTP_REFERER']);
 ?>

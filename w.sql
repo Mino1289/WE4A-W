@@ -68,8 +68,10 @@ CREATE TABLE `post` (
   `ID_user` int(11) NOT NULL,
   `ID_post` int(11) DEFAULT NULL,
   `content` varchar(300) NOT NULL,
+  `displayedcontent` varchar(1000) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `isSensible` tinyint(1) NOT NULL
+  `isSensible` tinyint(1) NOT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

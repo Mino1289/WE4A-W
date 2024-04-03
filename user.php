@@ -12,9 +12,17 @@
     
     if(isset($_GET['id'])){
         include 'components/user.php';
-        
-        $user = userFromID($_GET['id']);
-        $user->display_page();
+        $sql = "SELECT MAX(ID) as max FROM user";
+        $rs = $db->prepare($sql);
+        $rs->execute();
+        $maxID = $rs->fetch();
+
+        if($_GET['id'] > $maxID['max']){
+            echo "Utilisateur inexistant";
+        } else {
+            $user = userFromID($_GET['id']);
+            $user->display_page();
+        }
     } 
     ?>
     

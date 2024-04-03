@@ -20,17 +20,17 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["newPost"])) {
-    $content = "";
+    $content = $displayedcontent = "";
     if (!empty($_POST["content"])) {
         $content = test_input($_POST["content"]);
-        $content = preg_replace("/#([0-9a-zA-Z]+)/", "<a class='hashtag' href='index.php?q=$1'>#$1</a>", $content);
+        $displayedcontent = preg_replace("/#([a-zA-Z]+[0-9]*)/", "<a class='hashtag' href='index.php?q=$1'>#$1</a>", $content);
     }
-}
 
-if (empty($content) || empty($_SESSION['ID_user'])) {
-    return;
+    if (empty($content) || empty($_SESSION['ID_user'])) {
+        return;
+    }
+    $sql = "INSERT INTO post (ID_user, content, displayedcontent) VALUES (?, ?, ?)";
+    $query = $db->prepare($sql);
+    $query->execute([$_SESSION['ID_user'], $content, $displayedcontent]);
 }
-$sql = "INSERT INTO post (ID_user, content) VALUES (?, ?)";
-$query = $db->prepare($sql);
-$query->execute([$_SESSION['ID_user'], $content]);
 ?>
