@@ -1,15 +1,11 @@
-<link rel="stylesheet" href="./css/search.css">
+<!-- <link rel="stylesheet" href="./css/search.css"> -->
 
-<form method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" class="spacing">
-
-    <div id="search">
-        <div><i class="fa fa-fw fa-search" id="logosearch"></i></div>
-        <input name="value" id="input" type="text" placeholder="Search on W" maxlength="32" autocomplete="off">
-        
-        <input type="submit" value="Research" id="submit" name="search">
-    </div>
-
+<div class="container">
+<form class="d-flex" role="search" method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+    <input class="form-control me-2" type="search" placeholder="Search on W" aria-label="Search" name="value" maxlength="32" autocomplete="off">
+    <button class="btn btn-outline" type="submit" value="Research" name="search">Search</button>
 </form>
+</div>
 
 <?php
     include "post.php";

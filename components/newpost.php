@@ -1,19 +1,19 @@
-<div class="newPost">
+<div class="container mb-5">
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
 
-<div>
-    <i class="fa fa-fw fa-envelope"></i>
-    <label for="content"></label>
-    <textarea type="text" name="content" maxlength="300" placeholder="De quoi voulez-vous parler ?" autocomplete="off"></textarea>
-</div>
-<div>
-    <i class="fa fa-fw fa-image"></i>
-    <label for="picture"></label>
-    <input type="file" name="picture" accept="image/*">
-</div>
-<div class="formbutton">
-    <button type="submit" name="newPost">Envoyer le post</button>
-</div>
+    <div class="mb-3">
+        <label for="newPostTextArea" class="form-label"></label>
+        <textarea class="form-control" placeholder="De quoi voulez-vous parler ?" id="newPostTextArea" maxlength="300" name="content" rows="3" autocomplete="off"></textarea>
+    </div>
+    <div class="row g-3">
+
+        <div class="col-auto">
+            <input class="form-control" type="file" id="newPostImage" accept="image/*">
+        </div>
+        <div class="col-auto">
+            <button class="form-control btn btn-primary" type="submit" name="newPost" id="newPostSubmit">Envoyer le post</button>
+        </div>
+    </div>
 </form>
 </div>
 
