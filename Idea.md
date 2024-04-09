@@ -17,9 +17,9 @@
 - [x] User can see all posts
 - [x] User can see all posts of a user
 - [ ] User can see all users he follows (do a panel thing)
-- [ ] User have a param page (change pp, password, username, mail?)
+- [ ] User can edit it's account (change pp, password, username, mail?)
 - [ ] User can block another user
-- [ ] 
+- [ ] User have a statistic page
 
 ### Post
 

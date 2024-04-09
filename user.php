@@ -7,20 +7,32 @@
     <link rel="stylesheet" href="./css/post.css">
 </head>
 <body>
+    <style>
+        div.warned, div.sensible {
+            filter: blur(5px);
+            transition: .3s;
+        }
+
+        div.warned:hover, div.sensible:hover {
+            filter: none;
+            transition: .3s;
+        }
+    </style>
     <?php
     include 'header.php';
     
     if(isset($_GET['id'])){
+        $id = $_GET['id'];
         include 'components/user.php';
-        $sql = "SELECT MAX(ID) as max FROM user";
+        $sql = "SELECT ID FROM user WHERE ID = ?";
         $rs = $db->prepare($sql);
-        $rs->execute();
-        $maxID = $rs->fetch();
+        $rs->execute([$id]);
+        $exist = $rs->fetch();
 
-        if($_GET['id'] > $maxID['max']){
+        if(!$exist){
             echo "Utilisateur inexistant";
         } else {
-            $user = userFromID($_GET['id']);
+            $user = userFromID($id);
             $user->display_page();
         }
     } 

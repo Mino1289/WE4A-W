@@ -43,12 +43,12 @@
             $query->execute([$this->ID_user]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
             
-            echo "<div class='mb-5 mx-3 card ";
+            echo "<div class='card mb-5";
             if ($this->ID_post != null) {
-                echo "comment";
+                echo " mx-5 comment";
             }
             else {
-                echo "post";
+                echo " mx-3 post";
             }
             if ($user['isWarn'] != 0) {
                 echo " warned";
@@ -66,24 +66,34 @@
             echo "</div>";
 
             echo '<div class="col-md-1">';
-            echo "<a href='user.php?id=".$this->ID_user."' class='text-decoration-none'>".$user["username"]."</a>";
+            echo "<a href='user.php?id=".$this->ID_user."' class=''>".$user["username"]."</a>";
             echo "</div>";
 
 
             if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
                 echo "<div class='col-2'>";
+                echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
+                echo "<button class='form-control btn btn-warning' type='submit' name='sensible'>";
+                if($this->isSensible == 0){
+                    echo "M";
+                } else {
+                    echo "Unm";
+                }
+                echo "ark post sensible</button></form></div>";
+
+                echo "<div class='col-2'>";
                 echo "<form action='components/warn.php?id=".$this->ID_user."&type=user' method='POST'>";
                 echo "<button class='form-control btn btn-warning' type='submit' name='sensible'>";
                 if($user['isWarn'] == 0){
-                    echo "warn";
+                    echo "W";
                 } else {
-                    echo "unwarn";
+                    echo "Unw";
                 }
-                echo " user</button></form>";
+                echo "arn user</button></form></div>";
 
             }
             if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
-                echo "<div class='col-2 pt-2'>";
+                echo "<div class='col-2'>";
                 echo "<form action='components/delete.php?id=".$this->ID."&type=post' method='POST'>";
                 echo "<button class='form-control btn btn-danger' type='submit' name='sensible'>";
                 echo " Delete ";
@@ -101,40 +111,26 @@
             echo "<div class='card-body'>";
             echo "<p>".$this->content."</p>";
             
-            if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
-
-                echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
-                echo "<button type='submit' name='sensible'>";
-                if($this->isSensible == 0){
-                    echo "M";
-                } else {
-                    echo "Unm";
-                }
-                echo "ark Sensible</button></form>";
-                
-            }
-
             echo "</div>";
             echo "<div class='card-footer'>";
-            // echo "<p>Date : ".$this->date."</p>";
             
             echo "<div class='row align-items-center'>";
             echo "<div class='col-2'><a href='post.php?id=".$this->ID."'><button class='mb-2 btn btn-primary'>Voir le post</button></a></div>";
-            echo "<div class='col-2 pt-2'>Le ".$this->date."</div>";
-            //TODO: add a small form that likes/dislike the post/comment (get the unique id)
+            echo "<div class='col-2 pt-2'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
+
             echo "<div class='col-2'>
             <form action='components/processlike.php?id=".$this->ID."' method='POST'>
             <button class='form-control btn btn-success' type='submit' name='like'>". $this->likes." W</button>
             </form></div>"; 
-            //TODO: add a small form that likes/dislike the post/comment (get the unique id)
+
             echo "<div class='col-2'>
             <form action='components/processlike.php?id=".$this->ID."' method='POST'>
             <button class='form-control btn btn-danger' type='submit' name='dislike'>". $this->dislikes ." L</button>
             </form></div>";
-            echo "</div>";
-
-            // echo "<a href='newcomment.php?id=".$this->ID."'>Commenter</a>";
             echo "</div></div>";
+            // add a btn to display the comments and add a comment
+            
+            echo "</div>";
 
             
         }
@@ -155,7 +151,6 @@
                         <button class="form-control btn btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
                     </div>
                 </div>';
-            // echo "<input name='newComment' type='submit' value='comment'>";
             echo "</form></div>";
 
             

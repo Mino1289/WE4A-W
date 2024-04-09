@@ -45,14 +45,20 @@
                 $query->execute([$_SESSION['ID_user'], $this->ID_user]);
                 $follow = $query->fetch(PDO::FETCH_ASSOC);
 
-                echo "<form action='components/follow.php?id=".$this->ID_user."' method='POST'>
-                <input name='follow' type='submit' value='";
+                echo "<div class='col-1'>
+                <form action='components/follow.php?id=".$this->ID_user."' method='POST'>
+                <button value='follow' class='form-control btn btn-success' type='submit' name='follow'>";
                 if ($follow) {
-                    echo "unfollow'>";
+                    echo "unfollow";
                 } else {
-                    echo "follow'>";
+                    echo "follow";
                 }
-                echo "</form>";
+                echo "</button></form></div>";
+            } else {
+                echo "<div class='col-1'><a href='statistic.php'>
+                <button value='Statistics' class='btn btn-primary'>Statistics</button></a>
+                </div>";
+
             }
 
             $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";

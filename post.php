@@ -7,6 +7,17 @@
     <!-- <link rel="stylesheet" href="css/post.css"> -->
 </head>
 <body>
+    <style>
+        div.warned, div.sensible {
+            filter: blur(5px);
+            transition: .3s;
+        }
+
+        div.warned:hover, div.sensible:hover {
+            filter: none;
+            transition: .3s;
+        }
+    </style>
     <?php
     include 'header.php';
 
