@@ -65,38 +65,38 @@
             <div class="formbutton">Register</div>
             <label for="username">Username :</label>
             <div class="icon-input">
-                <input autofocus type="text" name="username" maxlength="20" placeholder="Username" autocomplete="off">
+                <input autofocus type="text" name="username" maxlength="20" placeholder="Username" autocomplete="off" required>
                 <i class="fa fa-fw fa-user"></i>
             </div>
 
             <label for="firstName">First Name :</label>
             <div class="icon-input">
-                <input type="text" name="firstName" maxlength="40" placeholder="First Name" autocomplete="off">
+                <input type="text" name="firstName" maxlength="40" placeholder="First Name" autocomplete="off" required>
                 <i class="fa fa-fw fa-user"></i>
             </div>
             <label for="lastName">Last Name :</label>
             <div class="icon-input">
-                <input type="text" name="lastName" maxlength="40" placeholder="Last Name" autocomplete="off">
+                <input type="text" name="lastName" maxlength="40" placeholder="Last Name" autocomplete="off" required>
                 <i class="fa fa-fw fa-user"></i>
             </div>
             <label for="email">Email :</label>
             <div class="icon-input">
-                <input type="text" name="email" maxlength="100" placeholder="Email" autocomplete="off">
+                <input type="text" name="email" maxlength="100" placeholder="Email" autocomplete="off" required>
                 <i class="fa fa-fw fa-envelope"></i>
             </div>
             <label for="birthDate">Birthdate : </label>
             <div class="icon-input">
-                <input type="date" name="birthDate" maxlength="100" autocomplete="off">
+                <input type="date" name="birthDate" maxlength="100" autocomplete="off" required>
                 <i class="fa fa-fw fa-calendar"></i>
             </div>
             <label for="photo_profil">Profile Picture :</label>
             <div class="icon-input">
-                <input type="file" name="photo_profil" accept="image/*">
+                <input type="file" name="photo_profil" accept="image/*" required>
                 <i class="fa fa-fw fa-image"></i>
             </div>
             <label for="password">Password :</label>
             <div class="icon-input">
-                <input type="password" name="password" maxlength="20" placeholder="Password" autocomplete="off">
+                <input type="password" name="password" maxlength="20" placeholder="Password" autocomplete="off" required>
                 <i class="fa fa-fw fa-lock"></i>
             </div>
             <div class="formbutton">

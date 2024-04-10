@@ -3,3 +3,9 @@
     width: 3em;
     height: 3em;
 }
+
+.settings_pdp {
+    display: flex;
+    width: 7em;
+    height: 7em;
+}
