@@ -8,14 +8,16 @@
         public $isSensible;
         public $likes;
         public $dislikes;
+        public $imageURL;
 
-        function __construct($ID, $ID_user, $ID_post, $content, $date, $isSensible) {
+        function __construct($ID, $ID_user, $ID_post, $content, $date, $isSensible, $imageURL) {
             $this->ID = $ID;
             $this->ID_user = $ID_user;
             $this->ID_post = $ID_post;
             $this->content = $content;
             $this->date = $date;
             $this->isSensible = $isSensible;
+            $this->imageURL = $imageURL;
             
             global $db;
 
@@ -108,10 +110,18 @@
             
             echo "</div>";
             echo "</div>";
-            echo "<div class='card-body'>";
+            echo "<div class='card-body text-body-secondary'>
+                <div class='row'>
+                <div class='col'>";
             echo "<p>".$this->content."</p>";
             
             echo "</div>";
+            if($this->imageURL != null){
+                echo '<div class="col">
+                    <img class="img-fluid" alt="Image of the post" src="'.$this->imageURL.'">
+                    </div>';
+                }
+            echo '</div></div>';
             echo "<div class='card-footer'>";
             
             echo "<div class='row align-items-center'>";
@@ -165,7 +175,7 @@
 
             // echo "<div class='comment'>";
             foreach ($comments as $comment) {
-                $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['content'], $comment['date'], $comment['isSensible']);
+                $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['content'], $comment['date'], $comment['isSensible'], $comment['imageURL']);
                 $comment->display_post();
             }
             // echo "</div>";
@@ -184,6 +194,6 @@
             return null;
         }
 
-        return new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
+        return new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
     }
 ?>

@@ -31,14 +31,14 @@
         if (!isset($_POST["search"]) && !isset($_GET["q"])) {
             include "components/newpost.php";
             // display the posts
-            $sql = "SELECT * FROM post WHERE ID_post IS NULL AND isDeleted = 0 ORDER BY date DESC";
+            $sql = "SELECT ID FROM post WHERE ID_post IS NULL AND isDeleted = 0 ORDER BY date DESC";
             $query = $db->prepare($sql);
             $query->execute();
-            $posts = $query->fetchAll(PDO::FETCH_ASSOC);
+            $ids = $query->fetchAll(PDO::FETCH_ASSOC);
 
             echo "<div class='container'>";
-            foreach ($posts as $post) {
-                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
+            foreach ($ids as $id) {
+                $post = postFromID($id["ID"]);
                 $post->display_post();
             }
             echo "</div>";

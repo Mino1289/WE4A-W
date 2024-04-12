@@ -17,14 +17,14 @@
 - [x] User can see all posts
 - [x] User can see all posts of a user
 - [ ] User can see all users he follows (do a panel thing)
-- [ ] User can edit it's account (change pp, password, username, mail?)
+- [x] User can edit it's account (change pp, password, username, mail?)
 - [ ] User can block another user
-- [ ] User have a statistic page
+- [x] User have a statistic page
 
 ### Post
 
 - [x] Post have their content
-- [ ] Post can have a picture
+- [x] Post can have a picture
 - [x] Post can be "sensible" (kind of NSFW)
 - [ ] Post can be "ratio" (a comment has more likes than the post)
 - [x] Post can be "W" (a like)
