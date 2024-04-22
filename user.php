@@ -34,7 +34,7 @@
         } else {
             $user = userFromID($id);
             $user->display_page();
-            if($_GET['id'] == $_SESSION['ID_user']){
+            if(isset($_SESSION['ID_user']) && $_GET['id'] == $_SESSION['ID_user']){
                 echo '<a class="navbar-link active" href="settings.php">Paramètres</a>';
             }
         }

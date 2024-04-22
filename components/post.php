@@ -65,37 +65,46 @@
             echo '<img class="pdp img-thumbnail" alt="pp" src="data:image/png;base64,'.$img.'">';
             echo "</div>";
 
-            echo '<div class="col-md-1">';
+            echo '<div class="col-md-2">';
             echo "<a href='user.php?id=".$this->ID_user."' class=''>".$user["username"]."</a>";
             echo "</div>";
 
+            if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
+                echo '<div class="dropdown col-2">
+                <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  More Actions
+                </button>
+                <ul class="dropdown-menu">';
+            }
 
             if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
-                echo "<div class='col-2'>";
-                echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
-                echo "<button class='form-control btn btn-warning' type='submit' name='sensible'>";
-                if($this->isSensible == 0){
-                    echo "M";
-                } else {
-                    echo "Unm";
-                }
-                echo "ark post sensible</button></form></div>";
-
-                echo "<div class='col-2'>";
+                echo '<li>';
+                    echo "<div class='dropdown-item'>";
+                    echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
+                    echo "<button class='form-control btn btn-sm btn-warning' type='submit' name='sensible'>";
+                    if($this->isSensible == 0){
+                        echo "M";
+                    } else {
+                        echo "Unm";
+                    }
+                    echo "ark post sensible</button></form></div>";
+                echo '</li><li>';
+                
+                echo "<div class='dropdown-item'>";
                 echo "<form action='components/warn.php?id=".$this->ID_user."&type=user' method='POST'>";
-                echo "<button class='form-control btn btn-warning' type='submit' name='sensible'>";
+                echo "<button class='form-control btn btn-sm btn-warning' type='submit' name='sensible'>";
                 if($user['isWarn'] == 0){
                     echo "W";
                 } else {
                     echo "Unw";
                 }
                 echo "arn user</button></form></div>";
-
+                echo '</li>';
             }
             if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
-                echo "<div class='col-2'>";
+                echo "<div class='dropdown-item'>";
                 echo "<form action='components/delete.php?id=".$this->ID."&type=post' method='POST'>";
-                echo "<button class='form-control btn btn-danger' type='submit' name='sensible'>";
+                echo "<button class='form-control btn btn-sm btn-danger' type='submit' name='sensible'>";
                 echo " Delete ";
                 if ($this->ID_post != null) {
                     echo "comment";
@@ -104,7 +113,9 @@
                     echo "post";
                 }
                 echo "</button></form></div>";
+                echo '</ul></div>';
             }
+
             
             echo "</div>";
             echo "</div>";
@@ -115,20 +126,20 @@
             echo "<div class='card-footer'>";
             
             echo "<div class='row align-items-center'>";
-            echo "<div class='col-2'><a href='post.php?id=".$this->ID."'><button class='mb-2 btn btn-primary'>Voir le post</button></a></div>";
+            echo "<div class='col-2'><a href='post.php?id=".$this->ID."'><button class='mb-2 btn btn-sm btn-primary'>Voir le post</button></a></div>";
             echo "<div class='col-2 pt-2'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
 
-            echo "<div class='col-2'>
+            echo "<div class='col-1'>
             <form action='components/processlike.php?id=".$this->ID."' method='POST'>
-            <button class='form-control btn btn-success' type='submit' name='like'>". $this->likes." W</button>
+            <button class='form-control btn btn-sm btn-success' type='submit' name='like'>". $this->likes." W</button>
             </form></div>"; 
 
-            echo "<div class='col-2'>
+            echo "<div class='col-1'>
             <form action='components/processlike.php?id=".$this->ID."' method='POST'>
-            <button class='form-control btn btn-danger' type='submit' name='dislike'>". $this->dislikes ." L</button>
+            <button class='form-control btn btn-sm btn-danger' type='submit' name='dislike'>". $this->dislikes ." L</button>
             </form></div>";
             echo "</div></div>";
-            // add a btn to display the comments and add a comment
+            // add a btn btn-sm to display the comments and add a comment
             
             echo "</div>";
 
@@ -148,7 +159,7 @@
                 </div>
                 <div class="row g-3">
                     <div class="col-auto">
-                        <button class="form-control btn btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
+                        <button class="form-control btn btn-sm btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
                     </div>
                 </div>';
             echo "</form></div>";
