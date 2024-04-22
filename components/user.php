@@ -47,7 +47,13 @@
 
                 echo "<div class='col-1'>
                 <form action='components/follow.php?id=".$this->ID_user."' method='POST'>
-                <button value='follow' class='form-control btn btn-success' type='submit' name='follow'>";
+                <button value='follow' class='form-control btn btn-";
+                if ($follow) {
+                    echo "danger";
+                } else {
+                    echo "success";
+                }
+                echo "' type='submit' name='follow'>";
                 if ($follow) {
                     echo "unfollow";
                 } else {

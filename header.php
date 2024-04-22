@@ -60,7 +60,7 @@
     } 
 ?>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary p-0">
+<nav class="navbar navbar-expand-lg bg-body-secondary p-2">
   <div class="container-fluid">
     <a class="navbar-brand" href="./index.php">W</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,8 +74,9 @@
                 echo '<li class="nav-item"><a class="nav-link" href="./register.php">Sign up</a></li>';
             } else {
                 // my page
-                echo '<li class="nav-item"><a class="nav-link" href="user.php?id='.$_SESSION['ID_user'].'">My page</a></li>';
-                echo '<li class="nav-item"><a class="nav-link" href="./components/disconnect.php">Disconnect</a></li>';
+                echo '<li class="nav-item"><a class="nav-link" href="user.php?id='.$_SESSION['ID_user'].'">Ma page</a></li>';
+                echo '<li class="nav-item"><a class="nav-link" href="./fil.php">Mon fil</a></li>';
+                echo '<li class="nav-item"><a class="nav-link" href="./components/disconnect.php">Déconnexion</a></li>';
                 
                 if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']) {
                     echo '<li class="nav-item"><a class="nav-link" href="./admin.php">Admin</a></li>';
@@ -87,7 +88,7 @@
                 if (isset($_SESSION['profile_picture'])) {
                     $img = base64_encode($_SESSION['profile_picture']);
                     echo '<a class="navbar-link active" href="user.php?id='.$_SESSION['ID_user'].'">';
-                    echo '<img class="pdp rounded img-thumbnail" alt="profile_picture" src="data:image/png;base64,'.$img.'" />';
+                    echo '<img class="pdp rounded img" alt="profile_picture" src="data:image/png;base64,'.$img.'" />';
                     echo '</a>';
                 } 
             }
