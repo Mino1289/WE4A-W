@@ -32,12 +32,12 @@
                     datasets: [
                         {
                             label: 'Posts per Day',
-                            data: daystatdata.filter(row => !row.isComment).map(row => row.count),
+                            data: daystatdata.filter(row => row.isComment).map(row => row.count),
                             type: 'bar',
                         },
                         {
                             label: 'Comments per Day',
-                            data: daystatdata.filter(row => row.isComment).map(row => row.count),
+                            data: daystatdata.filter(row => !row.isComment).map(row => row.count),
                             type: 'bar',
                             color: 'red',
                         }

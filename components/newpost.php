@@ -69,7 +69,6 @@
                     $qry->execute();
                     $post = $qry->fetch(PDO::FETCH_ASSOC);
                     $idNb = $post['max'] + 1;
-                    echo $idNb;
 
                     // Rename file with the id of our post
                     $newName = $idNb . '.' . $imageFileType;

@@ -182,7 +182,7 @@
 
             global $db;
 
-            $sql = "SELECT * FROM post WHERE ID_post = ? ORDER BY `date` DESC";
+            $sql = "SELECT * FROM post WHERE ID_post = ? AND isDeleted = 0 ORDER BY `date` DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID]);
             $comments = $query->fetchAll(PDO::FETCH_ASSOC);

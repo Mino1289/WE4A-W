@@ -78,14 +78,14 @@
             echo "<div id='post_container'>";
             
             $sql = "SELECT * FROM post 
-                    WHERE ID_user = ? AND ID_post IS NULL AND isDeleted = 0
+                    WHERE ID_user = ? AND ID_post IS NOT NULL AND isDeleted = 0
                     ORDER BY date DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $posts = $query->fetchAll(PDO::FETCH_ASSOC);
             
             foreach ($posts as $post) {
-                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
+                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
                 $post->display_post();
             }
 
