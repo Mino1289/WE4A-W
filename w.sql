@@ -71,7 +71,8 @@ CREATE TABLE `post` (
   `displayedcontent` varchar(1000) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `isSensible` tinyint(1) NOT NULL,
-  `isDeleted` tinyint(1) NOT NULL DEFAULT 0
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0,
+  `imageURL` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
