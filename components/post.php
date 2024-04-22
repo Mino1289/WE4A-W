@@ -139,15 +139,18 @@
             echo "<div class='col-2'><a href='post.php?id=".$this->ID."'><button class='mb-2 btn btn-sm btn-primary'>Voir le post</button></a></div>";
             echo "<div class='col-2 pt-2'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
 
-            echo "<div class='col-1'>
-            <form action='components/processlike.php?id=".$this->ID."' method='POST'>
-            <button class='form-control btn btn-sm btn-success' type='submit' name='like'>". $this->likes." W</button>
-            </form></div>"; 
 
+            // <form action='components/processlike.php?id=".$this->ID."' method='POST'>
+            // </form>
             echo "<div class='col-1'>
-            <form action='components/processlike.php?id=".$this->ID."' method='POST'>
-            <button class='form-control btn btn-sm btn-danger' type='submit' name='dislike'>". $this->dislikes ." L</button>
-            </form></div>";
+            <button id='like-".$this->ID."' class='form-control btn btn-sm btn-success' onclick=like(".$this->ID.")>". $this->likes." W</button>
+            </div>"; 
+            
+            // <form action='components/processlike.php?id=".$this->ID."' method='POST'>
+            // </form>
+            echo "<div class='col-1'>
+            <button id='dislike-".$this->ID."' class='form-control btn btn-sm btn-danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
+            </div>";
             echo "</div></div>";
             // add a btn btn-sm to display the comments and add a comment
             
