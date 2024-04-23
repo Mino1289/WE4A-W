@@ -1,6 +1,6 @@
 <?php
     class User {
-        public $ID; 
+        public $ID_user; 
         public $username; 
         public $email; 
         public $first_name; 
@@ -27,41 +27,78 @@
             global $db;
 
             echo "<title> W | ".$this->username ."</title>";
-            echo "<p id='username'>".$this->username."</p>";
+            echo "<h3 id='username'>".$this->username."</h3>";
             echo "<div id='information_user'>";
             echo "<p>Name : ".$this->username."</p>";
             echo "<p>Firstname : ".$this->first_name."</p>";
             echo "<p>Mail : ".$this->email."</p>";
 
-            $sql = "SELECT COUNT(*) FROM follow WHERE ID_followed = ?";
+            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_followed = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
-            echo "<p>Followers : ". $followers['COUNT(*)'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] != $this->ID_user) {
+                $sql = "SELECT * FROM follow WHERE ID_user = ? AND ID_followed = ?";
+                $query = $db->prepare($sql);
+                $query->execute([$_SESSION['ID_user'], $this->ID_user]);
+                $follow = $query->fetch(PDO::FETCH_ASSOC);
 
-            $sql = "SELECT COUNT(*) FROM follow WHERE ID_user = ?";
+                echo "<div class='col-1'>
+                <form action='components/follow.php?id=".$this->ID_user."' method='POST'>
+                <button value='follow' class='form-control btn btn-";
+                if ($follow) {
+                    echo "danger";
+                } else {
+                    echo "success";
+                }
+                echo "' type='submit' name='follow'>";
+                if ($follow) {
+                    echo "unfollow";
+                } else {
+                    echo "follow";
+                }
+                echo "</button></form></div>";
+            } else {
+                echo "<div class='col-1'><a href='statistic.php'>
+                <button value='Statistics' class='btn btn-primary'>Statistics</button></a>
+                </div>";
+
+            }
+
+            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $followings = $query->fetch(PDO::FETCH_ASSOC);
 
-            echo "<p>Followings : ". $followings['COUNT(*)'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
             //TODO: add a btn to follow/unfollow the user if you are not the user
             echo "</div>";
             echo "<div id='post_container'>";
             
-            $sql = "SELECT * FROM post WHERE ID_user = ? AND ID_post = NULL ORDER BY date DESC";
+            $sql = "SELECT * FROM post 
+                    WHERE ID_user = ? AND ID_post IS NOT NULL AND isDeleted = 0
+                    ORDER BY date DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $posts = $query->fetchAll(PDO::FETCH_ASSOC);
-
+            
             foreach ($posts as $post) {
-                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['content'], $post['date'], $post['isSensible']);
+                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
                 $post->display_post();
             }
 
 
             echo "</div>";
+        }
+
+        function isAdmin(): bool{
+            if($this -> isAdmin == 1){
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

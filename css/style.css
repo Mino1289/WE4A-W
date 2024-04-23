@@ -1,12 +1,11 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+.pdp {
+    display: flex;
+    width: 3em;
+    height: 3em;
 }
 
-a {
-    text-decoration: none;
-}
-
-#acceuil {
-    margin: 1em; 
+.settings_pdp {
+    display: flex;
+    width: 7em;
+    height: 7em;
 }
