@@ -63,18 +63,26 @@
             echo "<div class='card-header'>";
             echo "<div class='row align-items-start align-items-center'>";
             $img = base64_encode($user['profile_picture']);
-            echo '<div class="col-md-1">';
+            echo '<div class="col-md-2">';
             echo '<img class="pdp img-thumbnail" alt="pp" src="data:image/png;base64,'.$img.'">';
             echo "</div>";
 
-            echo '<div class="col-md-2">';
+            echo '<div class="col">';
             echo "<a href='user.php?id=".$this->ID_user."' class=''>".$user["username"]."</a>";
+            
+            $sql = "SELECT isAdmin FROM user WHERE ID = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID_user]);
+            $isAdmin = $query->fetch(PDO::FETCH_ASSOC);
+            if ($isAdmin['isAdmin'] == 1) {
+                echo "<span class='ms-3 badge bg-warning text-dark'>Admin</span>";
+            }
             echo "</div>";
 
             if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
-                echo '<div class="dropdown col-2">
+                echo '<div class="dropdown col">
                 <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  More Actions
+                    Actions
                 </button>
                 <ul class="dropdown-menu">';
             }
@@ -118,7 +126,7 @@
             
             echo "</div>";
             echo "</div>";
-            echo "<div class='card-body text-body-secondary'>
+            echo "<div class='card-body text-body-primary'>
                 <div class='row'>
                 <div class='col'>";
             echo "<p>".$this->content."</p>";
@@ -133,8 +141,8 @@
             echo "<div class='card-footer'>";
             
             echo "<div class='row align-items-center'>";
-            echo "<div class='col-2'><a href='post.php?id=".$this->ID."'><button class='mb-2 btn btn-sm btn-primary'>Voir le post</button></a></div>";
-            echo "<div class='col-2 pt-2'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
+            echo "<div class='col'><a href='post.php?id=".$this->ID."'><button class='btn btn-sm btn-primary'>Voir le post</button></a></div>";
+            echo "<div class='col'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
 
 
             $sql = "SELECT * FROM `like` WHERE `like`.ID_post = ? AND `like`.ID_user = ?";
@@ -147,8 +155,8 @@
                 $outline = "";
             }
 
-            echo "<div class='col-1'>
-            <button id='like-".$this->ID."' class='form-control btn btn-sm btn-".$outline."success' onclick=like(".$this->ID.")>". $this->likes." W</button>
+            echo "<div class='col'>
+            <button id='like-".$this->ID."' class='btn btn-sm btn-".$outline."success' onclick=like(".$this->ID.")>". $this->likes." W</button>
             </div>"; 
             
             $sql = "SELECT * FROM dislike WHERE dislike.ID_post = ? AND dislike.ID_user = ?";
@@ -161,8 +169,8 @@
                 $outline = "";
             }
 
-            echo "<div class='col-1'>
-            <button id='dislike-".$this->ID."' class='form-control btn btn-sm btn-".$outline."danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
+            echo "<div class='col'>
+            <button id='dislike-".$this->ID."' class='btn btn-sm btn-".$outline."danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
             </div>";
             echo "</div></div>";
             // add a btn btn-sm to display the comments and add a comment
