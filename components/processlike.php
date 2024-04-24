@@ -4,18 +4,18 @@ include "functions.php";
 include "db.php";
 global $db;
 
-if (isset($_POST["id_post"])) {
-    $id_post = $_POST["id_post"];
-}
-if (isset($_POST["type"])) {
-    $type = $_POST["type"];
-}
-if (isset($_SESSION["ID_user"])) {
-    $id_user = $_SESSION["ID_user"];
-}
 $response = array("success" => false);
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["id_post"])) {
+        $id_post = $_POST["id_post"];
+    }
+    if (isset($_POST["type"])) {
+        $type = $_POST["type"];
+    }
+    if (isset($_SESSION["ID_user"])) {
+        $id_user = $_SESSION["ID_user"];
+    }
+
     $sql = "SELECT * FROM `like` WHERE ID_user = ? AND ID_post = ?";
     $query = $db->prepare($sql);
     $query->execute([$id_user, $id_post]);

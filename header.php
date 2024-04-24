@@ -52,9 +52,8 @@
                 $_SESSION['ID_user'] = $infos["ID"];
                 $_SESSION['isAdmin'] = $infos["isAdmin"];
                 $_SESSION['profile_picture'] = __findPP($email,$password,$db);
-                // header('Refresh:0');
-                $page = $_SERVER['HTTP_REFERER'];
-                header("Location: $page");
+                // $page = $_SERVER['HTTP_REFERER'];
+                // header("Location: $page");
             
             }
         }

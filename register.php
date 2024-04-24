@@ -16,12 +16,9 @@
 </head>
 
 <body>
-    <h1>W Social Network : for the winners</h1>
     <?php
     // database connection code
-    session_start();
-    include 'components/db.php';
-    global $db;
+    include 'header.php';
 
 
     //Données reçues via formulaire?
@@ -58,7 +55,7 @@
         }
     } ?>
 
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
+    <form class="mt-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
 
         <div class="register_form">
 

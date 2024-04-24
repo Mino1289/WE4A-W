@@ -45,7 +45,7 @@
             $query->execute([$this->ID_user]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
             
-            echo "<div class='card mb-5";
+            echo "<div id='post-".$this->ID."' class='card mb-5";
             if ($this->ID_post != null) {
                 echo " mx-5 comment";
             }
@@ -82,31 +82,28 @@
             if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
                 echo '<li>';
                     echo "<div class='dropdown-item'>";
-                    echo"<form action='components/warn.php?id=".$this->ID."&type=post' method='POST'>";
-                    echo "<button class='form-control btn btn-sm btn-warning' type='submit' name='sensible'>";
+                    echo "<button id='btn-warn-post-".$this->ID."' class='btn btn-sm btn-warning' type='submit' name='sensible' onclick='warn(".$this->ID.",\"post\")'>";
                     if($this->isSensible == 0){
                         echo "M";
                     } else {
                         echo "Unm";
                     }
-                    echo "ark post sensible</button></form></div>";
+                    echo "ark post sensible</button></div>";
                 echo '</li><li>';
                 
                 echo "<div class='dropdown-item'>";
-                echo "<form action='components/warn.php?id=".$this->ID_user."&type=user' method='POST'>";
-                echo "<button class='form-control btn btn-sm btn-warning' type='submit' name='sensible'>";
+                echo "<button class='btn btn-sm btn-warning warn-user-".$this->ID_user."' type='submit' name='sensible' onclick='warn(".$this->ID_user.",\"user\")'>";
                 if($user['isWarn'] == 0){
                     echo "W";
                 } else {
                     echo "Unw";
                 }
-                echo "arn user</button></form></div>";
+                echo "arn user</button></div>";
                 echo '</li>';
             }
             if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
                 echo "<div class='dropdown-item'>";
-                echo "<form action='components/delete.php?id=".$this->ID."&type=post' method='POST'>";
-                echo "<button class='form-control btn btn-sm btn-danger' type='submit' name='sensible'>";
+                echo "<button class='btn btn-sm btn-danger' type='submit' name='sensible' onclick='delet(".$this->ID.",\"post\")'>";
                 echo " Delete ";
                 if ($this->ID_post != null) {
                     echo "comment";
@@ -114,7 +111,7 @@
                 else {
                     echo "post";
                 }
-                echo "</button></form></div>";
+                echo "</button></div>";
                 echo '</ul></div>';
             }
 
@@ -140,16 +137,32 @@
             echo "<div class='col-2 pt-2'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
 
 
-            // <form action='components/processlike.php?id=".$this->ID."' method='POST'>
-            // </form>
+            $sql = "SELECT * FROM `like` WHERE `like`.ID_post = ? AND `like`.ID_user = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID, $_SESSION['ID_user']]);
+            $like = $query->fetch(PDO::FETCH_ASSOC);
+            if ($like) {
+                $outline = "outline-";
+            } else {
+                $outline = "";
+            }
+
             echo "<div class='col-1'>
-            <button id='like-".$this->ID."' class='form-control btn btn-sm btn-success' onclick=like(".$this->ID.")>". $this->likes." W</button>
+            <button id='like-".$this->ID."' class='form-control btn btn-sm btn-".$outline."success' onclick=like(".$this->ID.")>". $this->likes." W</button>
             </div>"; 
             
-            // <form action='components/processlike.php?id=".$this->ID."' method='POST'>
-            // </form>
+            $sql = "SELECT * FROM dislike WHERE dislike.ID_post = ? AND dislike.ID_user = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID, $_SESSION['ID_user']]);
+            $dislike = $query->fetch(PDO::FETCH_ASSOC);
+            if ($dislike) {
+                $outline = "outline-";
+            } else {
+                $outline = "";
+            }
+
             echo "<div class='col-1'>
-            <button id='dislike-".$this->ID."' class='form-control btn btn-sm btn-danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
+            <button id='dislike-".$this->ID."' class='form-control btn btn-sm btn-".$outline."danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
             </div>";
             echo "</div></div>";
             // add a btn btn-sm to display the comments and add a comment
