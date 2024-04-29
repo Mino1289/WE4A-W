@@ -1,9 +1,9 @@
 
 <link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="scripts/script.js"></script>
 <header>
 
 
@@ -52,9 +52,8 @@
                 $_SESSION['ID_user'] = $infos["ID"];
                 $_SESSION['isAdmin'] = $infos["isAdmin"];
                 $_SESSION['profile_picture'] = __findPP($email,$password,$db);
-                // header('Refresh:0');
-                $page = $_SERVER['HTTP_REFERER'];
-                header("Location: $page");
+                // $page = $_SERVER['HTTP_REFERER'];
+                // header("Location: $page");
             
             }
         }
@@ -86,12 +85,29 @@
             }
             echo '</ul>';
             if (isset($_SESSION['ID_user'])) {
-                if (isset($_SESSION['profile_picture'])) {
-                    $img = base64_encode($_SESSION['profile_picture']);
-                    echo '<a class="navbar-link active" href="user.php?id='.$_SESSION['ID_user'].'">';
-                    echo '<img class="pdp rounded img" alt="profile_picture" src="data:image/png;base64,'.$img.'" />';
-                    echo '</a>';
-                } 
+              $sql = "SELECT COUNT(*) AS n FROM `notification` WHERE ID_user = ? AND isRead = 0";
+              $qry = $db->prepare($sql);
+              $qry->execute([$_SESSION['ID_user']]);
+              $notifs = $qry->fetch()['n'];
+              
+              echo '<div class="row align-items-center">';
+              echo '<div class="col"><a href="notifications.php">
+                <button type="button" class="btn btn-primary position-relative">
+                  Notifications';
+              echo '<span id="notif-nbr" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  '.$notifs.'
+                  <span class="visually-hidden">unread messages</span>
+                </span>';
+              echo '</button></a></div>';
+              
+              if (isset($_SESSION['profile_picture'])) {
+                $img = base64_encode($_SESSION['profile_picture']);
+                echo '<div class="col">';
+                echo '<a class="navbar-link active" href="user.php?id='.$_SESSION['ID_user'].'">';
+                echo '<img class="pdp rounded img" alt="profile_picture" src="data:image/png;base64,'.$img.'" />';
+                echo '</a></div>';
+              }
+              echo '</div>';
             }
         ?>
         </ul>
@@ -132,7 +148,6 @@
 
         </div></div>
         </form>
-      <!-- </div> -->
     </div>
   </div>
 </div>

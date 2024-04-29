@@ -12,16 +12,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <h1>W Social Network : for the winners</h1>
     <?php
-    // database connection code
-    session_start();
-    include 'components/db.php';
-    global $db;
+    include 'header.php';
 
 
     //Données reçues via formulaire?
@@ -47,18 +42,26 @@
                 $sql = "UPDATE user SET profile_picture = ? WHERE ID = ?";
                 $qry = $db->prepare($sql);
                 $qry->execute([$profile_picture, $ID]); // ID de l'user
+                if ($qry)
+                    $_SESSION["profile_picture"] = $profile_picture;
+            } else {
+                $profile_picture = file_get_contents('https://www.gravatar.com/avatar/'.md5(strtolower(trim($username))).'?d=identicon');
+                $sql = "UPDATE user SET profile_picture = ? WHERE ID = ?";
+                $qry = $db->prepare($sql);
+                $qry->execute([$profile_picture, $ID]); // ID de l'user
+                if ($qry)
+                    $_SESSION["profile_picture"] = $profile_picture;
             }
 
             if ($rs) {
                 $_SESSION["ID_user"] = $ID;
-                $_SESSION["profile_picture"] = $profile_picture;
                 $_SESSION['isAdmin'] = 0;
                 header("Location: user.php?id=" . $ID);    
             }
         }
     } ?>
 
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
+    <form class="mt-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
 
         <div class="register_form">
 
@@ -91,7 +94,7 @@
             </div>
             <label for="photo_profil">Profile Picture :</label>
             <div class="icon-input">
-                <input type="file" name="photo_profil" accept="image/*" required>
+                <input type="file" name="photo_profil" accept="image/*">
                 <i class="fa fa-fw fa-image"></i>
             </div>
             <label for="password">Password :</label>
