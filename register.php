@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Website</title>
-    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./css/register.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -17,19 +16,19 @@
 <body>
     <?php
     include 'header.php';
-
-
+    
     //Données reçues via formulaire?
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["email"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["birthDate"])) {
+        if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["passwordCheck"]) && isset($_POST["email"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["birthDate"])) {
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
+            $passwordCheck = $_POST['passwordCheck'];
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $birthDate = $_POST['birthDate'];
-
+            
             $sql = "INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `birth_date`) VALUES (?, ?, ?, ?, ?, ?)";
 
             // insert in database 
@@ -59,7 +58,8 @@
                 header("Location: user.php?id=" . $ID);    
             }
         }
-    } ?>
+    }
+             ?>
 
     <form class="mt-3" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
 
@@ -99,15 +99,42 @@
             </div>
             <label for="password">Password :</label>
             <div class="icon-input">
-                <input type="password" name="password" maxlength="20" placeholder="Password" autocomplete="off" required>
+                <input type="password" name="password" id="password" maxlength="20" placeholder="Password" autocomplete="off" required>
                 <i class="fa fa-fw fa-lock"></i>
             </div>
+            <label for="password">Verify Password :</label>
+            <div class="icon-input">
+                <input type="password" name="passwordCheck" id="passwordCheck" maxlength="20" placeholder="Verify password" autocomplete="off"  required>
+                <i class="fa fa-fw fa-lock"></i>
+                <p id="isIdentical"></p>
+            </div>
             <div class="formbutton">
-                <button type="submit">Envoyer le formulaire</button>
+                <button type="submit" id="formButton" disabled>Envoyer le formulaire</button>
             </div>
     </form>
     </div>
-    <hr>
+    <script>
+        document.getElementById("passwordCheck").addEventListener("keyup", function() {
+            var passw = document.getElementById("password").value;
+            var passwCheck = document.getElementById("passwordCheck").value;
+            var paragraph = document.getElementById("isIdentical");
+            var button = document.getElementById("formButton");
+            if (passw !== passwCheck) {
+                console.log ("passwords don't match");
+                paragraph.textContent = "Passwords don't match";
+                document.getElementById("isIdentical").style.color = "red";
+                $("#formButton").prop('disabled', true);
+                document.getElementById("formButton").style.backgroundColor = "red";
+            }
+            else{
+                console.log ("passwords do match"); 
+                paragraph.textContent = "Passwords match";
+                document.getElementById("isIdentical").style.color = "green";
+                $("#formButton").prop('disabled', false);
+                document.getElementById("formButton").style.backgroundColor = "green";
+            }
+        });
+    </script>
 
 
 </body>
