@@ -172,9 +172,21 @@
             echo "<div class='col'>
             <button id='dislike-".$this->ID."' class='btn btn-sm btn-".$outline."danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
             </div>";
-            echo "</div></div>";
             // add a btn btn-sm to display the comments and add a comment
+            //TODO: using https://getbootstrap.com/docs/5.3/components/collapse/
             
+            echo '<div class="col">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-p-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
+            Button with data-bs-target
+            </button>
+            </div>
+            <div class="collapse" id="comment-p-'.$this->ID.'">
+            <div class="card card-body">
+            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
+            </div>';
+            
+            echo "</div></div>"; // footer + row div
             echo "</div>";
 
             

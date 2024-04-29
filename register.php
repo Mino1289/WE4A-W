@@ -16,7 +16,6 @@
 
 <body>
     <?php
-    // database connection code
     include 'header.php';
 
 

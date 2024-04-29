@@ -60,6 +60,23 @@ CREATE TABLE `like` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `notification`
+--
+
+CREATE TABLE `notification` (
+  `ID` int(11) NOT NULL,
+  `ID_post` int(11) DEFAULT NULL,
+  `ID_user` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `content` varchar(500) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `isRead` tinyint(1) NOT NULL DEFAULT 0,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `post`
 --
 
@@ -123,6 +140,14 @@ ALTER TABLE `like`
   ADD KEY `ID_post` (`ID_post`);
 
 --
+-- Index pour la table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_post` (`ID_post`),
+  ADD KEY `ID_user` (`ID_user`);
+
+--
 -- Index pour la table `post`
 --
 ALTER TABLE `post`
@@ -156,6 +181,12 @@ ALTER TABLE `follow`
 -- AUTO_INCREMENT pour la table `like`
 --
 ALTER TABLE `like`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `notification`
+--
+ALTER TABLE `notification`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -194,6 +225,13 @@ ALTER TABLE `follow`
 ALTER TABLE `like`
   ADD CONSTRAINT `like_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `like_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `notification`
+--
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`ID_user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `post`
