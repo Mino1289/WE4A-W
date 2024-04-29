@@ -144,29 +144,29 @@
             echo "<div class='col'><a href='post.php?id=".$this->ID."'><button class='btn btn-sm btn-primary'>Voir le post</button></a></div>";
             echo "<div class='col'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
 
-
-            $sql = "SELECT * FROM `like` WHERE `like`.ID_post = ? AND `like`.ID_user = ?";
-            $query = $db->prepare($sql);
-            $query->execute([$this->ID, $_SESSION['ID_user']]);
-            $like = $query->fetch(PDO::FETCH_ASSOC);
-            if ($like) {
-                $outline = "outline-";
-            } else {
-                $outline = "";
+            $outline = "";
+            if (isset($_SESSION['ID_user'])) {
+                $sql = "SELECT * FROM `like` WHERE `like`.ID_post = ? AND `like`.ID_user = ?";
+                $query = $db->prepare($sql);
+                $query->execute([$this->ID, $_SESSION['ID_user']]);
+                $like = $query->fetch(PDO::FETCH_ASSOC);
+                if ($like) {
+                    $outline = "outline-";
+                }
             }
-
             echo "<div class='col'>
             <button id='like-".$this->ID."' class='btn btn-sm btn-".$outline."success' onclick=like(".$this->ID.")>". $this->likes." W</button>
             </div>"; 
             
-            $sql = "SELECT * FROM dislike WHERE dislike.ID_post = ? AND dislike.ID_user = ?";
-            $query = $db->prepare($sql);
-            $query->execute([$this->ID, $_SESSION['ID_user']]);
-            $dislike = $query->fetch(PDO::FETCH_ASSOC);
-            if ($dislike) {
-                $outline = "outline-";
-            } else {
-                $outline = "";
+            $outline = "";
+            if (isset($_SESSION['ID_user'])) {
+                $sql = "SELECT * FROM dislike WHERE dislike.ID_post = ? AND dislike.ID_user = ?";
+                $query = $db->prepare($sql);
+                $query->execute([$this->ID, $_SESSION['ID_user']]);
+                $dislike = $query->fetch(PDO::FETCH_ASSOC);
+                if ($dislike) {
+                    $outline = "outline-";
+                }
             }
 
             echo "<div class='col'>

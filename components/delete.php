@@ -13,11 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $type = $_POST["type"];
     }
 
-    if (isset($_POST["title"]) && !empty($_POST["title"])){
+    if (isset($_POST["title"]) && !empty($_POST["title"])) {
         $title = $_POST["title"];
     }
 
-    if (isset($_POST["content"]) && !empty($_POST["content"])){
+    if (isset($_POST["content"]) && !empty($_POST["content"])) {
         $content = $_POST["content"];
     }
 
@@ -26,8 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $qry = $db->prepare($sql);
         $qry->execute([1, $id]);
         // notify user
-        $title = "Deleted Post";
-        $content = "Your post has been deleted by an admin."; // TODO: insert a link to the post
         $sql = "INSERT INTO `notification`(ID_post, ID_user, title, content) VALUES(?, (SELECT ID_user FROM post WHERE ID=?), ?, ?)";
         $qry = $db->prepare($sql);
         $qry->execute([$id, $id, $title, $content]);
