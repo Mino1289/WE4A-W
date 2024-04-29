@@ -71,7 +71,7 @@ CREATE TABLE `notification` (
   `content` varchar(500) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `isRead` tinyint(1) NOT NULL DEFAULT 0,
-  `isDeleted` tinyint(1) NOT NULL DEFAULT 0
+  `isDisplayed` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
