@@ -210,6 +210,14 @@ setInterval(function () {
 }, 10*1000); // 30 seconds
 
 function exeNotif(id, type) {
+    if (type == "delete"){
+        if (!confirm("Voulez-vous vraiment supprimer cette notification ?"))
+            return;
+    } else if (type == "deleteAll") {
+        if (!confirm("Voulez-vous vraiment supprimer toutes les notifications ?"))
+            return;
+    }
+    
     $.ajax({
         type: "POST",
         url: "components/notifs.php",
