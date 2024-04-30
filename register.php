@@ -114,24 +114,18 @@
     </form>
     </div>
     <script>
-        document.getElementById("passwordCheck").addEventListener("keyup", function() {
-            var passw = document.getElementById("password").value;
-            var passwCheck = document.getElementById("passwordCheck").value;
-            var paragraph = document.getElementById("isIdentical");
-            var button = document.getElementById("formButton");
-            if (passw !== passwCheck) {
-                console.log ("passwords don't match");
-                paragraph.textContent = "Passwords don't match";
-                document.getElementById("isIdentical").style.color = "red";
+        $("#passwordCheck").on("keyup", function() {
+            if ($('#password').val() !== $('#passwordCheck').val()) {
+                $('#isIdentical').text("Passwords don\'t match");
+                $("#isIdentical").css('color', 'red');
                 $("#formButton").prop('disabled', true);
-                document.getElementById("formButton").style.backgroundColor = "red";
+                $("#formButton").css('backgroundColor', 'red');
             }
             else{
-                console.log ("passwords do match"); 
-                paragraph.textContent = "Passwords match";
-                document.getElementById("isIdentical").style.color = "green";
+                $('#isIdentical').text("Passwords match");
+                $("#isIdentical").css('color', 'green');
                 $("#formButton").prop('disabled', false);
-                document.getElementById("formButton").style.backgroundColor = "green";
+                $("#formButton").css('backgroundColor', 'green');
             }
         });
     </script>
