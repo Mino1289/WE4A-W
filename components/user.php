@@ -49,20 +49,19 @@
                 $follow = $query->fetch(PDO::FETCH_ASSOC);
 
                 echo "<div class='col-1'>
-                <form action='components/follow.php?id=".$this->ID_user."' method='POST'>
-                <button value='follow' class='form-control btn btn-";
+                <button id='follow-btn' class='form-control btn btn-";
                 if ($follow) {
                     echo "danger";
                 } else {
                     echo "success";
                 }
-                echo "' type='submit' name='follow'>";
+                echo "' onclick='follow(".$this->ID_user.")'>";
                 if ($follow) {
-                    echo "unfollow";
+                    echo "Unfollow";
                 } else {
-                    echo "follow";
+                    echo "Follow";
                 }
-                echo "</button></form></div>";
+                echo "</button></div>";
             } elseif (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
                 echo "<div class='col-1 m-1'><a href='statistic.php'>
                 <button value='Statistics' class='btn btn-primary'>Statistics</button></a>

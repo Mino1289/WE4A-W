@@ -251,3 +251,28 @@ function exeNotif(id, type) {
         }
     });
 }
+
+function follow(id) {
+    if ($('#follow-btn').text() == "Unfollow") {
+        if (!confirm("Voulez-vous vraiment unfollow cet utilisateur ?"))
+            return;
+    }
+    $.ajax({
+        type: "POST",
+        url: "components/follow.php",
+        data: {
+            id: id
+        },
+        datatype: "json",
+        success: function (result) {
+            result = JSON.parse(result);
+            if (result.success) {
+                if (result.following) {
+                    $(`#follow-btn`).text("Unfollow").removeClass("btn-success").addClass("btn-danger");
+                } else {
+                    $(`#follow-btn`).text("Follow").removeClass("btn-danger").addClass("btn-success");
+                }
+            }
+        }
+    });
+}

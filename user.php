@@ -38,6 +38,5 @@
     } 
     ?>
     
-    <script src="scripts/post.js"></script>
 </body>
 </html>
