@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $sql = "INSERT INTO notification (ID_post, ID_user, title, content) VALUES (?, ?, ?, ?)";
         $query = $db->prepare($sql);
-        $query->execute([$id_post, $id_user_post, "Nouveau commentaire", "Votre <a href='post.php?id=".$id_post."'>post</a> a reçu un nouveau commentaire par <a href='user.php?id=".$id_user."'>'".$username."</a>."]);
+        $query->execute([$id_post, $id_user_post, "Nouveau commentaire", "Votre <a href='post.php?id=".$id_post."'>post</a> a reçu un nouveau commentaire par <a href='user.php?id=".$id_user."'>".$username."</a>."]);
 
 
     }
