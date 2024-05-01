@@ -177,16 +177,28 @@
             
             echo '<div class="col">
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-p-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
-            Button with data-bs-target
+            Ajouter un commentaire
             </button>
-            </div>
-            <div class="collapse" id="comment-p-'.$this->ID.'">
-            <div class="card card-body">
-            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-            </div>
             </div>';
             
             echo "</div></div>"; // footer + row div
+            echo '<div class="collapse" id="comment-p-'.$this->ID.'">
+                <div class="card card-body m-4">
+                <p>Ajouter un commentaire !</p>
+                    <form action="components/newcomment.php?id='.$this->ID.'" method="POST">
+                    <input type="hidden" name="id" value="'.$this->ID.'">
+                    <div class="mb-3">
+                            <label for="newCommentTextArea" class="form-label"></label>
+                            <textarea class="form-control" placeholder="Que voulez-vous commenter ?" id="newCommentTextArea" maxlength="300" name="content" rows="3" autocomplete="off"></textarea>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-auto">
+                            <button class="form-control btn btn-sm btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>';
             echo "</div>";
 
             
@@ -196,19 +208,19 @@
             // Add a form to comment the post/comment
             $this->display_post();
 
-            echo "<div class='container my-4'>";
-            echo "<form action='components/newcomment.php?id=".$this->ID."' method='POST'>";
-            echo "<input type='hidden' name='id' value='".$this->ID."'>";
-            echo '<div class="mb-3">
-                    <label for="newCommentTextArea" class="form-label"></label>
-                    <textarea class="form-control" placeholder="Que voulez-vous commenter ?" id="newCommentTextArea" maxlength="300" name="content" rows="3" autocomplete="off"></textarea>
-                </div>
-                <div class="row g-3">
-                    <div class="col-auto">
-                        <button class="form-control btn btn-sm btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
-                    </div>
-                </div>';
-            echo "</form></div>";
+            // echo `<div class="container my-4">`;
+            // echo '<form action="components/newcomment.php?id='.$this->ID.'" method="POST">';
+            // echo '<input type="hidden" name="id" value="'.$this->ID.'">';
+            // echo "<div class="mb-3">
+            //         <label for="newCommentTextArea" class="form-label"></label>
+            //         <textarea class="form-control" placeholder="Que voulez-vous commenter ?" id="newCommentTextArea" maxlength="300" name="content" rows="3" autocomplete="off"></textarea>
+            //     </div>
+            //     <div class="row g-3">
+            //         <div class="col-auto">
+            //             <button class="form-control btn btn-sm btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
+            //         </div>
+            //     </div>";
+            // echo "</form></div>";
 
             
 
