@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         $start = 0;
     }
-    $types = ["index", "fil", "trending", "user"];
+    $types = ["index", "fil", "trending", "user", "post"];
     if (isset($_POST["type"]) && !empty($_POST["type"]) && in_array($_POST['type'], $types)){
         $type = $_POST["type"];
     } else {
@@ -52,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             ORDER BY date DESC 
             LIMIT 5 OFFSET $start";
     }
+
     $query = $db->prepare($sql);
     if ($type == "fil" || $type == "user") {
         $query->execute([$_SESSION['ID_user']]);

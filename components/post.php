@@ -176,13 +176,26 @@
             //TODO: using https://getbootstrap.com/docs/5.3/components/collapse/
             
             $post_html .= '<div class="col">
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-p-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
-            Ajouter un commentaire
-            </button>
-            </div>';
-            
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-add-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
+                Ajouter un commentaire
+                </button>
+                </div>';
+
+            $sql = "SELECT COUNT(*) AS n FROM post WHERE ID_post = ? AND isDeleted = 0";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID]);
+            $n = $query->fetch(PDO::FETCH_ASSOC);
+            $n = $n['n'];
+            if ($n > 0) {
+                $post_html .= '<div class="col">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
+                    Voir les commentaires
+                    </button>
+                    </div>';
+            }
+
             $post_html .= "</div></div>"; // footer + row div
-            $post_html .= '<div class="collapse" id="comment-p-'.$this->ID.'">
+            $post_html .= '<div class="collapse" id="comment-add-'.$this->ID.'">
                 <div class="card card-body m-4">
                 <p>Ajouter un commentaire !</p>
                     <form action="components/newcomment.php?id='.$this->ID.'" method="POST">
@@ -200,43 +213,30 @@
                 </div>
             </div>';
             $post_html .= "</div>";
+            $post_html .= '<div class="collapse" id="comment-'.$this->ID.'">
+            <div class="m-4">';
+
+            
+            $sql = "SELECT * FROM post WHERE ID_post = ? AND isDeleted = 0 ORDER BY `date` DESC";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID]);
+            $comments = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($comments as $comment) {
+                $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['displayedcontent'], $comment['date'], $comment['isSensible'], $comment['imageURL']);
+                $post_html .= $comment->display_post();
+            }
+
+            $post_html .= '</div>
+                </div>';
 
             return $post_html;
         }
         
         function display_page() {
             // Add a form to comment the post/comment
-            $this->display_post();
+            echo $this->display_post();          
 
-            // echo `<div class="container my-4">`;
-            // echo '<form action="components/newcomment.php?id='.$this->ID.'" method="POST">';
-            // echo '<input type="hidden" name="id" value="'.$this->ID.'">';
-            // echo "<div class="mb-3">
-            //         <label for="newCommentTextArea" class="form-label"></label>
-            //         <textarea class="form-control" placeholder="Que voulez-vous commenter ?" id="newCommentTextArea" maxlength="300" name="content" rows="3" autocomplete="off"></textarea>
-            //     </div>
-            //     <div class="row g-3">
-            //         <div class="col-auto">
-            //             <button class="form-control btn btn-sm btn-primary" type="submit" name="newComment" id="newCommentSubmit">Ajouter le commentaire</button>
-            //         </div>
-            //     </div>";
-            // echo "</form></div>";
-
-            
-
-
-            global $db;
-
-            $sql = "SELECT * FROM post WHERE ID_post = ? AND isDeleted = 0 ORDER BY `date` DESC";
-            $query = $db->prepare($sql);
-            $query->execute([$this->ID]);
-            $comments = $query->fetchAll(PDO::FETCH_ASSOC);
-
-            // echo "<div class='comment'>";
-            foreach ($comments as $comment) {
-                $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['content'], $comment['date'], $comment['isSensible'], $comment['imageURL']);
-                echo $comment->display_post();
-            }
+            // echo "<div id='posts'>";
             // echo "</div>";
         }
     }
