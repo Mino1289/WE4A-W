@@ -28,7 +28,7 @@
 
             echo "<title> W | ".$this->username ."</title>";
             echo "<h3 id='username'>".$this->username."</h3>";
-            echo "<div id='information_user'>";
+            echo "<div id='information_user' class='m-1'>";
             echo "<p>Name : ".$this->username."</p>";
             echo "<p>Firstname : ".$this->first_name."</p>";
             echo "<p>Mail : ".$this->email."</p>";
@@ -39,6 +39,9 @@
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
             echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            if (isset($_SESSION['isAdmin']) && $_SESSION['ID_user'] != $this->ID_user) {
+                echo "add a btn to make you admin !";
+            }
             if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] != $this->ID_user) {
                 $sql = "SELECT * FROM follow WHERE ID_user = ? AND ID_followed = ?";
                 $query = $db->prepare($sql);
@@ -46,25 +49,26 @@
                 $follow = $query->fetch(PDO::FETCH_ASSOC);
 
                 echo "<div class='col-1'>
-                <form action='components/follow.php?id=".$this->ID_user."' method='POST'>
-                <button value='follow' class='form-control btn btn-";
+                <button id='follow-btn' class='form-control btn btn-";
                 if ($follow) {
                     echo "danger";
                 } else {
                     echo "success";
                 }
-                echo "' type='submit' name='follow'>";
+                echo "' onclick='follow(".$this->ID_user.")'>";
                 if ($follow) {
-                    echo "unfollow";
+                    echo "Unfollow";
                 } else {
-                    echo "follow";
+                    echo "Follow";
                 }
-                echo "</button></form></div>";
-            } else {
-                echo "<div class='col-1'><a href='statistic.php'>
+                echo "</button></div>";
+            } elseif (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
+                echo "<div class='col-1 m-1'><a href='statistic.php'>
                 <button value='Statistics' class='btn btn-primary'>Statistics</button></a>
                 </div>";
-
+                echo "<div class='col-1 m-1'><a href='settings.php'>
+                <button value='Settings' class='btn btn-primary'>Settings</button></a>
+                </div>";
             }
 
             $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
@@ -78,7 +82,7 @@
             echo "<div id='post_container'>";
             
             $sql = "SELECT * FROM post 
-                    WHERE ID_user = ? AND ID_post IS NOT NULL AND isDeleted = 0
+                    WHERE ID_user = ? AND ID_post IS NULL AND isDeleted = 0
                     ORDER BY date DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);

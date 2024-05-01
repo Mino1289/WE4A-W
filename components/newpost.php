@@ -79,11 +79,29 @@
                 $new_target_name = NULL;
             }
 
+            $sql = "SELECT username FROM user WHERE ID = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$_SESSION['ID_user']]);
+            $username = $query->fetch(PDO::FETCH_ASSOC)['username'];
 
             // Upload it to the database
             $sql = "INSERT INTO post (ID_user, content, displayedcontent, imageURL) VALUES (?, ?, ?, ?)";
             $query = $db->prepare($sql);
             $query->execute([$_SESSION['ID_user'], $content, $displayedcontent, $new_target_name]);
+
+            $id = $db->lastInsertId();
+
+            $sql = "SELECT * FROM follow WHERE ID_followed = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$_SESSION['ID_user']]);
+            $followers = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            $sql = "INSERT INTO notification (ID_user, title, content) VALUES (?, ?, ?)"; // no need of ID_post it's not it's own post
+            foreach ($followers as $follower) {
+                $query = $db->prepare($sql);
+                $query->execute([$follower['ID_user'], "Nouveau post", "Un nouvel <a href='post.php?id=".$id."'>article</a> a été publié par " . $username]);
+            }
+            
         }
         ?>
     </div>
