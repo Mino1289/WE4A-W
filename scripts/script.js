@@ -299,13 +299,15 @@ function unfollow(id) { // for suivi page
 
 postsList = [];
 function loadPosts(type) {
-    start = $('#posts').children().length;
+    var start = $('#posts').children().length;
+    var id = 3;
     $.ajax({
         type: "POST",
         url: "components/display.php",
         data: {
             type: type,
-            start: start
+            start: start,
+            ID_user: id
         },
         datatype: "json",
         success: function (result) {

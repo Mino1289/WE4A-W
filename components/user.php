@@ -20,6 +20,7 @@
             $this->profile_picture = $profile_picture;
             $this->isWarn = $isWarn;
             $this->isAdmin = $isAdmin;
+            $_SESSION['ID_user_page'] = $ID;
         }
 
         function display_page() {
@@ -39,7 +40,15 @@
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
             echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
-            if (isset($_SESSION['isAdmin']) && $_SESSION['ID_user'] != $this->ID_user) {
+            
+            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID_user]);
+            $followings = $query->fetch(PDO::FETCH_ASSOC);
+
+            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+
+            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1 && $_SESSION['ID_user'] != $this->ID_user) {
                 echo "add a btn to make you admin !";
             }
             if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] != $this->ID_user) {
@@ -74,13 +83,6 @@
                 </div>";
             }
 
-            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
-            $query = $db->prepare($sql);
-            $query->execute([$this->ID_user]);
-            $followings = $query->fetch(PDO::FETCH_ASSOC);
-
-            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
-            //TODO: add a btn to follow/unfollow the user if you are not the user
             echo "</div>";
             echo "<div id='posts'>";
             echo "</div>";

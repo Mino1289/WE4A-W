@@ -213,21 +213,22 @@
                 </div>
             </div>';
             $post_html .= "</div>";
-            $post_html .= '<div class="collapse" id="comment-'.$this->ID.'">
-            <div class="m-4">';
-
+            
             
             $sql = "SELECT * FROM post WHERE ID_post = ? AND isDeleted = 0 ORDER BY `date` DESC";
             $query = $db->prepare($sql);
             $query->execute([$this->ID]);
             $comments = $query->fetchAll(PDO::FETCH_ASSOC);
+            if ($comments) {
+                $post_html .= '<div class="collapse" id="comment-'.$this->ID.'"><div class="m-4">';
+            }
             foreach ($comments as $comment) {
                 $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['displayedcontent'], $comment['date'], $comment['isSensible'], $comment['imageURL']);
                 $post_html .= $comment->display_post();
             }
-
-            $post_html .= '</div>
-                </div>';
+            if ($comments){ 
+                $post_html .= "</div></div>";
+            }
 
             return $post_html;
         }

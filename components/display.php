@@ -54,8 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     $query = $db->prepare($sql);
-    if ($type == "fil" || $type == "user") {
+    if ($type == "fil") {
         $query->execute([$_SESSION['ID_user']]);
+    } elseif ($type == "user") {
+        $query->execute([$_SESSION['ID_user_page']]);
     } else {
         $query->execute();
     }
