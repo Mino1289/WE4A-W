@@ -55,7 +55,7 @@
                 } else {
                     echo "success";
                 }
-                echo "' onclick='follow(".$this->ID_user.")'>";
+                echo " follow-btn' onclick='follow(".$this->ID_user.")'>";
                 if ($follow) {
                     echo "Unfollow";
                 } else {
@@ -63,11 +63,14 @@
                 }
                 echo "</button></div>";
             } elseif (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
+                echo "<div class='col-1 m-1'><a href='followed.php'>
+                <button value='Followed' class='btn btn-primary'>Suivi</button></a>
+                </div>";
                 echo "<div class='col-1 m-1'><a href='statistic.php'>
-                <button value='Statistics' class='btn btn-primary'>Statistics</button></a>
+                <button value='Statistics' class='btn btn-primary'>Statistiques</button></a>
                 </div>";
                 echo "<div class='col-1 m-1'><a href='settings.php'>
-                <button value='Settings' class='btn btn-primary'>Settings</button></a>
+                <button value='Settings' class='btn btn-primary'>Paramètres</button></a>
                 </div>";
             }
 

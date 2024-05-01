@@ -252,26 +252,46 @@ function exeNotif(id, type) {
     });
 }
 
-function follow(id) {
+function follow(id) { // for user profile page
     if ($('#follow-btn').text() == "Unfollow") {
         if (!confirm("Voulez-vous vraiment unfollow cet utilisateur ?"))
             return;
     }
+
     $.ajax({
         type: "POST",
         url: "components/follow.php",
         data: {
-            id: id
+            ID_user: id
         },
         datatype: "json",
         success: function (result) {
             result = JSON.parse(result);
             if (result.success) {
                 if (result.following) {
-                    $(`#follow-btn`).text("Unfollow").removeClass("btn-success").addClass("btn-danger");
+                    $('#follow-btn').text("Unfollow").removeClass("btn-success").addClass("btn-danger");
                 } else {
-                    $(`#follow-btn`).text("Follow").removeClass("btn-danger").addClass("btn-success");
+                    $('#follow-btn').text("Follow").removeClass("btn-danger").addClass("btn-success");
                 }
+            }
+        }
+    });
+}
+
+function unfollow(id) { // for suivi page
+    if (!confirm("Voulez-vous vraiment unfollow cet utilisateur ?"))
+        return;
+    $.ajax({
+        type: "POST",
+        url: "components/follow.php",
+        data: {
+            ID_follow: id
+        },
+        datatype: "json",
+        success: function (result) {
+            result = JSON.parse(result);
+            if (result.success) {
+                $(`#follow-${id}`).remove();
             }
         }
     });
