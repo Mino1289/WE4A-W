@@ -37,6 +37,13 @@
         }
     } 
     ?>
-    
+<script>
+    loadPosts("user");
+    window.addEventListener('scroll', function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadPosts("user");
+        }
+    });
+</script>
 </body>
 </html>

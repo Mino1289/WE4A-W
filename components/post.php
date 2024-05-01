@@ -45,42 +45,42 @@
             $query->execute([$this->ID_user]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
             
-            echo "<div id='post-".$this->ID."' class='card mb-5";
+            $post_html = "<div id='post-".$this->ID."' class='card mb-5";
             if ($this->ID_post != null) {
-                echo " mx-5 comment";
+                $post_html .= " mx-5 comment";
             }
             else {
-                echo " mx-3 post";
+                $post_html .= " mx-3 post";
             }
             if ($user['isWarn'] != 0) {
-                echo " warned";
+                $post_html .= " warned";
             }
             if ($this->isSensible == '1') {
-                echo " sensible";
+                $post_html .= " sensible";
             }
-            echo "'>";
+            $post_html .= "'>";
             
-            echo "<div class='card-header'>";
-            echo "<div class='row align-items-start align-items-center'>";
+            $post_html .= "<div class='card-header'>";
+            $post_html .= "<div class='row align-items-start align-items-center'>";
             $img = base64_encode($user['profile_picture']);
-            echo '<div class="col-md-2">';
-            echo '<img class="pdp img-thumbnail" alt="pp" src="data:image/png;base64,'.$img.'">';
-            echo "</div>";
+            $post_html .= '<div class="col-md-2">';
+            $post_html .= '<img class="pdp img-thumbnail" alt="pp" src="data:image/png;base64,'.$img.'">';
+            $post_html .= "</div>";
 
-            echo '<div class="col">';
-            echo "<a href='user.php?id=".$this->ID_user."' class=''>".$user["username"]."</a>";
+            $post_html .= '<div class="col">';
+            $post_html .= "<a href='user.php?id=".$this->ID_user."' class=''>".$user["username"]."</a>";
             
             $sql = "SELECT isAdmin FROM user WHERE ID = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $isAdmin = $query->fetch(PDO::FETCH_ASSOC);
             if ($isAdmin['isAdmin'] == 1) {
-                echo "<span class='ms-3 badge bg-warning text-dark'>Admin</span>";
+                $post_html .= "<span class='ms-3 badge bg-warning text-dark'>Admin</span>";
             }
-            echo "</div>";
+            $post_html .= "</div>";
 
             if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
-                echo '<div class="dropdown col">
+                $post_html .= '<div class="dropdown col">
                 <button class="btn btn-sm btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Actions
                 </button>
@@ -88,61 +88,61 @@
             }
 
             if (isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) {
-                echo '<li>';
-                    echo "<div class='dropdown-item'>";
-                    echo "<button id='btn-warn-post-".$this->ID."' class='btn btn-sm btn-warning' type='submit' name='sensible' onclick='warn(".$this->ID.",\"post\")'>";
+                $post_html .= '<li>';
+                    $post_html .= "<div class='dropdown-item'>";
+                    $post_html .= "<button id='btn-warn-post-".$this->ID."' class='btn btn-sm btn-warning' type='submit' name='sensible' onclick='warn(".$this->ID.",\"post\")'>";
                     if($this->isSensible == 0){
-                        echo "M";
+                        $post_html .= "M";
                     } else {
-                        echo "Unm";
+                        $post_html .= "Unm";
                     }
-                    echo "ark post sensible</button></div>";
-                echo '</li><li>';
+                    $post_html .= "ark post sensible</button></div>";
+                $post_html .= '</li><li>';
                 
-                echo "<div class='dropdown-item'>";
-                echo "<button class='btn btn-sm btn-warning warn-user-".$this->ID_user."' type='submit' name='sensible' onclick='warn(".$this->ID_user.",\"user\")'>";
+                $post_html .= "<div class='dropdown-item'>";
+                $post_html .= "<button class='btn btn-sm btn-warning warn-user-".$this->ID_user."' type='submit' name='sensible' onclick='warn(".$this->ID_user.",\"user\")'>";
                 if($user['isWarn'] == 0){
-                    echo "W";
+                    $post_html .= "W";
                 } else {
-                    echo "Unw";
+                    $post_html .= "Unw";
                 }
-                echo "arn user</button></div>";
-                echo '</li>';
+                $post_html .= "arn user</button></div>";
+                $post_html .= '</li>';
             }
             if ((isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1) || (isset($_SESSION["ID_user"]) && $this->ID_user == $_SESSION["ID_user"])) {
-                echo "<div class='dropdown-item'>";
-                echo "<button class='btn btn-sm btn-danger' type='submit' name='sensible' onclick='delet(".$this->ID.",\"post\")'>";
-                echo " Delete ";
+                $post_html .= "<div class='dropdown-item'>";
+                $post_html .= "<button class='btn btn-sm btn-danger' type='submit' name='sensible' onclick='delet(".$this->ID.",\"post\")'>";
+                $post_html .= " Delete ";
                 if ($this->ID_post != null) {
-                    echo "comment";
+                    $post_html .= "comment";
                 }
                 else {
-                    echo "post";
+                    $post_html .= "post";
                 }
-                echo "</button></div>";
-                echo '</ul></div>';
+                $post_html .= "</button></div>";
+                $post_html .= '</ul></div>';
             }
 
             
-            echo "</div>";
-            echo "</div>";
-            echo "<div class='card-body text-body-primary'>
+            $post_html .= "</div>";
+            $post_html .= "</div>";
+            $post_html .= "<div class='card-body text-body-primary'>
                 <div class='row'>
                 <div class='col'>";
-            echo "<p>".$this->content."</p>";
+            $post_html .= "<p>".$this->content."</p>";
             
-            echo "</div>";
+            $post_html .= "</div>";
             if($this->imageURL != null){
-                echo '<div class="col">
+                $post_html .= '<div class="col">
                     <img class="img-fluid" alt="Image of the post" src="'.$this->imageURL.'">
                     </div>';
                 }
-            echo '</div></div>';
-            echo "<div class='card-footer'>";
+            $post_html .= '</div></div>';
+            $post_html .= "<div class='card-footer'>";
             
-            echo "<div class='row align-items-center'>";
-            echo "<div class='col'><a href='post.php?id=".$this->ID."'><button class='btn btn-sm btn-primary'>Voir le post</button></a></div>";
-            echo "<div class='col'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
+            $post_html .= "<div class='row align-items-center'>";
+            $post_html .= "<div class='col'><a href='post.php?id=".$this->ID."'><button class='btn btn-sm btn-primary'>Voir le post</button></a></div>";
+            $post_html .= "<div class='col'><small class='text-body-secondary' >Le ".$this->date."</small></div>";
 
             $outline = "";
             if (isset($_SESSION['ID_user'])) {
@@ -154,7 +154,7 @@
                     $outline = "outline-";
                 }
             }
-            echo "<div class='col'>
+            $post_html .= "<div class='col'>
             <button id='like-".$this->ID."' class='btn btn-sm btn-".$outline."success' onclick=like(".$this->ID.")>". $this->likes." W</button>
             </div>"; 
             
@@ -169,20 +169,20 @@
                 }
             }
 
-            echo "<div class='col'>
+            $post_html .= "<div class='col'>
             <button id='dislike-".$this->ID."' class='btn btn-sm btn-".$outline."danger' onclick=dislike(".$this->ID.")>". $this->dislikes ." L</button>
             </div>";
             // add a btn btn-sm to display the comments and add a comment
             //TODO: using https://getbootstrap.com/docs/5.3/components/collapse/
             
-            echo '<div class="col">
+            $post_html .= '<div class="col">
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-p-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
             Ajouter un commentaire
             </button>
             </div>';
             
-            echo "</div></div>"; // footer + row div
-            echo '<div class="collapse" id="comment-p-'.$this->ID.'">
+            $post_html .= "</div></div>"; // footer + row div
+            $post_html .= '<div class="collapse" id="comment-p-'.$this->ID.'">
                 <div class="card card-body m-4">
                 <p>Ajouter un commentaire !</p>
                     <form action="components/newcomment.php?id='.$this->ID.'" method="POST">
@@ -199,9 +199,9 @@
                     </form>
                 </div>
             </div>';
-            echo "</div>";
+            $post_html .= "</div>";
 
-            
+            return $post_html;
         }
         
         function display_page() {
@@ -235,7 +235,7 @@
             // echo "<div class='comment'>";
             foreach ($comments as $comment) {
                 $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['content'], $comment['date'], $comment['isSensible'], $comment['imageURL']);
-                $comment->display_post();
+                echo $comment->display_post();
             }
             // echo "</div>";
         }

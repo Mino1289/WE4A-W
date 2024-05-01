@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W | Mon Fil</title>
+    <title>W | Tendances</title>
 </head>
 <body>
     <style>
@@ -26,7 +26,7 @@
         echo '<div class="text-center">
         <div class="row">
           <div class="col align-self-center">
-            <p class="m-3">Les posts des personnes que vous suivez.<p>
+            <p class="m-3">Les posts les plus aimés par la communauté.<p>
           </div>
         </div></div>';
         echo "<div id='posts' class='container'>";
@@ -35,10 +35,10 @@
 ?>
 
 <script>
-loadPosts("fil");
+loadPosts("trending");
 window.addEventListener('scroll', function () {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        loadPosts("fil");
+        loadPosts("trending");
     }
 });
 </script>
