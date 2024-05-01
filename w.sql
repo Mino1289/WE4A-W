@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `dislike` (
   `ID` int(11) NOT NULL,
   `ID_user` int(11) NOT NULL,
-  `ID_post` int(11) NOT NULL
+  `ID_post` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -42,7 +43,8 @@ CREATE TABLE `dislike` (
 CREATE TABLE `follow` (
   `ID` int(11) NOT NULL,
   `ID_user` int(11) NOT NULL,
-  `ID_followed` int(11) NOT NULL
+  `ID_followed` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -54,7 +56,8 @@ CREATE TABLE `follow` (
 CREATE TABLE `like` (
   `ID` int(11) NOT NULL,
   `ID_user` int(11) NOT NULL,
-  `ID_post` int(11) NOT NULL
+  `ID_post` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
