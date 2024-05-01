@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $qry->execute([$id]);
         $response["success"] = true;
     } elseif ($type == "read") {
-        $sql = "UPDATE `notification` SET isRead=1 AND isDisplayed=1 WHERE ID = ?";
+        $sql = "UPDATE `notification` SET isRead=1, isDisplayed=1 WHERE ID = ?";
         $qry = $db->prepare($sql);
         $qry->execute([$id]);
         $response["success"] = true;
