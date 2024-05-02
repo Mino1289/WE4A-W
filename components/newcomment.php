@@ -35,11 +35,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query->execute([$id_user]);
         $username = $query->fetch(PDO::FETCH_ASSOC)['username'];
 
+        $sql = "SELECT ID_user FROM post WHERE ID = ?";
+        $query = $db->prepare($sql);
+        $query->execute([$id_post]);
+        $id_user_post = $query->fetch(PDO::FETCH_ASSOC)['ID_user'];
+
         $sql = "INSERT INTO notification (ID_post, ID_user, title, content) VALUES (?, ?, ?, ?)";
         $query = $db->prepare($sql);
-        $query->execute([$id_post, $id_user, "Nouveau commentaire", "Votre <a href='post.php?id=".$id_post."'>post</a> a reçu un nouveau commentaire par <a href='user.php?id=".$id_user."'>'".$username."</a>."]);
+        $query->execute([$id_post, $id_user_post, "Nouveau commentaire", "Votre <a href='post.php?id=".$id_post."'>post</a> a reçu un nouveau commentaire par <a href='user.php?id=".$id_user."'>".$username."</a>."]);
 
-        
+
     }
 }
 

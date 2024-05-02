@@ -27,7 +27,7 @@ function like(id_post) {
             if (result.success) {
                 var like = $(`#like-${id_post}`);
                 var dislike = $(`#dislike-${id_post}`);
-                like.text(`${result.likes} W`);                
+                like.text(`${result.likes} W`);
                 dislike.text(`${result.dislikes} L`);
 
                 if (like.hasClass("btn-outline-success")) {
@@ -41,10 +41,10 @@ function like(id_post) {
                 if (dislike.hasClass("btn-outline-danger")) {
                     dislike.removeClass("btn-outline-danger");
                     dislike.addClass("btn-danger");
-                } 
-            } 
-        } 
-    }); 
+                }
+            }
+        }
+    });
 }
 
 function dislike(id_post) {
@@ -61,7 +61,7 @@ function dislike(id_post) {
             if (result.success) {
                 var like = $(`#like-${id_post}`);
                 var dislike = $(`#dislike-${id_post}`);
-                like.text(`${result.likes} W`);                
+                like.text(`${result.likes} W`);
                 dislike.text(`${result.dislikes} L`);
                 if (like.hasClass("btn-outline-success")) {
                     like.removeClass("btn-outline-success");
@@ -177,7 +177,7 @@ setInterval(function () {
                             if (date.seconds > 0)
                                 datestring += `${date.seconds} seconds `;
                         }
-                        
+
                         $(`#notif-${lastnotif.id}`).remove();
                         var html = `<div id="notif-${lastnotif.ID}" class="toast-container position-fixed bottom-0 end-0 p-3"> \
                         <div id="liveToast-${lastnotif.ID}" class="toast" role="alert" aria-live="assertive" aria-atomic="true"> \
@@ -207,17 +207,17 @@ setInterval(function () {
             }
         }
     });
-}, 10*1000); // 30 seconds
+}, 10 * 1000); // 10 seconds
 
 function exeNotif(id, type) {
-    if (type == "delete"){
+    if (type == "delete") {
         if (!confirm("Voulez-vous vraiment supprimer cette notification ?"))
             return;
     } else if (type == "deleteAll") {
         if (!confirm("Voulez-vous vraiment supprimer toutes les notifications ?"))
             return;
     }
-    
+
     $.ajax({
         type: "POST",
         url: "components/notifs.php",
@@ -252,27 +252,77 @@ function exeNotif(id, type) {
     });
 }
 
-function follow(id) {
+function follow(id) { // for user profile page
     if ($('#follow-btn').text() == "Unfollow") {
         if (!confirm("Voulez-vous vraiment unfollow cet utilisateur ?"))
             return;
     }
+
     $.ajax({
         type: "POST",
         url: "components/follow.php",
         data: {
-            id: id
+            ID_user: id
         },
         datatype: "json",
         success: function (result) {
             result = JSON.parse(result);
             if (result.success) {
                 if (result.following) {
-                    $(`#follow-btn`).text("Unfollow").removeClass("btn-success").addClass("btn-danger");
+                    $('#follow-btn').text("Unfollow").removeClass("btn-success").addClass("btn-danger");
                 } else {
-                    $(`#follow-btn`).text("Follow").removeClass("btn-danger").addClass("btn-success");
+                    $('#follow-btn').text("Follow").removeClass("btn-danger").addClass("btn-success");
                 }
             }
         }
     });
 }
+
+function unfollow(id) { // for suivi page
+    if (!confirm("Voulez-vous vraiment unfollow cet utilisateur ?"))
+        return;
+    $.ajax({
+        type: "POST",
+        url: "components/follow.php",
+        data: {
+            ID_follow: id
+        },
+        datatype: "json",
+        success: function (result) {
+            result = JSON.parse(result);
+            if (result.success) {
+                $(`#follow-${id}`).remove();
+            }
+        }
+    });
+}
+
+postsList = [];
+function loadPosts(type) {
+    var start = $('#posts').children().length;
+    var id = 3;
+    $.ajax({
+        type: "POST",
+        url: "components/display.php",
+        data: {
+            type: type,
+            start: start,
+            ID_user: id
+        },
+        datatype: "json",
+        success: function (result) {
+            result = JSON.parse(result);
+            if (result.success) {
+                for (let post of result.posts) {
+                    var id = parseInt(post.match(/post-[0-9]+/)[0].slice(5));
+                    if (postsList.indexOf(id) != -1) {
+                        continue;
+                    }
+                    $('#posts').append(post);
+                    postsList.push(id);
+                }
+            }
+        }
+    });
+}
+

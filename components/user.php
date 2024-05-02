@@ -20,6 +20,7 @@
             $this->profile_picture = $profile_picture;
             $this->isWarn = $isWarn;
             $this->isAdmin = $isAdmin;
+            $_SESSION['ID_user_page'] = $ID;
         }
 
         function display_page() {
@@ -39,7 +40,15 @@
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
             echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
-            if (isset($_SESSION['isAdmin']) && $_SESSION['ID_user'] != $this->ID_user) {
+            
+            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
+            $query = $db->prepare($sql);
+            $query->execute([$this->ID_user]);
+            $followings = $query->fetch(PDO::FETCH_ASSOC);
+
+            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+
+            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1 && $_SESSION['ID_user'] != $this->ID_user) {
                 echo "add a btn to make you admin !";
             }
             if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] != $this->ID_user) {
@@ -55,7 +64,7 @@
                 } else {
                     echo "success";
                 }
-                echo "' onclick='follow(".$this->ID_user.")'>";
+                echo " follow-btn' onclick='follow(".$this->ID_user.")'>";
                 if ($follow) {
                     echo "Unfollow";
                 } else {
@@ -63,37 +72,19 @@
                 }
                 echo "</button></div>";
             } elseif (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
+                echo "<div class='col-1 m-1'><a href='followed.php'>
+                <button value='Followed' class='btn btn-primary'>Suivi</button></a>
+                </div>";
                 echo "<div class='col-1 m-1'><a href='statistic.php'>
-                <button value='Statistics' class='btn btn-primary'>Statistics</button></a>
+                <button value='Statistics' class='btn btn-primary'>Statistiques</button></a>
                 </div>";
                 echo "<div class='col-1 m-1'><a href='settings.php'>
-                <button value='Settings' class='btn btn-primary'>Settings</button></a>
+                <button value='Settings' class='btn btn-primary'>Paramètres</button></a>
                 </div>";
             }
 
-            $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
-            $query = $db->prepare($sql);
-            $query->execute([$this->ID_user]);
-            $followings = $query->fetch(PDO::FETCH_ASSOC);
-
-            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
-            //TODO: add a btn to follow/unfollow the user if you are not the user
             echo "</div>";
-            echo "<div id='post_container'>";
-            
-            $sql = "SELECT * FROM post 
-                    WHERE ID_user = ? AND ID_post IS NULL AND isDeleted = 0
-                    ORDER BY date DESC";
-            $query = $db->prepare($sql);
-            $query->execute([$this->ID_user]);
-            $posts = $query->fetchAll(PDO::FETCH_ASSOC);
-            
-            foreach ($posts as $post) {
-                $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
-                $post->display_post();
-            }
-
-
+            echo "<div id='posts'>";
             echo "</div>";
         }
 

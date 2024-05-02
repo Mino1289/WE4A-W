@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="./css/post.css">
 </head>
 <body>
     <style>
@@ -37,6 +35,13 @@
         }
     } 
     ?>
-    
+<script>
+    loadPosts("user");
+    window.addEventListener('scroll', function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadPosts("user");
+        }
+    });
+</script>
 </body>
 </html>

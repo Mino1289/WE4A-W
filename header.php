@@ -62,7 +62,7 @@
 
 <nav class="navbar navbar-expand-lg bg-body-secondary p-2">
   <div class="container-fluid">
-    <a class="navbar-brand" href="./index.php">W</a>
+    <a class="navbar-brand" href="./index.php">Home W</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -76,6 +76,7 @@
                 // my page
                 echo '<li class="nav-item"><a class="nav-link" href="user.php?id='.$_SESSION['ID_user'].'">Ma page</a></li>';
                 echo '<li class="nav-item"><a class="nav-link" href="./fil.php">Mon fil</a></li>';
+                echo '<li class="nav-item"><a class="nav-link" href="./trend.php">Tendances</a></li>';
                 echo '<li class="nav-item"><a class="nav-link" href="./components/disconnect.php">Déconnexion</a></li>';
                 
                 if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']) {
