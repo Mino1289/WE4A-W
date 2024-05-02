@@ -41,7 +41,7 @@
                     $uploadOk = 1;
                 } else {
                     echo '<div class="col">
-                        <p>File is not an image.</p>
+                        <p>Le fichier n\'est pas une image.</p>
                     </div>';
                     $uploadOk = 0;
                 }
@@ -49,7 +49,14 @@
                 // Check if file already exists
                 if (file_exists($target_file)) {
                     echo '<div class="col">
-                            <p>Sorry, file already exists. </p>
+                            <p>Désolé, votre image existe déjà.</p>
+                        </div>';
+                    $uploadOk = 0;
+                }
+
+                if($_FILES['postImage']['size'] >= 2000000) {
+                    echo '<div class="col">
+                            <p>Désolé, votre image est trop lourde (maximum 2Mo).</p>
                         </div>';
                     $uploadOk = 0;
                 }
@@ -57,8 +64,9 @@
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk == 0) {
                     echo '<div class="col">
-                            <p>Sorry, your file was not uploaded.</p>
+                            <p>Désolé, votre image n\'a pas été mise en ligne.</p>
                         </div>';
+                    $new_target_name = NULL;
                     // if everything is ok, try to upload file
                 } else {
                     move_uploaded_file($_FILES['postImage']['tmp_name'], $target_file);

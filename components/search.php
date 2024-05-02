@@ -39,7 +39,7 @@ if (empty($value)) {
     $n = count($result);
     echo "<div id='search_info'><p> Found ".$n." results for '".$value."'</p></div>";
     foreach ($result as $post) {
-        $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
+        $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
         $post->display_post();
     }
 // }
