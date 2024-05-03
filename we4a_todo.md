@@ -1,8 +1,8 @@
 - [x] Arborescence dans les conversations : post original, réaction, réaction à la réaction, etc. C’est théoriquement, potentiellement infini (faire en sorte qu'on voit 1 ou 2 commentaires ?)
 - [x] Ajouter une taille max pour les images des publications
 - [ ] Améliorer l'affichage des images dans les posts
-- [ ] Ajouter un champ adresse aux utilisateurs
-- [ ] Faire en sorte que les noms d'utilisateurs et adresse mail soient uniques
+- [x] Ajouter un champ adresse aux utilisateurs
+- [x] Faire en sorte que les noms d'utilisateurs et adresse mail soient uniques
 - [ ] A voir : Modifier la page de profil d'un utilisateur qui est un peu moche
 - [x] Voir les réponses directs au post
 - [ ] Optionnel (pour des pts en plus) : faire un système "malin" lorsqu'il y a des chaines de discussions avec 5 commentaires par exemple)

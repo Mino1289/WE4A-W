@@ -20,20 +20,41 @@
     //Données reçues via formulaire?
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["passwordCheck"]) && isset($_POST["email"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["birthDate"])) {
+        if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["passwordCheck"]) && isset($_POST["email"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["adress"]) && isset($_POST["birthDate"])) {
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
             $passwordCheck = $_POST['passwordCheck'];
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
+            $adress = $_POST['adress'];
             $birthDate = $_POST['birthDate'];
             
-            $sql = "INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `birth_date`) VALUES (?, ?, ?, ?, ?, ?)";
+            // Check if the email is unique
+            $sql = $db->prepare('SELECT COUNT(email) AS EmailCount FROM user WHERE email = ?');
+            $sql->execute([$email]);
+            $qry = $sql->fetch(PDO::FETCH_ASSOC);
+            if($qry['EmailCount'] > 0){
+                echo "<script>alert('Cet email est déjà associé à un compte.');
+                window.location = 'register.php';</script>";
+                return;
+            }
 
-            // insert in database 
+            // Check if the username is unique
+            $sql = $db->prepare('SELECT COUNT(username) AS UsernameCount FROM user WHERE username = ?');
+            $sql->execute([$username]);
+            $qry = $sql->fetch(PDO::FETCH_ASSOC);
+            if($qry['UsernameCount'] > 0){
+                echo "<script>alert('Ce pseudo est déjà associé à un compte.');
+                window.location = 'register.php';</script>";
+                return;
+            }
+            
+            $sql = "INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `adress` `birth_date`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            // insert in database
             $rs = $db->prepare($sql);
-            $rs->execute([$username, $email, $password, $firstName, $lastName, $birthDate]);
+            $rs->execute([$username, $email, $password, $firstName, $lastName, $adress, $birthDate]);
             $ID = $db->lastInsertId();
 
             if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['size'] != 0) {
@@ -65,21 +86,21 @@
 
         <div class="register_form">
 
-            <div class="formbutton">Register</div>
-            <label for="username">Username :</label>
+            <div class="formbutton">Inscription</div>
+            <label for="username">Pseudo :</label>
             <div class="icon-input">
-                <input autofocus type="text" name="username" maxlength="20" placeholder="Username" autocomplete="off" required>
+                <input autofocus type="text" name="username" maxlength="20" placeholder="Pseudo" autocomplete="off" required>
                 <i class="fa fa-fw fa-user"></i>
             </div>
 
-            <label for="firstName">First Name :</label>
+            <label for="firstName">Prénom :</label>
             <div class="icon-input">
-                <input type="text" name="firstName" maxlength="40" placeholder="First Name" autocomplete="off" required>
+                <input type="text" name="firstName" maxlength="40" placeholder="Prénom" autocomplete="off" required>
                 <i class="fa fa-fw fa-user"></i>
             </div>
-            <label for="lastName">Last Name :</label>
+            <label for="lastName">Nom de famille :</label>
             <div class="icon-input">
-                <input type="text" name="lastName" maxlength="40" placeholder="Last Name" autocomplete="off" required>
+                <input type="text" name="lastName" maxlength="40" placeholder="Nom de famille" autocomplete="off" required>
                 <i class="fa fa-fw fa-user"></i>
             </div>
             <label for="email">Email :</label>
@@ -87,33 +108,36 @@
                 <input type="text" name="email" maxlength="100" placeholder="Email" autocomplete="off" required>
                 <i class="fa fa-fw fa-envelope"></i>
             </div>
-            <label for="birthDate">Birthdate : </label>
+            <label for="email">Adresse postale :</label>
             <div class="icon-input">
-                <input type="date" name="birthDate" maxlength="100" autocomplete="off" required>
-                <i class="fa fa-fw fa-calendar"></i>
+                <input type="text" name="adress" maxlength="100" placeholder="Adresse postale" autocomplete="off" required>
+                <i class="fa fa-fw fa-envelope"></i>
             </div>
-            <label for="photo_profil">Profile Picture :</label>
+            <label for="birthDate">Date de naissance : </label>
+            <input type="date" name="birthDate" maxlength="100" autocomplete="off" required>
+            <label for="photo_profil">Photo de profil :</label>
             <div class="icon-input">
                 <input type="file" name="photo_profil" accept="image/*">
                 <i class="fa fa-fw fa-image"></i>
             </div>
-            <label for="password">Password :</label>
+            <label for="password">Mot de passe :</label>
             <div class="icon-input">
-                <input type="password" name="password" id="password" maxlength="20" placeholder="Password" autocomplete="off" required>
+                <input type="password" name="password" id="password" maxlength="20" placeholder="Mot de passe" autocomplete="off" required>
                 <i class="fa fa-fw fa-lock"></i>
             </div>
-            <label for="password">Verify Password :</label>
+            <label for="password">Verification du mot de passe :</label>
             <div class="icon-input">
-                <input type="password" name="passwordCheck" id="passwordCheck" maxlength="20" placeholder="Verify password" autocomplete="off"  required>
+                <input type="password" name="passwordCheck" id="passwordCheck" maxlength="20" placeholder="Verification du mot de passe" autocomplete="off"  required>
                 <i class="fa fa-fw fa-lock"></i>
                 <p id="isIdentical"></p>
             </div>
             <div class="formbutton">
-                <button type="submit" id="formButton" disabled>Envoyer le formulaire</button>
+                <button type="submit" id="formButton" disabled>S'inscrire</button>
             </div>
     </form>
     </div>
     <script>
+        // Check if the two passwords are identical
         $("#passwordCheck").on("keyup", function() {
             if ($('#password').val() !== $('#passwordCheck').val()) {
                 $('#isIdentical').text("Passwords don\'t match");
