@@ -15,20 +15,23 @@
             $birthDate = $_POST['birthDate'];
 
             // Check if the email is unique
-            $sql = $db->prepare('SELECT COUNT(email) AS EmailCount FROM user WHERE email = ?');
-            $sql->execute([$email]);
-            $qry = $sql->fetch(PDO::FETCH_ASSOC);
-            if($qry['EmailCount'] > 0){
+            //$sql = $db->prepare('SELECT COUNT(email) AS EmailCount FROM user WHERE email = ?');
+            $sql = "SELECT email AS EmailCount FROM user WHERE email = ?";
+            $qry = $db->prepare($sql);
+            $result = $qry->execute([$email]);
+            $isAlreadyExist = $qry->fetch(PDO::FETCH_ASSOC);
+            if($isAlreadyExist){
                 echo "<script>alert('Cet email est déjà associé à un compte.');
                 window.location = '../index.php';</script>";
                 return;
             }
 
             // Check if the username is unique
-            $sql = $db->prepare('SELECT COUNT(username) AS UsernameCount FROM user WHERE username = ?');
-            $sql->execute([$username]);
-            $qry = $sql->fetch(PDO::FETCH_ASSOC);
-            if($qry['UsernameCount'] > 0){
+            $sql = "SELECT username AS UsernameCount FROM user WHERE username = ?";
+            $qry = $db->prepare($sql);
+            $result = $qry->execute([$username]);
+            $isAlreadyExist = $qry->fetch(PDO::FETCH_ASSOC);
+            if($isAlreadyExist){
                 echo "<script>alert('Ce pseudo est déjà associé à un compte.');
                 window.location = '../index.php';</script>";
                 return;

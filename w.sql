@@ -108,6 +108,7 @@ CREATE TABLE `user` (
   `password` varchar(50) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
+  `adress` varchar(100) NOT NULL,
   `birth_date` date NOT NULL,
   `profile_picture` mediumblob NOT NULL,
   `isWarn` tinyint(1) NOT NULL,

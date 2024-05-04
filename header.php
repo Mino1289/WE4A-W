@@ -229,15 +229,11 @@
     // Check if the two passwords are identical
     $("#registerVerifyPassword").on("keyup", function() {
       if ($('#registerPassword').val() !== $('#registerVerifyPassword').val()) {
-        $('#isIdentical').text("Passwords don\'t match");
-        $("#isIdentical").css('color', 'red');
-        $("#formButton").prop('disabled', true);
-        $("#formButton").css('backgroundColor', 'red');
+        $('#isIdentical').text("Les mots de passe ne sont pas identiques.").css('color', 'red');
+        $("#formButton").prop('disabled', true).css('backgroundColor', 'red');
       } else {
-        $('#isIdentical').text("Passwords match");
-        $("#isIdentical").css('color', 'green');
-        $("#formButton").prop('disabled', false);
-        $("#formButton").css('backgroundColor', 'green');
+        $('#isIdentical').text("Les mots de passe sont identiques.").css('color', 'green');
+        $("#formButton").prop('disabled', false).css('backgroundColor', 'green');
       }
     });
   </script>
