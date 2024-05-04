@@ -50,7 +50,7 @@
                 return;
             }
             
-            $sql = "INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `adress` `birth_date`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO `user` (`username`, `email`, `password`, `first_name`, `last_name`, `adress`, `birth_date`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             // insert in database
             $rs = $db->prepare($sql);
