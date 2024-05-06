@@ -122,7 +122,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+          <form method="POST" action="<?php echo htmlspecialchars($_SERVER["REQUEST_URI"]); ?>">
             <div class="container text-center">
               <div class="row mb-3">
                 <label for="loginEmail" class="col-sm-2 col-form-label">Email</label>
