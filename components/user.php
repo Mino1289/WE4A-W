@@ -5,11 +5,11 @@
         public $email; 
         public $first_name; 
         public $last_name; 
+        public $adress;
         public $birth_date;
         public $profile_picture;
         public $isWarn; 
         public $isAdmin;
-
 
         function __construct($ID, $username, $email, $first_name, $last_name, $adress, $birth_date, $profile_picture, $isWarn, $isAdmin) {
             $this->ID_user = $ID;
@@ -124,6 +124,6 @@
         $user = $query->fetch(PDO::FETCH_ASSOC);
         
 
-        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'] ,$user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isAdmin']);
+        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isAdmin']);
     }
 ?>
