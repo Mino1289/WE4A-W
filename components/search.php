@@ -1,4 +1,3 @@
-<!-- <link rel="stylesheet" href="./css/search.css"> -->
 
 <div class="container mt-2">
 <form class="d-flex" role="search" method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
