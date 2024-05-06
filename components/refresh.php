@@ -5,7 +5,7 @@ include "db.php";
 global $db;
 
 $response = array("success" => false);
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['ID_user'])) {
     $id_user = $_SESSION['ID_user'];
     $sql = "SELECT * FROM `notification` WHERE ID_user = ? AND isRead = 0 AND isDisplayed = 0 ORDER BY `date` DESC LIMIT 1";
     $qry = $db->prepare($sql);

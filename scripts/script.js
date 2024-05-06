@@ -326,3 +326,24 @@ function loadPosts(type) {
     });
 }
 
+blurbtndisplayed = [];
+function displayBlurBtn() {
+    var elem = $('.sensible, .warned');
+    elem.each(function (idx) {
+        if (blurbtndisplayed.indexOf(idx) == -1) {
+            if ($(this).parent().children().find('.btn-see-blured').length == 0) {
+                $(this).parent().append('<div class="position-absolute top-50 start-50 translate-middle"> \
+                    <button type="button" class="btn btn-warning btn-see-blured">Voir le post</button>\
+                    </div>');
+            }
+            blurbtndisplayed.push(idx);
+        }
+    });
+
+    $('.btn-see-blured').click(function(){
+        $(this).parent().parent().find('.sensible, .warned').removeClass('warned').removeClass('sensible');
+        $(this).parent().remove();
+    });
+}
+
+setTimeout(displayBlurBtn, 200);

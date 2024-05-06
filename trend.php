@@ -11,11 +11,6 @@
             filter: blur(5px);
             transition: .3s;
         }
-
-        div.warned:hover, div.sensible:hover {
-            filter: none;
-            transition: .3s;
-        }
     </style>
 <?php
     include "header.php";
@@ -34,12 +29,14 @@
     }
 ?>
 
-<script>
+<script defer>
 loadPosts("trending");
 window.addEventListener('scroll', function () {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         loadPosts("trending");
+        displayBlurBtn();
     }
+    displayBlurBtn();
 });
 </script>
 </body>
