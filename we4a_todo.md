@@ -1,13 +1,13 @@
 - [x] Arborescence dans les conversations : post original, réaction, réaction à la réaction, etc. C’est théoriquement, potentiellement infini (faire en sorte qu'on voit 1 ou 2 commentaires ?)
 - [x] Ajouter une taille max pour les images des publications
-- [ ] Améliorer l'affichage des images dans les posts
+- [x] Améliorer l'affichage des images dans les posts
 - [x] Ajouter un champ adresse aux utilisateurs
 - [x] Faire en sorte que les noms d'utilisateurs et adresse mail soient uniques
-- [ ] A voir : Modifier la page de profil d'un utilisateur qui est un peu moche
+- [x] A voir : Modifier la page de profil d'un utilisateur qui est un peu moche
 - [x] Voir les réponses directs au post
 - [ ] Optionnel (pour des pts en plus) : faire un système "malin" lorsqu'il y a des chaines de discussions avec 5 commentaires par exemple)
 - [x] Afficher un nombre limité de post sur la page d'un utilisateur et permettre de charger les N suivants avec AJAX
-- [ ] Lorsqu'un utilisateur se trouve sur sa propre page il doit pouvoir créer un nouveau post
+- [x] Lorsqu'un utilisateur se trouve sur sa propre page il doit pouvoir créer un nouveau post
 - [x] Faire une page qui affiche les posts les plus populaires (trier par like)
 - [ ] Améliorer le champ de recherche avec des cases à cocher pour différencier post ou nom d'utilisateur
 - [x] Pour répondre à un post il faudrait un bouton répondre directement sur le post qui ouvre une pop-up en-dessous (idée pour le faire sur le pdf page 12)

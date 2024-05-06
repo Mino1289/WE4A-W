@@ -14,11 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if (isset($_POST["title"]) && !empty($_POST["title"])) {
-        $title = $_POST["title"];
+        $title = htmlspecialchars($_POST["title"]);
+
     }
 
     if (isset($_POST["content"]) && !empty($_POST["content"])) {
-        $content = $_POST["content"];
+        $content = htmlspecialchars($_POST["content"]);
     }
 
     if ($type == "post"){

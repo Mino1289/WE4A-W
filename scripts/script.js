@@ -300,7 +300,7 @@ function unfollow(id) { // for suivi page
 postsList = [];
 function loadPosts(type) {
     var start = $('#posts').children().length;
-    var id = 3;
+    var id = parseInt($('#ID_user').text());
     $.ajax({
         type: "POST",
         url: "components/display.php",

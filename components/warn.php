@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if (isset($_POST["title"]) && !empty($_POST["title"])){
-        $title = $_POST["title"];
+        $title = htmlspecialchars($_POST["title"]);
     } else {
         $response["error"] = "Title is required";
     }
 
     if (isset($_POST["content"]) && !empty($_POST["content"])){
-        $content = $_POST["content"];
+        $content = htmlspecialchars($_POST["content"]);
     } else {
         $response["error"] = "Content is required";
     }

@@ -67,8 +67,8 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <?php
           if (!(isset($_SESSION['ID_user']))) {
-            echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</button>';
-            echo '<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#registerModal">S\'inscrire</button>';
+            echo '<li class="nav-item"><button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</button></li> ';
+            echo '<li class="nav-item"><button type="button" class="btn btn-info mx-2" data-bs-toggle="modal" data-bs-target="#registerModal">S\'inscrire</button></li>  ';
           } else {
             // my page
             echo '<li class="nav-item"><a class="nav-link" href="user.php?id=' . $_SESSION['ID_user'] . '">Ma page</a></li>';
@@ -100,6 +100,7 @@
             if (isset($_SESSION['profile_picture'])) {
               $img = base64_encode($_SESSION['profile_picture']);
               echo '<div class="col">';
+              echo '<p class="visually-hidden" id="ID_user">'.$_SESSION['ID_user'].'</p>';
               echo '<a class="navbar-link active" href="user.php?id=' . $_SESSION['ID_user'] . '">';
               echo '<img class="pdp rounded img" alt="profile_picture" src="data:image/png;base64,' . $img . '" />';
               echo '</a></div>';

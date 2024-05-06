@@ -1,5 +1,5 @@
 <div class="container mb-5">
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
+    <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'])?>" method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
             <label for="newPostTextArea" class="form-label"></label>
