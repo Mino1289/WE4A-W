@@ -16,7 +16,7 @@
 - [x] Avoir une page "Suivis" avec toutes les personnes qu'on suit. A côté de chaque nom, avoir un bouton pour unfollow ces personnes-là.
 - [ ] Optionnel : Mettre un bouton pour follow/unfollow un utilisateur sur le post directement
 - [ ] Demander à saisir 2 fois le mot de passe pour le modifier
-- [ ] Pour la page de stats, afficher : nb followers, following, posts, posts moyen par semaine + mois, likes donnés/reçus avec une moyenne par semaine et mois
+- [x] Pour la page de stats, afficher : nb followers, following, posts, posts moyen par semaine + mois, likes donnés/reçus avec une moyenne par semaine et mois
 - [x] Passer le follow/unfollow en AJAX
 - [ ] Faire le rapport
 
