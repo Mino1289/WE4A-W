@@ -16,8 +16,9 @@ include "header.php";
     <div class="container text-center">
         <h1>Statistiques</h1>
         <div class="row mx-2">
-            <div class="col-6"><h3>Total des interactions</h3><canvas id="interactionstats"></canvas></div>
-            <div class="col-6"><h3>Posts par semaines et par mois</h3><canvas id="postweekstats"></canvas><canvas id="postmonthstats"></canvas></div>
+            <div class="col-4"><h3>Total des interactions</h3><canvas id="interactionstats"></canvas></div>
+            <div class="col-4"></div>
+            <div class="col-4"><h3>Posts par semaines et par mois</h3><canvas id="postweekstats"></canvas><canvas id="postmonthstats"></canvas></div>
         </div>
     </div>
 
