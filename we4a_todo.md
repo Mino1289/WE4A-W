@@ -15,14 +15,14 @@
 - [x] Demander une confirmation avec JS avant d'unfollow quelqu'un
 - [x] Avoir une page "Suivis" avec toutes les personnes qu'on suit. A côté de chaque nom, avoir un bouton pour unfollow ces personnes-là.
 - [ ] Optionnel : Mettre un bouton pour follow/unfollow un utilisateur sur le post directement
-- [ ] Demander à saisir 2 fois le mot de passe pour le modifier
+- [x] Demander à saisir 2 fois le mot de passe pour le modifier
 - [ ] Pour la page de stats, afficher : nb followers, following, posts, posts moyen par semaine + mois, likes donnés/reçus avec une moyenne par semaine et mois
 - [x] Passer le follow/unfollow en AJAX
 - [ ] Faire le rapport
 
 ADMIN :
 - [x] Faire tout le système des notifs pour les avertissements/posts
-- [ ] Normalement lorsqu'un post est sensible on doit mettre un texte disant : "bla bla c'est sensible, t'es sur de vouloir le voir ?" avec un bouton. On le fait ou pas ? 
+- [x] Normalement lorsqu'un post est sensible on doit mettre un texte disant : "bla bla c'est sensible, t'es sur de vouloir le voir ?" avec un bouton. On le fait ou pas ? 
   x > Si on le fait, c'est "absolument [...] par AJAX"
 - [x] Envoyer une notif si on enlève un avertissement d'user/post
 - [ ] Optionnel : Faire en sorte qu'un post supprimé puisse être "désupprimé"

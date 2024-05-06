@@ -138,7 +138,7 @@
                 </div>
               </div>
 
-              <button name="login" value="Submit" type="submit" class="btn btn-primary">S'inscrire</button>
+              <button name="login" value="Submit" type="submit" class="btn btn-primary">Se connecter</button>
               <div class="row mb-3">
                 <a href="register.php">Vous n'avez pas de compte ?</a>
               </div>

@@ -30,6 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $qry = $db->prepare($sql);
         $qry->execute([$_POST["birthDate"], $id]);
     }
+    if (isset($_POST["adress"]) && $_POST["adress"] != null) {
+        $sql = "UPDATE user SET adress=? WHERE ID=?";
+        $qry = $db->prepare($sql);
+        $qry->execute([$_POST["adress"], $id]);
+    }
     if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['size'] != 0) {
         $profile_picture = file_get_contents($_FILES["photo_profil"]["tmp_name"]);
         $sql = "UPDATE user SET profile_picture = ? WHERE ID = ?";
@@ -37,10 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $qry->execute([$profile_picture, $id]); // ID de l'user
         $_SESSION['profile_picture'] = $profile_picture;
     }
-    if (isset($_POST["password"]) && $_POST["password"] != null) {
+    if (isset($_POST["changePassword"]) && $_POST["changePassword"] != null) {
         $sql = "UPDATE user SET password=? WHERE ID=?";
         $qry = $db->prepare($sql);
-        $qry->execute([$_POST["password"], $id]);
+        $qry->execute([$_POST["changePassword"], $id]);
     }
     echo "<script> location.href='../settings.php' </script>";
 }
