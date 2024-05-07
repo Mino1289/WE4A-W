@@ -1,4 +1,3 @@
-<!-- <link rel="stylesheet" href="./css/search.css"> -->
 
 <div class="container mt-2">
 <form class="d-flex" role="search" method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
@@ -39,8 +38,8 @@ if (empty($value)) {
     $n = count($result);
     echo "<div id='search_info'><p> Found ".$n." results for '".$value."'</p></div>";
     foreach ($result as $post) {
-        $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible']);
-        $post->display_post();
+        $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
+        echo $post->display_post();
     }
 // }
 ?>

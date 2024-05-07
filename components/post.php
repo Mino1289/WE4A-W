@@ -45,7 +45,8 @@
             $query->execute([$this->ID_user]);
             $user = $query->fetch(PDO::FETCH_ASSOC);
             
-            $post_html = "<div id='post-".$this->ID."' class='card mb-5";
+            $post_html = "<div class='position-relative'>";
+            $post_html .= "<div id='post-".$this->ID."' class='card mb-5";
             if ($this->ID_post != null) {
                 $post_html .= " mx-5 comment";
             }
@@ -189,7 +190,7 @@
             if ($n > 0) {
                 $post_html .= '<div class="col">
                     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#comment-'.$this->ID.'" aria-expanded="false" aria-controls="collapseExample">
-                    Voir les commentaires
+                    Voir les commentaires ('.$n.')
                     </button>
                     </div>';
             }
@@ -220,7 +221,7 @@
             $query->execute([$this->ID]);
             $comments = $query->fetchAll(PDO::FETCH_ASSOC);
             if ($comments) {
-                $post_html .= '<div class="collapse" id="comment-'.$this->ID.'"><div class="m-4">';
+                $post_html .= '<div class="collapse" id="comment-'.$this->ID.'"><div class="m-2">';
             }
             foreach ($comments as $comment) {
                 $comment = new Post($comment['ID'], $comment['ID_user'], $comment['ID_post'], $comment['displayedcontent'], $comment['date'], $comment['isSensible'], $comment['imageURL']);
@@ -229,6 +230,7 @@
             if ($comments){ 
                 $post_html .= "</div></div>";
             }
+            $post_html .= "</div>";
 
             return $post_html;
         }

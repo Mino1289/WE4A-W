@@ -11,11 +11,6 @@
             filter: blur(5px);
             transition: .3s;
         }
-
-        div.warned:hover, div.sensible:hover {
-            filter: none;
-            transition: .3s;
-        }
     </style>
 <?php
     include "header.php";
@@ -36,21 +31,41 @@
     else {
         echo '<div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+            <h5 class="card-title">Bienvenue sur W, le reseau social de la Win, mais on tolère aussi les Loosers...</h5>
+            <div class="row">
+                <div class="col">
+                    <p class="card-text">
+                        <ul>
+                            <li>Connectez-vous pour voir les posts de vos amis</li>
+                            <li>Partagez vos moments de gloire</li>
+                            <li>Likez et commentez les posts de vos amis</li>
+                        </ul>
+                    </p>
+                </div>
+                <div class="col">
+                    <p>
+                    <ul>
+                        <li><button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#registerModal">Pas de compte ?</button></li>
+                        <li><button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#loginModal">Déjà un compte ?</button></li>
+                    </p>
+                </div>
+            </div>
+          <p class="card-text"><small class="text-body-secondary"></small></p>
         </div>
       </div>';
     }
 ?>
 
-<script>
+<script defer>
 loadPosts("index");
 window.addEventListener('scroll', function () {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         loadPosts("index"); // <- fonction à faire qui call du ajax
+        displayBlurBtn();
     }
+    displayBlurBtn();    
 });
+
 </script>
 
 </body>

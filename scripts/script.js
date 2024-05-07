@@ -300,7 +300,7 @@ function unfollow(id) { // for suivi page
 postsList = [];
 function loadPosts(type) {
     var start = $('#posts').children().length;
-    var id = 3;
+    var id = parseInt($('#ID_user').text());
     $.ajax({
         type: "POST",
         url: "components/display.php",
@@ -326,3 +326,24 @@ function loadPosts(type) {
     });
 }
 
+blurbtndisplayed = [];
+function displayBlurBtn() {
+    var elem = $('.sensible, .warned');
+    elem.each(function (idx) {
+        if (blurbtndisplayed.indexOf(idx) == -1) {
+            if ($(this).parent().children().find('.btn-see-blured').length == 0) {
+                $(this).parent().append('<div class="position-absolute top-50 start-50 translate-middle"> \
+                    <button type="button" class="btn btn-warning btn-see-blured">Voir le post</button>\
+                    </div>');
+            }
+            blurbtndisplayed.push(idx);
+        }
+    });
+
+    $('.btn-see-blured').click(function(){
+        $(this).parent().parent().find('.sensible, .warned').removeClass('warned').removeClass('sensible');
+        $(this).parent().remove();
+    });
+}
+
+setTimeout(displayBlurBtn, 200);

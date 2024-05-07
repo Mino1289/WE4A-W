@@ -26,6 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query->execute([$id_user, $id_post]);
     $dislike = $query->fetch(PDO::FETCH_ASSOC);
 
+    $sql = "SELECT username FROM user WHERE ID = ?";
+    $query = $db->prepare($sql);
+    $query->execute([$id_user]);
+    $username = $query->fetch(PDO::FETCH_ASSOC)["username"];
 
     if ($type == "like") {
         if ($like) {
@@ -35,6 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 __deletefromlikedislike("dislike", $id_user, $id_post, $db);
             }
             $sql = "INSERT INTO `like` (ID_user, ID_post) VALUES (?, ?)";
+            $query = $db->prepare($sql);
+            $query->execute([$id_user, $id_post]);
+
+            $sql = "INSERT INTO notification (ID_user, ID_post, title, content) VALUES (?, ?, 'Like', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> à liké l\'un de vos <a href=\'post.php?id=".$id_post."\'>posts</a>.')";
             $query = $db->prepare($sql);
             $query->execute([$id_user, $id_post]);
         }
@@ -47,6 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 __deletefromlikedislike("like", $id_user, $id_post, $db);
             }
             $sql = "INSERT INTO `dislike` (ID_user, ID_post) VALUES (?, ?)";
+            $query = $db->prepare($sql);
+            $query->execute([$id_user, $id_post]);
+
+            $sql = "INSERT INTO notification (ID_user, ID_post, title, content) VALUES (?, ?, 'Dislike', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> à disliké l\'un de vos <a href=\'post.php?id=".$id_post."\'>posts</a>.')";
             $query = $db->prepare($sql);
             $query->execute([$id_user, $id_post]);
         }

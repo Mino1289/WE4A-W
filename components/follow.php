@@ -42,6 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = $db->prepare($sql);
     $query->execute([$id_user, $id_userpage]);
     $follow = $query->fetch(PDO::FETCH_ASSOC);
+
+    $sql = "SELECT username FROM user WHERE ID = ?";
+    $query = $db->prepare($sql);
+    $query->execute([$id_user]);
+    $username = $query->fetch(PDO::FETCH_ASSOC)["username"];
+
     if ($follow) {
         $sql = "DELETE FROM follow WHERE ID_user = ? AND ID_followed = ?";
         $query = $db->prepare($sql);
@@ -49,6 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $responde['followID'] = $follow['ID'];
         $response['following'] = false;
+
+        $sql = "INSERT INTO notification (ID_user, title, content) VALUES (?, 'Follow', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> à commencé à vous suivre.')";
+        $query = $db->prepare($sql);
+        $query->execute([$id_userpage]);
+
     } else {
         $sql = "INSERT INTO follow (ID_user, ID_followed) VALUES (?, ?)";
         $query = $db->prepare($sql);

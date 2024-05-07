@@ -5,17 +5,19 @@
         public $email; 
         public $first_name; 
         public $last_name; 
+        public $adress;
         public $birth_date;
         public $profile_picture;
         public $isWarn; 
         public $isAdmin;
 
-        function __construct($ID, $username, $email, $first_name, $last_name, $birth_date, $profile_picture, $isWarn, $isAdmin) {
+        function __construct($ID, $username, $email, $first_name, $last_name, $adress, $birth_date, $profile_picture, $isWarn, $isAdmin) {
             $this->ID_user = $ID;
             $this->username = $username;
             $this->email = $email;
             $this->first_name = $first_name;
             $this->last_name = $last_name;
+            $this->adress = $adress;
             $this->birth_date = $birth_date;
             $this->profile_picture = $profile_picture;
             $this->isWarn = $isWarn;
@@ -27,44 +29,51 @@
             include 'components/post.php';
             global $db;
 
-            echo "<title> W | ".$this->username ."</title>";
-            echo "<h3 id='username'>".$this->username."</h3>";
-            echo "<div id='information_user' class='m-1'>";
-            echo "<p>Name : ".$this->username."</p>";
-            echo "<p>Firstname : ".$this->first_name."</p>";
-            echo "<p>Mail : ".$this->email."</p>";
+            echo "<div class='container text-center mt-2'>";
+            echo "<div class=''><img src='data:image/png;base64,". base64_encode($this->profile_picture) ."' class='img-fluid' alt='profile picture'></div>";
+            echo "<div class=''><h1>". $this->username ."</h1></div>";
+            echo "<div class=''><p>". $this->first_name ." ". $this->last_name ."</p></div>";
+            echo "<div class='row'>";
 
             $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_followed = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $followers = $query->fetch(PDO::FETCH_ASSOC);
 
-            echo "<p>Followers : ". $followers['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
+            echo "<div class='col'><p class='m-0'>Followers : ". $followers['n'] ."</p></div>"; //TODO: click on the number to display the list of followers/followings
             
             $sql = "SELECT COUNT(*) AS n FROM follow WHERE ID_user = ?";
             $query = $db->prepare($sql);
             $query->execute([$this->ID_user]);
             $followings = $query->fetch(PDO::FETCH_ASSOC);
 
-            echo "<p>Followings : ". $followings['n'] ."</p>"; //TODO: click on the number to display the list of followers/followings
-
-            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1 && $_SESSION['ID_user'] != $this->ID_user) {
-                echo "add a btn to make you admin !";
+            echo "<div class='col'><p class='m-0'>Followings : ". $followings['n'] ."</p></div>"; //TODO: click on the number to display the list of followers/followings
+            echo "</div>";
+            echo "<div class='row my-2'>";
+            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1 && $_SESSION['ID_user'] != $this->ID_user && $this->isAdmin == 0) {
+                echo "<div class='col-6'>
+                <form action='components/setadmin.php' method='post'>
+                <button id='warn-btn' class='btn btn-warning px-3'>Set Admin</button>
+                <input type='hidden' name='ID_user' value='".$this->ID_user."'>
+                </form>
+                </div>";
             }
             if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] != $this->ID_user) {
                 $sql = "SELECT * FROM follow WHERE ID_user = ? AND ID_followed = ?";
                 $query = $db->prepare($sql);
                 $query->execute([$_SESSION['ID_user'], $this->ID_user]);
                 $follow = $query->fetch(PDO::FETCH_ASSOC);
-
-                echo "<div class='col-1'>
-                <button id='follow-btn' class='form-control btn btn-";
+                if (!(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1 && $_SESSION['ID_user'] != $this->ID_user && $this->isAdmin == 0)) {
+                    echo "<div class='col-6'></div>";
+                }
+                echo "<div class='col-6'>";
+                echo "<button id='follow-btn' class='btn btn-";
                 if ($follow) {
                     echo "danger";
                 } else {
                     echo "success";
                 }
-                echo " follow-btn' onclick='follow(".$this->ID_user.")'>";
+                echo " follow-btn px-3' onclick='follow(".$this->ID_user.")'>";
                 if ($follow) {
                     echo "Unfollow";
                 } else {
@@ -72,19 +81,29 @@
                 }
                 echo "</button></div>";
             } elseif (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
-                echo "<div class='col-1 m-1'><a href='followed.php'>
-                <button value='Followed' class='btn btn-primary'>Suivi</button></a>
+                echo "<div class='col'><a href='followers.php'>
+                <button value='Followers' class='btn btn-primary'>Follower</button></a>
                 </div>";
-                echo "<div class='col-1 m-1'><a href='statistic.php'>
+
+                echo "<div class='col'><a href='followings.php'>
+                <button value='Followings' class='btn btn-primary'>Suivi</button></a>
+                </div>";
+                echo "</div>"; 
+                echo "<div class='row my-2'>";
+                echo "<div class='col'><a href='statistic.php'>
                 <button value='Statistics' class='btn btn-primary'>Statistiques</button></a>
                 </div>";
-                echo "<div class='col-1 m-1'><a href='settings.php'>
+                echo "<div class='col'><a href='settings.php'>
                 <button value='Settings' class='btn btn-primary'>Paramètres</button></a>
                 </div>";
+                echo "</div>";
             }
 
             echo "</div>";
-            echo "<div id='posts'>";
+            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
+                include 'components/newpost.php';
+            }
+            echo "<div id='posts' class='mt-4'>";
             echo "</div>";
         }
 
@@ -105,6 +124,6 @@
         $user = $query->fetch(PDO::FETCH_ASSOC);
         
 
-        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isAdmin']);
+        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isAdmin']);
     }
 ?>
