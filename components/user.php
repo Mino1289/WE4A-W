@@ -8,10 +8,11 @@
         public $adress;
         public $birth_date;
         public $profile_picture;
-        public $isWarn; 
+        public $isWarn;
+        public $isBan;
         public $isAdmin;
 
-        function __construct($ID, $username, $email, $first_name, $last_name, $adress, $birth_date, $profile_picture, $isWarn, $isAdmin) {
+        function __construct($ID, $username, $email, $first_name, $last_name, $adress, $birth_date, $profile_picture, $isWarn, $isBan, $isAdmin) {
             $this->ID_user = $ID;
             $this->username = $username;
             $this->email = $email;
@@ -21,6 +22,7 @@
             $this->birth_date = $birth_date;
             $this->profile_picture = $profile_picture;
             $this->isWarn = $isWarn;
+            $this->isBan = $isBan;
             $this->isAdmin = $isAdmin;
             $_SESSION['ID_user_page'] = $ID;
         }
@@ -100,11 +102,22 @@
             }
 
             echo "</div>";
-            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
+            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user && $this->isBan == 0) {
                 include 'components/newpost.php';
             }
-            echo "<div id='posts' class='mt-4'>";
-            echo "</div>";
+            if ($this->isBan == 1) {
+                echo "<div class='alert alert-danger text-center m-3 mt-4'>";
+                if ($this->ID_user == $_SESSION['ID_user']) {
+                    echo "<h2>You are banned !</h2>";
+                    echo "<p>This is the only page you can access.</p></div>";
+                } else {
+                    echo "<h2>This user is banned !</h2></div>";
+                }
+            } 
+            if ($this->isBan == 0 || $this->ID_user == $_SESSION['ID_user'] || $_SESSION['isAdmin'] == 1) {
+                echo "<div id='posts' class='mt-4'>";
+                echo "</div>";
+            }
         }
 
         function isAdmin(): bool{
@@ -124,6 +137,6 @@
         $user = $query->fetch(PDO::FETCH_ASSOC);
         
 
-        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isAdmin']);
+        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isBan'], $user['isAdmin']);
     }
 ?>

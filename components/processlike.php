@@ -31,6 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query->execute([$id_user]);
     $username = $query->fetch(PDO::FETCH_ASSOC)["username"];
 
+    $sql = "SELECT ID_user FROM post WHERE ID = ?";
+    $query = $db->prepare($sql);
+    $query->execute([$id_post]);
+    $ID_tosendthenotif = $query->fetch(PDO::FETCH_ASSOC)["ID_user"];
+
     if ($type == "like") {
         if ($like) {
             __deletefromlikedislike("like", $id_user, $id_post, $db);
@@ -42,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $query = $db->prepare($sql);
             $query->execute([$id_user, $id_post]);
 
-            $sql = "INSERT INTO notification (ID_user, ID_post, title, content) VALUES (?, ?, 'Like', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> à liké l\'un de vos <a href=\'post.php?id=".$id_post."\'>posts</a>.')";
+            $sql = "INSERT INTO notification (ID_user, ID_post, title, content) VALUES (?, ?, 'Like', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> a liké l\'un de vos <a href=\'post.php?id=".$id_post."\'>posts</a>.')";
             $query = $db->prepare($sql);
-            $query->execute([$id_user, $id_post]);
+            $query->execute([$ID_tosendthenotif, $id_post]);
         }
     } 
     if ($type == "dislike") {
@@ -58,9 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $query = $db->prepare($sql);
             $query->execute([$id_user, $id_post]);
 
-            $sql = "INSERT INTO notification (ID_user, ID_post, title, content) VALUES (?, ?, 'Dislike', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> à disliké l\'un de vos <a href=\'post.php?id=".$id_post."\'>posts</a>.')";
+            $sql = "INSERT INTO notification (ID_user, ID_post, title, content) VALUES (?, ?, 'Dislike', '<a href=\'user.php?id=".$id_user."\'>".$username."</a> a disliké l\'un de vos <a href=\'post.php?id=".$id_post."\'>posts</a>.')";
             $query = $db->prepare($sql);
-            $query->execute([$id_user, $id_post]);
+            $query->execute([$ID_tosendthenotif, $id_post]);
         }
     }
     $sql = "SELECT COUNT(*) AS n FROM `like` WHERE ID_post = ?";

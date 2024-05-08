@@ -8,6 +8,12 @@
 
   <?php
   session_start();
+  if (isset($_SESSION['ID_user']) && $_SESSION['isBanned'] == 1 && $_SERVER['REQUEST_URI'] != "/w/user.php?id=" . $_SESSION['ID_user']) {
+    header("Location: user.php?id=" . $_SESSION['ID_user']);
+    // echo "<script>alert('".$_SERVER['REQUEST_URI']."')</script>";
+  } elseif (!isset($_SESSION['ID_user']) && $_SERVER['REQUEST_URI'] != "/w/index.php") {
+    header("Location: index.php");
+  }
   include 'components/db.php';
   include 'components/functions.php';
   global $db;
@@ -41,7 +47,7 @@
         $passwordErr = "<script>validate('password1');</script>
                 <p class='error_message'>Wrong password</p>";
       } else {
-        $sql = "SELECT username, ID, isAdmin FROM user WHERE password=? AND email= ?";
+        $sql = "SELECT username, ID, isAdmin, isBan FROM user WHERE password=? AND email= ?";
         $qry = $db->prepare($sql);
         $qry->execute([$password, $email]);
         $infos = $qry->fetch();
@@ -49,9 +55,12 @@
         $_SESSION['ID_user'] = $infos["ID"];
         $_SESSION['isAdmin'] = $infos["isAdmin"];
         $_SESSION['profile_picture'] = __findPP($email, $password, $db);
-        // $page = $_SERVER['HTTP_REFERER'];
-        // header("Location: $page");
+        $_SESSION['isBanned'] = $infos["isBan"];
 
+        if ($_SESSION['isBanned'] == 1) {
+          echo "<script>alert('You are banned')</script>";
+          header("Location: user.php?id=" . $_SESSION['ID_user']);
+        }
       }
     }
   }
@@ -243,6 +252,35 @@
 
 
   <script src="scripts/script.js"></script>
-
+  <?php
+  if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
+    echo '<script>
+    function ban(id) {
+      // no time to do ban temp
+      var title = prompt("Please provide a title:", "Warning");
+      var message = prompt("Please provide a reason:", "User / Post has been warned.");
+      if (title == null || message == null) {
+          return
+      }
+      $.ajax({
+          type: "POST",
+          url: "components/delete.php",
+          data: {
+              id: id,
+              type: "user",
+              title: title,
+              content: message
+          },
+          datatype: "json",
+          success: function(result) {
+              if (result.success) {
+  
+              }
+          }
+      })
+  }
+    </script>';
+  }
+  ?>
 
 </header>

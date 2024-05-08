@@ -12,10 +12,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['ID_user'])) {
     $qry->execute([$id_user]);
     $result = $qry->fetchAll(PDO::FETCH_ASSOC);
 
+    $sql = "SELECT isBan FROM user WHERE ID = ?";
+    $qry = $db->prepare($sql);
+    $qry->execute([$id_user]);
+    $isBanned = $qry->fetch(PDO::FETCH_ASSOC);
+
     $n = count($result);
     $response["n"] = $n;
     $response["notifications"] = $result;
     $response["success"] = true;
+    $response["isBanned"] = $isBanned["isBan"];
+    $response["ID_user"] = $id_user;
 }  
 echo json_encode($response);
 ?>

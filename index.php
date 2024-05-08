@@ -27,8 +27,19 @@
 
             echo '<div id="posts"></div>';
         }
-    }
-    else {
+        ?>
+<script defer>
+    loadPosts("index");
+    window.addEventListener('scroll', function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadPosts("index"); // <- fonction à faire qui call du ajax
+            displayBlurBtn();
+        }
+        displayBlurBtn();
+    });
+</script>
+<?php
+    } else {
         echo '<div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Bienvenue sur W, le reseau social de la Win, mais on tolère aussi les Loosers...</h5>
@@ -55,18 +66,6 @@
       </div>';
     }
 ?>
-
-<script defer>
-loadPosts("index");
-window.addEventListener('scroll', function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        loadPosts("index"); // <- fonction à faire qui call du ajax
-        displayBlurBtn();
-    }
-    displayBlurBtn();    
-});
-
-</script>
 
 </body>
 </html>

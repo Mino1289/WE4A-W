@@ -33,9 +33,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
          
         $response["success"] = true;
     } elseif ($type == "user") {
-        $sql = "DELETE FROM user WHERE ID=?";
+        $sql = "UPDATE user SET isBan = ? WHERE ID=?";
         $qry = $db->prepare($sql);
-        $qry->execute([$id]);
+        $qry->execute([1, $id]);
+
+        $sql = "UPDATE post SET isDeleted = ? WHERE ID_user = ?";
+        $qry = $db->prepare($sql);
+        $qry->execute([1, $id]);
+
+        $sql = "INSERT INTO `notification` (ID_user, title, content) VALUES(?, ?, ?)";
+        $qry = $db->prepare($sql);
+        $qry->execute([$id, $title, $content]);
+
+        $_SESSION['isBanned'] = 1;
         $response["success"] = true;
     }
 }

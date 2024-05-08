@@ -11,10 +11,6 @@
             transition: .3s;
         }
 
-        div.warned:hover, div.sensible:hover {
-            filter: none;
-            transition: .3s;
-        }
     </style>
     <?php
     include 'header.php';
