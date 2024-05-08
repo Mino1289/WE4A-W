@@ -33,7 +33,6 @@
     window.addEventListener('scroll', function () {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
             loadPosts("index"); // <- fonction à faire qui call du ajax
-            displayBlurBtn();
         }
         displayBlurBtn();
     });

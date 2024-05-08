@@ -37,6 +37,7 @@
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
             loadPosts("user");
         }
+        displayBlurBtn();
     });
 </script>
 </body>

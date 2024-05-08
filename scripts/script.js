@@ -343,25 +343,21 @@ function loadPosts(type) {
     });
 }
 
-// blurbtndisplayed = [];
 function displayBlurBtn() {
     var elem = $('.sensible, .warned');
-    // console.log(elem)
-    elem.each((idx) => {
-        // if (blurbtndisplayed.indexOf(idx) == -1) {
-            if ($(this).parent().children().find('.btn-see-blured').length == 0) {
-                $(this).parent().append('<div class="position-absolute top-50 start-50 translate-middle"> \
-                    <button type="button" class="btn btn-warning btn-see-blured">Voir le post</button>\
-                    </div>');
-            }
-        //     blurbtndisplayed.push(idx);
-        // }
-    });
+    elem.each((idx, e) => {
+        if ($(e).parent().children().find('.btn-see-blured').length > 0)
+            return;
+        else {
+            $(e).parent().append('<div class="position-absolute top-50 start-50 translate-middle"> \
+                            <button type="button" class="btn btn-warning btn-see-blured">Voir le contenu</button>\
+                            </div>');
 
+        }
+    })
     $('.btn-see-blured').click(function () {
         $(this).parent().parent().find('.sensible, .warned').removeClass('warned').removeClass('sensible');
         $(this).parent().remove();
     });
 }
-
-setTimeout(displayBlurBtn, 200);
+// setTimeout(displayBlurBtn, 200);

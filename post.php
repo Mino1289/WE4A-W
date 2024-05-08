@@ -10,11 +10,6 @@
             filter: blur(5px);
             transition: .3s;
         }
-
-        div.warned:hover, div.sensible:hover {
-            filter: none;
-            transition: .3s;
-        }
     </style>
     <?php
     include 'header.php';
@@ -37,5 +32,8 @@
     }
     ?>
     
+    <script defer>
+        setTimeout(displayBlurBtn(), 1000);
+    </script>
 </body>
 </html>
