@@ -8,12 +8,6 @@
 
   <?php
   session_start();
-  if (isset($_SESSION['ID_user']) && $_SESSION['isBanned'] == 1 && $_SERVER['REQUEST_URI'] != "/w/user.php?id=" . $_SESSION['ID_user']) {
-    header("Location: user.php?id=" . $_SESSION['ID_user']);
-    // echo "<script>alert('".$_SERVER['REQUEST_URI']."')</script>";
-  } elseif (!isset($_SESSION['ID_user']) && $_SERVER['REQUEST_URI'] != "/w/index.php") {
-    header("Location: index.php");
-  }
   include 'components/db.php';
   include 'components/functions.php';
   global $db;
@@ -84,10 +78,6 @@
             echo '<li class="nav-item"><a class="nav-link" href="./fil.php">Mon fil</a></li>';
             echo '<li class="nav-item"><a class="nav-link" href="./trend.php">Tendances</a></li>';
             echo '<li class="nav-item"><a class="nav-link" href="./components/disconnect.php">Déconnexion</a></li>';
-
-            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']) {
-              echo '<li class="nav-item"><a class="nav-link" href="./admin.php">Admin</a></li>';
-            }
           }
           echo '</ul>';
           if (isset($_SESSION['ID_user'])) {

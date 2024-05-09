@@ -63,6 +63,7 @@
             if ($rs) {
                 $_SESSION["ID_user"] = $ID;
                 $_SESSION['isAdmin'] = 0;
+                $_SESSION['isBanned'] = 0;
                 header("Location: ../user.php?id=" . $ID);  
             }
         }
