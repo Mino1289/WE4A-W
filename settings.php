@@ -116,7 +116,7 @@ if (isset($_SESSION['ID_user'])) {
                 <p id="arePasswordsIdentical"></p>
               </div>
               
-              <button class="btn btn-primary" type="submit" id="submitChangePassword">Changer de mot de passe</button>
+              <button disabled class="btn btn-primary" type="submit" id="submitChangePassword">Changer de mot de passe</button>
             </div>
         </div>
     </div>
@@ -131,10 +131,10 @@ if (isset($_SESSION['ID_user'])) {
     $("#changeVerifyPassword").on("keyup", function() {
       if ($('#changePassword').val() !== $('#changeVerifyPassword').val()) {
         $('#arePasswordsIdentical').text("Les mots de passe ne sont pas identiques.").css('color', 'red');
-        $("#submitChangePassword").prop('disabled', true).css('backgroundColor', 'red');
+        $("#submitChangePassword").prop('disabled', true).removeClass('btn-primary').addClass('btn-danger');
       } else {
         $('#arePasswordsIdentical').text("Les mots de passe sont identiques.").css('color', 'green');
-        $("#submitChangePassword").prop('disabled', false).css('backgroundColor', 'green');
+        $("#submitChangePassword").prop('disabled', false).removeClass('btn-danger').addClass('btn-success');
       }
     });
   </script>

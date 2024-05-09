@@ -105,20 +105,27 @@
             if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user && $this->isBan == 0) {
                 include 'components/newpost.php';
             }
-            if ($this->isBan == 1) {
-                echo "<div class='alert alert-danger text-center m-3 mt-4'>";
-                if ($this->ID_user == $_SESSION['ID_user']) {
-                    echo "<h2>You are banned !</h2>";
-                    echo "<p>This is the only page you can access.</p></div>";
-                } else {
-                    echo "<h2>This user is banned !</h2></div>";
+            if(isset($_SESSION['ID_user'])){
+                if ($this->isBan == 1) {
+                    echo "<div class='alert alert-danger text-center m-3 mt-4'>";
+                    if ($this->ID_user == $_SESSION['ID_user']) {
+                        echo "<h2>Vous êtes banni !</h2>";
+                        echo "<p>Ceci est la seule page à laquelle vous pouvez accéder.</p></div>";
+                    } else {
+                        echo "<h2>Cet utilisateur est banni !</h2></div>";
+                    }
+                } 
+                if ($this->isBan == 0 || $this->ID_user == $_SESSION['ID_user'] || $_SESSION['isAdmin'] == 1) {
+                    echo "<div id='posts' class='mt-4'>";
+                    echo "</div>";
                 }
-            } 
-            if ($this->isBan == 0 || $this->ID_user == $_SESSION['ID_user'] || $_SESSION['isAdmin'] == 1) {
-                echo "<div id='posts' class='mt-4'>";
-                echo "</div>";
+            } else {
+                if ($this->isBan == 1) {
+                    echo "<div class='alert alert-danger text-center m-3 mt-4'>";
+                    echo "<h2>Cet utilisateur est banni !</h2></div>";
             }
         }
+    }
 
         function isAdmin(): bool{
             if($this -> isAdmin == 1){

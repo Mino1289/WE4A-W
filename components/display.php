@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "SELECT ID FROM post 
             WHERE ID_post IS NULL
                 AND ID_user = ?
+                AND isDeleted = 0
             ORDER BY date DESC 
             LIMIT 5 OFFSET $start";
     }

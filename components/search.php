@@ -1,8 +1,8 @@
 
 <div class="container mt-2">
 <form class="d-flex" role="search" method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
-    <input class="form-control me-2" type="search" placeholder="Search on W" aria-label="Search" name="value" maxlength="32" autocomplete="off" required>
-    <button class="btn btn-outline" type="submit" value="Research" name="search">Search</button>
+    <input class="form-control me-2" type="search" placeholder="Chercher sur W" aria-label="Search" name="value" maxlength="32" autocomplete="off" required>
+    <button class="btn btn-outline" type="submit" value="Research" name="search">Chercher</button>
 </form>
 </div>
 
@@ -36,9 +36,9 @@ if (empty($value)) {
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
     $n = count($result);
-    echo "<div id='search_info'><p> Found ".$n." results for '".$value."'</p></div>";
+    echo "<div id='search_info'><p> ".$n." résultats ont été trouvé pour '".$value."'</p></div>";
     foreach ($result as $post) {
-        $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['imageURL']);
+        $post = new Post($post['ID'], $post['ID_user'], $post['ID_post'], $post['displayedcontent'], $post['date'], $post['isSensible'], $post['isDeleted'], $post['imageURL']);
         echo $post->display_post();
     }
 // }
