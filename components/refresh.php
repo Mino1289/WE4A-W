@@ -17,6 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['ID_user'])) {
     $qry->execute([$id_user]);
     $isBanned = $qry->fetch(PDO::FETCH_ASSOC);
 
+    if ($isBanned["isBan"] == 1) {
+        $_SESSION['isBanned'] = 1;
+    }
+
     $n = count($result);
     $response["n"] = $n;
     $response["notifications"] = $result;

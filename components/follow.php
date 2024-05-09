@@ -36,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($id_user == $id_userpage) {
         $response["error"] = "You can't follow yourself";
+        echo json_encode($response);
+        return;
     }
 
     $sql = "SELECT * FROM follow WHERE ID_user = ? AND ID_followed = ?";

@@ -282,9 +282,12 @@ function follow(id) { // for user profile page
             result = JSON.parse(result);
             if (result.success) {
                 if (result.following) {
-                    $('#follow-btn').text("Unfollow").removeClass("btn-success").addClass("btn-danger");
+                    $(`#follow-btn-${id}`).text("Ne plus suivre").removeClass("btn-success").addClass("btn-danger");
+                    $('#follow-btn').text("Ne plus suivre").removeClass("btn-success").addClass("btn-danger");
                 } else {
-                    $('#follow-btn').text("Follow").removeClass("btn-danger").addClass("btn-success");
+                    $('#follow-btn').text("Suivre").removeClass("btn-danger").addClass("btn-success");
+                    $(`#follow-btn-${id}`).text("Suivre").removeClass("btn-danger").addClass("btn-success");
+
                 }
             }
         }
