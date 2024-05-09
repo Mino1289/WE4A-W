@@ -52,8 +52,9 @@
         $_SESSION['isBanned'] = $infos["isBan"];
 
         if ($_SESSION['isBanned'] == 1) {
-          echo "<script>alert('You are banned')</script>";
-          header("Location: user.php?id=" . $_SESSION['ID_user']);
+          //echo "<script>alert('You are banned')</script>";
+          //header("Location: user.php?id=" . $_SESSION['ID_user']);
+          //exit();
         }
       }
     }
@@ -72,11 +73,13 @@
           if (!(isset($_SESSION['ID_user']))) {
             echo '<li class="nav-item"><button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</button></li> ';
             echo '<li class="nav-item"><button type="button" class="btn btn-info mx-2" data-bs-toggle="modal" data-bs-target="#registerModal">S\'inscrire</button></li>  ';
-          } else {
+          } elseif ($_SESSION['isBanned'] == 0) {
             // my page
             echo '<li class="nav-item"><a class="nav-link" href="user.php?id=' . $_SESSION['ID_user'] . '">Ma page</a></li>';
             echo '<li class="nav-item"><a class="nav-link" href="./fil.php">Mon fil</a></li>';
             echo '<li class="nav-item"><a class="nav-link" href="./trend.php">Tendances</a></li>';
+            echo '<li class="nav-item"><a class="nav-link" href="./components/disconnect.php">Déconnexion</a></li>';
+          } elseif ($_SESSION['isBanned'] == 1) {
             echo '<li class="nav-item"><a class="nav-link" href="./components/disconnect.php">Déconnexion</a></li>';
           }
           echo '</ul>';

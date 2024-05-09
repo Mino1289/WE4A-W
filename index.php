@@ -16,6 +16,7 @@
     include "header.php";
 
     if (isset($_SESSION['ID_user'])) {
+        if($_SESSION['isBanned'] == 0){
         // create a search bar
         include "components/search.php";
         
@@ -27,6 +28,9 @@
 
             echo '<div id="posts"></div>';
         }
+    } else {
+        ?> <script>window.location.href = "user.php?id=" + <?php echo $_SESSION['ID_user']; ?>;</script> <?php
+    }
         ?>
 <script defer>
     loadPosts("index");

@@ -209,10 +209,6 @@ setInterval(function () {
 
                         exeNotif(lastnotif.ID, "displayed")
                     }
-                    if (result.isBanned) {
-                        alert("Vous avez été banni. Vous allez être redirigé vers votre page personnelle.");
-                        window.location.href = "user.php?id=" + result.ID_user;
-                    }
                 }
             }
         }
