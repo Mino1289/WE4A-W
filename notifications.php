@@ -34,7 +34,7 @@
         $qry = $db->prepare($sql);
         $qry->execute();
 
-        $sql = "UPDATE notification SET isRead = 1 WHERE ID_user = ? AND isRead = 0";
+        $sql = "UPDATE notification SET isDisplayed = 1 WHERE ID_user = ? AND isRead = 0";
         $qry = $db->prepare($sql);
         $qry->execute([$ID_user]);
         
