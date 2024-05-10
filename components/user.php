@@ -1,3 +1,10 @@
+<style>
+        #profile_picture{
+            width: 5em;
+            height: 5em;
+            margin: 0 auto;
+        } 
+</style>
 <?php
     class User {
         public $ID_user; 
@@ -32,7 +39,7 @@
             global $db;
 
             echo "<div class='container text-center mt-2'>";
-            echo "<div class=''><img src='data:image/png;base64,". base64_encode($this->profile_picture) ."' class='img-fluid' alt='profile picture'></div>";
+            echo "<div class='' id='profile_picture'><img src='data:image/png;base64,". base64_encode($this->profile_picture) ."' class='img-fluid' alt='profile picture'></div>";
             echo "<div class=''><h1>". $this->username ."</h1></div>";
             echo "<div class=''><p>". $this->first_name ." ". $this->last_name ."</p></div>";
             echo "<div class='row'>";
