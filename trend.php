@@ -34,13 +34,15 @@
 ?>
 
 <script defer>
-loadPosts("trending");
-window.addEventListener('scroll', function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        loadPosts("trending");
+    loadPosts("trending");
+    setTimeout(() => {
+            displayBlurBtn();
+    }, 1000);
+    window.addEventListener('scroll', function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadPosts("trending");
+        }
         displayBlurBtn();
-    }
-    displayBlurBtn();
 });
 </script>
 </body>

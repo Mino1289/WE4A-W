@@ -33,6 +33,9 @@
     ?>
 <script>
     loadPosts("user");
+    setTimeout(() => {
+        displayBlurBtn();
+    }, 1000);
     window.addEventListener('scroll', function () {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
             loadPosts("user");

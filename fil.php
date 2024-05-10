@@ -44,14 +44,16 @@
 ?>
 
 <script defer>
-loadPosts("fil");
-window.addEventListener('scroll', function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        loadPosts("fil");
+    loadPosts("fil");
+    setTimeout(() => {
         displayBlurBtn();
-    }
-    displayBlurBtn();
-});
+    }, 1000);
+    window.addEventListener('scroll', function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadPosts("fil");
+        }
+        displayBlurBtn();
+    });
 </script>
 </body>
 </html>
