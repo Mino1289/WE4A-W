@@ -8,10 +8,11 @@
         public $adress;
         public $birth_date;
         public $profile_picture;
-        public $isWarn; 
+        public $isWarn;
+        public $isBan;
         public $isAdmin;
 
-        function __construct($ID, $username, $email, $first_name, $last_name, $adress, $birth_date, $profile_picture, $isWarn, $isAdmin) {
+        function __construct($ID, $username, $email, $first_name, $last_name, $adress, $birth_date, $profile_picture, $isWarn, $isBan, $isAdmin) {
             $this->ID_user = $ID;
             $this->username = $username;
             $this->email = $email;
@@ -21,6 +22,7 @@
             $this->birth_date = $birth_date;
             $this->profile_picture = $profile_picture;
             $this->isWarn = $isWarn;
+            $this->isBan = $isBan;
             $this->isAdmin = $isAdmin;
             $_SESSION['ID_user_page'] = $ID;
         }
@@ -30,7 +32,7 @@
             global $db;
 
             echo "<div class='container text-center mt-2'>";
-            echo "<div class=''><img src='data:image/png;base64,". base64_encode($this->profile_picture) ."' class='img-fluid' alt='profile picture'></div>";
+            echo "<div class='' id='profile_picture'><img src='data:image/png;base64,". base64_encode($this->profile_picture) ."' class='img-fluid' alt='profile picture'></div>";
             echo "<div class=''><h1>". $this->username ."</h1></div>";
             echo "<div class=''><p>". $this->first_name ." ". $this->last_name ."</p></div>";
             echo "<div class='row'>";
@@ -100,12 +102,30 @@
             }
 
             echo "</div>";
-            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user) {
+            if (isset($_SESSION['ID_user']) && $_SESSION['ID_user'] == $this->ID_user && $this->isBan == 0) {
                 include 'components/newpost.php';
             }
-            echo "<div id='posts' class='mt-4'>";
-            echo "</div>";
+            if(isset($_SESSION['ID_user'])){
+                if ($this->isBan == 1) {
+                    echo "<div class='alert alert-danger text-center m-3 mt-4'>";
+                    if ($this->ID_user == $_SESSION['ID_user']) {
+                        echo "<h2>Vous êtes banni !</h2>";
+                        echo "<p>Ceci est la seule page à laquelle vous pouvez accéder.</p></div>";
+                    } else {
+                        echo "<h2>Cet utilisateur est banni !</h2></div>";
+                    }
+                } 
+                if ($this->isBan == 0 || $this->ID_user == $_SESSION['ID_user'] || $_SESSION['isAdmin'] == 1) {
+                    echo "<div id='posts' class='mt-4'>";
+                    echo "</div>";
+                }
+            } else {
+                if ($this->isBan == 1) {
+                    echo "<div class='alert alert-danger text-center m-3 mt-4'>";
+                    echo "<h2>Cet utilisateur est banni !</h2></div>";
+            }
         }
+    }
 
         function isAdmin(): bool{
             if($this -> isAdmin == 1){
@@ -124,6 +144,6 @@
         $user = $query->fetch(PDO::FETCH_ASSOC);
         
 
-        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isAdmin']);
+        return new User($user['ID'], $user['username'], $user['email'], $user['first_name'], $user['last_name'], $user['adress'], $user['birth_date'], $user['profile_picture'], $user['isWarn'], $user['isBan'], $user['isAdmin']);
     }
 ?>

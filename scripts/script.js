@@ -83,6 +83,9 @@ function dislike(id_post) {
 function warn(id, type) {
     var title = prompt("Please provide a title:", "Warning");
     var message = prompt("Please provide a reason:", "User / Post has been warned.");
+    if (title == null || message == null) {
+        return
+    }
     $.ajax({
         type: "POST",
         url: "components/warn.php",
@@ -123,6 +126,9 @@ function warn(id, type) {
 function delet(id, type) {
     var title = prompt("Please provide a title:", "Delete post");
     var message = prompt("Please provide a reason:", "One of your posts has been deleted.");
+    if (title == null || message == null) {
+        return
+    }
     $.ajax({
         type: "POST",
         url: "components/delete.php",
@@ -229,22 +235,29 @@ function exeNotif(id, type) {
         success: function (result) {
             result = JSON.parse(result);
             if (result.success) {
+                var counter = $('#notif-nbr');
                 if (type == "read") {
                     $(`#notif-${id}`).removeClass('table-primary');
                     $(`#btn-mr-notif-${id}`).remove();
-                    $('#notif-nbr').text(parseInt($('#notif-nbr').text()) - 1);
+                    if (parseInt(counter.text()) > 0)
+                        counter.text(parseInt(counter.text()) - 1);
+                    else
+                        counter.hide();
                 }
                 if (type == "delete") {
                     $(`#notif-${id}`).remove();
-                    $('#notif-nbr').text(parseInt($('#notif-nbr').text()) - 1);
+                    if (parseInt(counter.text()) > 0)
+                        counter.text(parseInt(counter.text()) - 1);
+                    else
+                        counter.hide();
                 }
                 if (type == "readAll") {
-                    $('#notif-nbr').text("0").hide();
+                    counter.text("0").hide();
                     $('.notif').removeClass('table-primary');
                     $('.btn-mr-notif').remove();
                 }
                 if (type == "deleteAll") {
-                    $('#notif-nbr').text("0").hide();
+                    counter.text("0").hide();
                     $('#table-body-notif').remove();
                 }
             }
@@ -269,9 +282,12 @@ function follow(id) { // for user profile page
             result = JSON.parse(result);
             if (result.success) {
                 if (result.following) {
-                    $('#follow-btn').text("Unfollow").removeClass("btn-success").addClass("btn-danger");
+                    $(`#follow-btn-${id}`).text("Ne plus suivre").removeClass("btn-success").addClass("btn-danger");
+                    $('#follow-btn').text("Ne plus suivre").removeClass("btn-success").addClass("btn-danger");
                 } else {
-                    $('#follow-btn').text("Follow").removeClass("btn-danger").addClass("btn-success");
+                    $('#follow-btn').text("Suivre").removeClass("btn-danger").addClass("btn-success");
+                    $(`#follow-btn-${id}`).text("Suivre").removeClass("btn-danger").addClass("btn-success");
+
                 }
             }
         }
@@ -326,24 +342,21 @@ function loadPosts(type) {
     });
 }
 
-blurbtndisplayed = [];
 function displayBlurBtn() {
     var elem = $('.sensible, .warned');
-    elem.each(function (idx) {
-        if (blurbtndisplayed.indexOf(idx) == -1) {
-            if ($(this).parent().children().find('.btn-see-blured').length == 0) {
-                $(this).parent().append('<div class="position-absolute top-50 start-50 translate-middle"> \
-                    <button type="button" class="btn btn-warning btn-see-blured">Voir le post</button>\
-                    </div>');
-            }
-            blurbtndisplayed.push(idx);
-        }
-    });
+    elem.each((idx, e) => {
+        if ($(e).parent().children().find('.btn-see-blured').length > 0)
+            return;
+        else {
+            $(e).parent().append('<div class="position-absolute top-50 start-50 translate-middle"> \
+                            <button type="button" class="btn btn-warning btn-see-blured">Voir le contenu</button>\
+                            </div>');
 
-    $('.btn-see-blured').click(function(){
+        }
+    })
+    $('.btn-see-blured').click(function () {
         $(this).parent().parent().find('.sensible, .warned').removeClass('warned').removeClass('sensible');
         $(this).parent().remove();
     });
 }
-
-setTimeout(displayBlurBtn, 200);
+// setTimeout(displayBlurBtn, 200);

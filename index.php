@@ -16,6 +16,7 @@
     include "header.php";
 
     if (isset($_SESSION['ID_user'])) {
+        if($_SESSION['isBanned'] == 0){
         // create a search bar
         include "components/search.php";
         
@@ -27,8 +28,21 @@
 
             echo '<div id="posts"></div>';
         }
+    } else {
+        ?> <script>window.location.href = "user.php?id=" + <?php echo $_SESSION['ID_user']; ?>;</script> <?php
     }
-    else {
+        ?>
+<script defer>
+    loadPosts("index");
+    window.addEventListener('scroll', function () {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadPosts("index"); // <- fonction à faire qui call du ajax
+        }
+        displayBlurBtn();
+    });
+</script>
+<?php
+    } else {
         echo '<div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Bienvenue sur W, le reseau social de la Win, mais on tolère aussi les Loosers...</h5>
@@ -55,18 +69,6 @@
       </div>';
     }
 ?>
-
-<script defer>
-loadPosts("index");
-window.addEventListener('scroll', function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        loadPosts("index"); // <- fonction à faire qui call du ajax
-        displayBlurBtn();
-    }
-    displayBlurBtn();    
-});
-
-</script>
 
 </body>
 </html>

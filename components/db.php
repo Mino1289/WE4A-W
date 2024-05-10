@@ -1,6 +1,6 @@
 <?php
     define("HOST", "localhost");
-    define("DB_NAME", "w");
+    define("DB_NAME", "kretz_darmoise_w");
     define("USER", "root");
     define("PASSWORD", "");
 

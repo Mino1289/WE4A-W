@@ -46,9 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             LIMIT 5 OFFSET $start";
     } elseif ($type == "user") {
         $sql = "SELECT ID FROM post 
-            WHERE ID_post IS NULL AND 
-                isDeleted = 0 AND 
-                ID_user = ?
+            WHERE ID_post IS NULL
+                AND ID_user = ?
+                AND isDeleted = 0
             ORDER BY date DESC 
             LIMIT 5 OFFSET $start";
     }

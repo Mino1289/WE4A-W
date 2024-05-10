@@ -10,11 +10,12 @@
             filter: blur(5px);
             transition: .3s;
         }
+        #profile_picture{
+            width: 5em;
+            height: 5em;
+            margin: 0 auto;
+        } 
 
-        div.warned:hover, div.sensible:hover {
-            filter: none;
-            transition: .3s;
-        }
     </style>
     <?php
     include 'header.php';
@@ -37,10 +38,14 @@
     ?>
 <script>
     loadPosts("user");
+    setTimeout(() => {
+        displayBlurBtn();
+    }, 1000);
     window.addEventListener('scroll', function () {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
             loadPosts("user");
         }
+        displayBlurBtn();
     });
 </script>
 </body>

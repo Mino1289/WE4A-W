@@ -25,15 +25,6 @@ function test_input($data)
     return $data;
 }
 
-// final function to send safe data 
-function __sendUserData($name, $firstname, $username, $mail, $password, $rank, $db)
-{
-
-    $sql = "INSERT INTO user(name,firstname,username,mail,password,ID_rank) VALUES (?,?,?,?,?,?)";
-    $result = $db->prepare($sql);
-    $result->execute(array($name, $firstname, $username, $mail, $password, $rank));
-}
-
 function __findPP($mail, $password, $db)
 {
 

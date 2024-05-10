@@ -33,6 +33,10 @@
         $sql = "DELETE FROM notification WHERE `date` < DATE_SUB(NOW(), INTERVAL 14 DAY)";
         $qry = $db->prepare($sql);
         $qry->execute();
+
+        $sql = "UPDATE notification SET isDisplayed = 1 WHERE ID_user = ? AND isRead = 0";
+        $qry = $db->prepare($sql);
+        $qry->execute([$ID_user]);
         
         // then we select the notifications
 
