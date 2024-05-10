@@ -49,8 +49,7 @@
                 $sql = "UPDATE user SET profile_picture = ? WHERE ID = ?";
                 $qry = $db->prepare($sql);
                 $qry->execute([$profile_picture, $ID]); // ID de l'user
-                if ($qry)
-                    $_SESSION["profile_picture"] = $profile_picture;
+                $_SESSION["profile_picture"] = $profile_picture;
             } else {
                 $profile_picture = file_get_contents('https://www.gravatar.com/avatar/'.md5(strtolower(trim($username))).'?d=identicon');
                 $sql = "UPDATE user SET profile_picture = ? WHERE ID = ?";

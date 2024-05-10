@@ -162,7 +162,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form method="POST" action="components/register.php">
+          <form method="POST" action="components/register.php" enctype="multipart/form-data">
             <div class="container text-center">
               <div class="row mb-3">
                 <label for="registerUsername" class="col-sm-3 col-form-label">Pseudo</label>
@@ -233,10 +233,10 @@
     $("#registerVerifyPassword").on("keyup", function() {
       if ($('#registerPassword').val() !== $('#registerVerifyPassword').val()) {
         $('#isIdentical').text("Les mots de passe ne sont pas identiques.").css('color', 'red');
-        $("#formButton").prop('disabled', true).css('backgroundColor', 'red');
+        $("#formButton").prop('disabled', true).removeClass('btn-success').addClass('btn-danger');
       } else {
         $('#isIdentical').text("Les mots de passe sont identiques.").css('color', 'green');
-        $("#formButton").prop('disabled', false).css('backgroundColor', 'green');
+        $("#formButton").prop('disabled', false).removeClass('btn-danger').addClass('btn-success');
       }
     });
   </script>
