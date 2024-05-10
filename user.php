@@ -10,6 +10,11 @@
             filter: blur(5px);
             transition: .3s;
         }
+        #profile_picture{
+            width: 5em;
+            height: 5em;
+            margin: 0 auto;
+        } 
 
     </style>
     <?php

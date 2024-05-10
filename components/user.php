@@ -1,10 +1,3 @@
-<style>
-        #profile_picture{
-            width: 5em;
-            height: 5em;
-            margin: 0 auto;
-        } 
-</style>
 <?php
     class User {
         public $ID_user; 
