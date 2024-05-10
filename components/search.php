@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
     $value = "";
     if (isset($_GET["q"]) && !empty($_GET["q"])) {
         $value = test_input($_GET["q"]);
+        $type = "post";
     }
 }
 
